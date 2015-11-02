@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Charger:</strong>
+  <%= @transaction.charger_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @transaction.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_transaction_path(@transaction) %> |
+<%= link_to 'Back', transactions_path %>
