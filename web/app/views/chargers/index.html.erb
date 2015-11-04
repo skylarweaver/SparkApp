@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Type</th>
+      <th>Charger type</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +15,7 @@
     <% @chargers.each do |charger| %>
       <tr>
         <td><%= charger.name %></td>
-        <td><%= charger.type %></td>
+        <td><%= charger.charger_type %></td>
         <td><%= link_to 'Show', charger %></td>
         <td><%= link_to 'Edit', edit_charger_path(charger) %></td>
         <td><%= link_to 'Destroy', charger, method: :delete, data: { confirm: 'Are you sure?' } %></td>

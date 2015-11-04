@@ -1,7 +1,7 @@
 angular.module('starter.services', [])
 
-.factory('BlogEntry', function($resource) {
-  return $resource("http://localhost:3000/blog_entries/:id.json");
+.factory('Chargers', function($resource) {
+  return $resource("http://localhost:3000/chargers/:id.json");
 })
 
 .factory('Chats', function() {

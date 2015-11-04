@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  type: 
+  charger_type: MyString
 
 two:
   name: MyString
-  type: 
+  charger_type: MyString

@@ -69,6 +69,6 @@ class ChargersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def charger_params
-      params.require(:charger).permit(:name, :type)
+      params.require(:charger).permit(:name, :charger_type)
     end
 end

@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102212509) do
+ActiveRecord::Schema.define(version: 20151104050528) do
 
-  create_table "chargers", force: :cascade do |t|
+  create_table "Chargers", force: :cascade do |t|
     t.string   "name"
-    t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "charger_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "devices", force: :cascade do |t|
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(version: 20151102212509) do
     t.integer  "charger_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "owned_chargers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "charger_id"
+    t.string   "personal_charger_name"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "owned_devices", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "charger_id"
+    t.string   "personal_device_name"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "transactions", force: :cascade do |t|

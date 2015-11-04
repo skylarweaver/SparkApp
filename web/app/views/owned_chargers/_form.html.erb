@@ -1,0 +1,29 @@
+<%= form_for(@owned_charger) do |f| %>
+  <% if @owned_charger.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@owned_charger.errors.count, "error") %> prohibited this owned_charger from being saved:</h2>
+
+      <ul>
+      <% @owned_charger.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :charger_id %><br>
+    <%= f.number_field :charger_id %>
+  </div>
+  <div class="field">
+    <%= f.label :personal_charger_name %><br>
+    <%= f.text_field :personal_charger_name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

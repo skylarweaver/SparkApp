@@ -18,7 +18,7 @@ class ChargersControllerTest < ActionController::TestCase
 
   test "should create charger" do
     assert_difference('Charger.count') do
-      post :create, charger: { name: @charger.name, type: @charger.type }
+      post :create, charger: { charger_type: @charger.charger_type, name: @charger.name }
     end
 
     assert_redirected_to charger_path(assigns(:charger))
@@ -35,7 +35,7 @@ class ChargersControllerTest < ActionController::TestCase
   end
 
   test "should update charger" do
-    patch :update, id: @charger, charger: { name: @charger.name, type: @charger.type }
+    patch :update, id: @charger, charger: { charger_type: @charger.charger_type, name: @charger.name }
     assert_redirected_to charger_path(assigns(:charger))
   end
 
