@@ -69,6 +69,6 @@ class OwnedDevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def owned_device_params
-      params.require(:owned_device).permit(:user_id, :charger_id, :personal_device_name)
+      params.require(:owned_device).permit(:user_id, :device_id, :personal_device_name)
     end
 end

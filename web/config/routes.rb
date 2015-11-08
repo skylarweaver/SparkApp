@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  resources :chargers
   resources :owned_devices
-  resources :owned_chargers
+  resources :chargers
   resources :devices
   resources :transactions
   resources :users

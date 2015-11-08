@@ -2,10 +2,10 @@
 
 one:
   user_id: 1
-  charger_id: 1
+  device_id: 1
   personal_device_name: MyString
 
 two:
   user_id: 1
-  charger_id: 1
+  device_id: 1
   personal_device_name: MyString

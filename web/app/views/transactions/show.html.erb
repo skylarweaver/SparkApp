@@ -6,8 +6,13 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @transaction.user_id %>
+  <strong>Lender:</strong>
+  <%= @transaction.lender_id %>
+</p>
+
+<p>
+  <strong>Borrower:</strong>
+  <%= @transaction.borrower_id %>
 </p>
 
 <%= link_to 'Edit', edit_transaction_path(@transaction) %> |

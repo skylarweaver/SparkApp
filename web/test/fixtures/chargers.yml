@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  charger_type: MyString
+  charger_photo: MyString
 
 two:
   name: MyString
-  charger_type: MyString
+  charger_photo: MyString

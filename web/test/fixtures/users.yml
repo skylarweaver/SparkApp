@@ -2,6 +2,10 @@
 
 one:
   name: MyString
+  phone: MyString
+  email: MyString
 
 two:
   name: MyString
+  phone: MyString
+  email: MyString

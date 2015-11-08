@@ -1,3 +1,3 @@
 class DeviceSerializer < ActiveModel::Serializer
-  attributes :id, :charger_id, :name
+  attributes :id, :name, :charger_id
 end

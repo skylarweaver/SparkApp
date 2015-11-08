@@ -18,7 +18,7 @@ class OwnedDevicesControllerTest < ActionController::TestCase
 
   test "should create owned_device" do
     assert_difference('OwnedDevice.count') do
-      post :create, owned_device: { charger_id: @owned_device.charger_id, personal_device_name: @owned_device.personal_device_name, user_id: @owned_device.user_id }
+      post :create, owned_device: { device_id: @owned_device.device_id, personal_device_name: @owned_device.personal_device_name, user_id: @owned_device.user_id }
     end
 
     assert_redirected_to owned_device_path(assigns(:owned_device))
@@ -35,7 +35,7 @@ class OwnedDevicesControllerTest < ActionController::TestCase
   end
 
   test "should update owned_device" do
-    patch :update, id: @owned_device, owned_device: { charger_id: @owned_device.charger_id, personal_device_name: @owned_device.personal_device_name, user_id: @owned_device.user_id }
+    patch :update, id: @owned_device, owned_device: { device_id: @owned_device.device_id, personal_device_name: @owned_device.personal_device_name, user_id: @owned_device.user_id }
     assert_redirected_to owned_device_path(assigns(:owned_device))
   end
 

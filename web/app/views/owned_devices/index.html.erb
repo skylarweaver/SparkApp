@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>User</th>
-      <th>Charger</th>
+      <th>Device</th>
       <th>Personal device name</th>
       <th colspan="3"></th>
     </tr>
@@ -16,7 +16,7 @@
     <% @owned_devices.each do |owned_device| %>
       <tr>
         <td><%= owned_device.user_id %></td>
-        <td><%= owned_device.charger_id %></td>
+        <td><%= owned_device.device_id %></td>
         <td><%= owned_device.personal_device_name %></td>
         <td><%= link_to 'Show', owned_device %></td>
         <td><%= link_to 'Edit', edit_owned_device_path(owned_device) %></td>
