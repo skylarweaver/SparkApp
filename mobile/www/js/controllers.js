@@ -1,9 +1,15 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, Chargers) {
-  Chargers.query().$promise.then(function(response){
-    $scope.chargers = response;
+.controller('BorrowCtrl', function($scope, Devices) {
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
   });
+})
+
+.controller('LendCtrl', function($scope) {
+  $scope.settings = {
+    enableLending: true
+  };
 })
 
 // /mobile/www/controllers.js
@@ -16,7 +22,7 @@ $scope.login = function() {
     function(data){
       window.localStorage['userId'] = data.id;
       window.localStorage['userName'] = data.name;
-      $location.path('/tab/dash');
+      $location.path('/tab/borrow');
     },
     function(err){
       var error = err["data"]["error"] || err.data.join('. ')
