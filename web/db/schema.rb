@@ -39,8 +39,9 @@ ActiveRecord::Schema.define(version: 20151110192228) do
     t.integer  "charger_id"
     t.integer  "lender_id"
     t.integer  "borrower_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "time_requested"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "users", force: :cascade do |t|
