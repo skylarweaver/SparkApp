@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('BorrowCtrl', function($scope, Chargers) {
-  Chargers.query().$promise.then(function(response){
-    $scope.chargers = response;
+.controller('BorrowCtrl', function($scope, Devices) {
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
   });
 })
 
@@ -22,7 +22,7 @@ $scope.login = function() {
     function(data){
       window.localStorage['userId'] = data.id;
       window.localStorage['userName'] = data.name;
-      $location.path('/tab/dash');
+      $location.path('/tab/borrow');
     },
     function(err){
       var error = err["data"]["error"] || err.data.join('. ')
