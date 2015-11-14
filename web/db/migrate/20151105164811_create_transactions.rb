@@ -4,6 +4,7 @@ class CreateTransactions < ActiveRecord::Migration
       t.integer :charger_id
       t.integer :lender_id
       t.integer :borrower_id
+      t.integer	:time_requested
 
       t.timestamps null: false
     end
