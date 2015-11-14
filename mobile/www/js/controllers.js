@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, Chargers) {
+.controller('BorrowCtrl', function($scope, Chargers) {
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
   });
