@@ -54,14 +54,14 @@ namespace :db do
 
     password = "secret"
 
-    10..20.times do
+    rand(20..40).times do
       user = User.new
       user.first_name = Faker::Name.first_name
       user.last_name = Faker::Name.last_name
       user.email = Faker::Internet.free_email(user.first_name)
       user.encrypted_password = User.new(:password => password).encrypted_password
       #Give each user a few devices
-      1..3.times do
+      rand(1..3).times do
         d = OwnedDevice.new
         d.user_id = user.id
         d.device_id = rand(1..Device.all.size)
