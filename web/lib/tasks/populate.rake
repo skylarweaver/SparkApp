@@ -65,7 +65,7 @@ namespace :db do
         d = OwnedDevice.new
         d.user_id = user.id
         d.device_id = rand(1..Device.all.size)
-        d.personal_device_name = User.name + "'s" + Device.find(d.device_id).name
+        d.personal_device_name = user.first_name + "'s" + Device.find(d.device_id).name
         d.save!
       end
       user.save!(validate: false) #avoid password can't be blank validation
