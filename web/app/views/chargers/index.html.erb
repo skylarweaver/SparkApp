@@ -15,7 +15,7 @@
     <% @chargers.each do |charger| %>
       <tr>
         <td><%= charger.name %></td>
-        <td><%= charger.charger_photo %></td>
+        <td><%= image_tag(charger.charger_photo) %></td>
         <td><%= link_to 'Show', charger %></td>
         <td><%= link_to 'Edit', edit_charger_path(charger) %></td>
         <td><%= link_to 'Destroy', charger, method: :delete, data: { confirm: 'Are you sure?' } %></td>
