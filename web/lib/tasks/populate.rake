@@ -45,7 +45,7 @@ namespace :db do
     lightningDeviceNames = ["iPhone 5", "iPhone 5C","iPhone 5S", "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", "iPod Touch (5th gen)", "iPod Nano (7th gen)", "iPad mini", "iPad 4", "iPad Air", "iPad Air 2" ]
     appleThirtyPinDeviceNames = ["iPhone 3G", "iPhone 3GS", "iPhone 4", "iPhone 4S", "iPod Touch (1st-4th gen)", "iPad", "iPad 2", "iPad 3"]
     microUSBDeviceNames = []
-    miniUSBDevices = []
+    miniUSBDeviceNames = []
     #https://support.apple.com/en-us/HT201700
 
 
@@ -60,6 +60,20 @@ namespace :db do
       device = Device.new
       device.name = d
       device.charger_id = appleThirtyPin.id
+      device.save!
+    end
+
+    microUSBDeviceNames.each do |d|
+      device = Device.new
+      device.name = d
+      device.charger_id = microUSB.id
+      device.save!
+    encrypted_password
+
+    miniUSBDeviceNames.each do |d|
+      device = Device.new
+      device.name = d
+      device.charger_id = miniUSB.id
       device.save!
     end
 
