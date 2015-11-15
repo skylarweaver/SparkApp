@@ -68,7 +68,7 @@ namespace :db do
       device.name = d
       device.charger_id = microUSB.id
       device.save!
-    encrypted_password
+    end
 
     miniUSBDeviceNames.each do |d|
       device = Device.new
