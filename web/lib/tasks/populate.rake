@@ -30,9 +30,22 @@ namespace :db do
     appleThirtyPin.charger_photo = "http://placehold.it/100x100.png/000"
     appleThirtyPin.save!
 
+    microUSB = Charger.new
+    microUSB.name = "microUSB charger"
+    microUSB.charger_photo = "http://placehold.it/100x100.png/000"
+    microUSB.save! 
+
+    miniUSB = Charger.new
+    miniUSB.name = "miniUSB charger"
+    miniUSB.charger_photo = "http://placehold.it/100x100.png/000"
+    miniUSB.save! 
+
+
     #Add Devices 
     lightningDeviceNames = ["iPhone 5", "iPhone 5C","iPhone 5S", "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", "iPod Touch (5th gen)", "iPod Nano (7th gen)", "iPad mini", "iPad 4", "iPad Air", "iPad Air 2" ]
     appleThirtyPinDeviceNames = ["iPhone 3G", "iPhone 3GS", "iPhone 4", "iPhone 4S", "iPod Touch (1st-4th gen)", "iPad", "iPad 2", "iPad 3"]
+    microUSBDeviceNames = []
+    miniUSBDevices = []
     #https://support.apple.com/en-us/HT201700
 
 
@@ -60,15 +73,16 @@ namespace :db do
       user.last_name = Faker::Name.last_name
       user.email = Faker::Internet.free_email(user.first_name)
       user.encrypted_password = User.new(:password => password).encrypted_password
+      user.save!(validate: false) #avoid password can't be blank validation
+
       #Give each user a few devices
       rand(1..3).times do
         d = OwnedDevice.new
         d.user_id = user.id
         d.device_id = rand(1..Device.all.size)
-        d.personal_device_name = user.first_name + "'s" + Device.find(d.device_id).name
+        d.personal_device_name = user.first_name + "'s " + Device.find(d.device_id).name
         d.save!
       end
-      user.save!(validate: false) #avoid password can't be blank validation
     end
 
 
