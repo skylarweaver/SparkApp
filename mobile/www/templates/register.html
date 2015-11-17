@@ -1,4 +1,4 @@
-<ion-view name="login-view">
+<ion-view name="register-view">
   <ion-content>
     <div class="list">
       <label class="item item-input item-floating-label">
@@ -9,21 +9,18 @@
         <span class="input-label">Password</span>
         <input type="password" placeholder="Password" ng-model="data.user.password">
       </label>
-    </div>
-
-
-    <div class="padding">
-      <button class="button button-block button-calm" ng-click="login()">Login</button>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Password Confirmation</span>
+        <input type="password" placeholder="Password Confirmation" ng-model="data.user.password_confirmation">
+      </label>
     </div>
     
     <div class="padding">
-      <a class="button button-block" href="#/register">Register Instead</a>
+      <button class="button button-block button-calm" ng-click="register()">Register</button>
     </div>
-    <br><br>
-<!--     <div class="padding">
-      <button class="button button-block button-positive" ng-click="fbLogin()">
-        Login with Facebook
-      </div> -->
-    </label>
+    
+    <div class="padding">
+      <a class="button button-block" href="#/login">Login Instead</a>
+    </div>
   </ion-content>
 </ion-view>
