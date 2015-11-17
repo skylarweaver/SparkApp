@@ -4,9 +4,44 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/chargers/:id.json");
 })
 
-.factory('UserSession', function($resource) {
+.factory('Devices', function($resource) {
+  return $resource("http://localhost:3000/devices/:id.json");
+})
+
+.factory('Login', function($resource) {
   return $resource("http://localhost:3000/users/sign_in.json");
 })
+
+.factory('Logout', function ($resource) {
+  return $resource("http://localhost:3000/users/sign_out.json");
+})
+
+.factory('Register', function ($resource) {
+  return $resource("http://localhost:3000/users.json");
+})
+
+.factory('Auth',function($window){
+  return {
+    set: function(data) {
+      $window.localStorage['userToken'] = data.user_token;
+      $window.localStorage['userEmail'] = data.user_email;
+      // $window.localStorage['userId'] = data.id;
+      // $window.localStorage['userName'] = data.name;
+    },
+    get: function() {
+      return { user_email: $window.localStorage['userEmail'],
+               user_token: $window.localStorage['userToken']}
+    }
+  }
+})
+
+
+
+
+
+//*****  DEFAULT IONIC STUFF BELOW  *****
+
+
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array

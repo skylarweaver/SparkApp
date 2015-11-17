@@ -62,16 +62,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.chats', {
-    url: '/chats',
-    views: {
-      'tab-chats': {
-        templateUrl: 'templates/tab-chats.html',
-        controller: 'ChatsCtrl'
-      }
-    }
-  })
-
   .state('tab.chat-detail', {
     url: '/chats/:chatId',
     views: {
@@ -88,15 +78,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       controller: 'LoginCtrl'
   })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
+  .state('register', {
+      url: '/register',
+      templateUrl: 'templates/register.html',
+      controller: 'RegisterCtrl'
+  })
+
+  .state('redirect', {
+    url: '/redirect',
+    templateUrl: 'templates/redirect.html',
+    controller: 'RedirectCtrl'
+  })
+;
 
   // if none of the above states are matched, use this as the fallback
 
