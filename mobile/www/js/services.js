@@ -1,5 +1,10 @@
 angular.module('starter.services', [])
 
+
+.factory('Owned_Devices', function($resource) {
+  return $resource("http://localhost:3000/owned_devices/:id.json");
+})
+
 .factory('Chargers', function($resource) {
   return $resource("http://localhost:3000/chargers/:id.json");
 })

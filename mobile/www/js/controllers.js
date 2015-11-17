@@ -1,9 +1,14 @@
 angular.module('starter.controllers', [])
 
-.controller('BorrowCtrl', function($scope, Devices) {
-  Devices.query().$promise.then(function(response){
-    $scope.devices = response;
+.controller('BorrowCtrl', function($scope, Owned_Devices, Chargers) {
+  Owned_Devices.query().$promise.then(function(response){
+    $scope.owned_devices = response;
   });
+  Chargers.query().$promise.then(function(response){
+    $scope.chargers = response;
+  });})
+
+.controller('BorrowDetailCTRL', function($scope) {
 })
 
 .controller('LendCtrl', function($scope, Logout, $window, $location, Auth, $ionicPopup) {
