@@ -61,6 +61,16 @@ class OwnedDevicesController < ApplicationController
     end
   end
 
+  #GET '/owned_devices/userid/:id
+  #GET '/owned_devices/userid/:id.json
+  #TODO: avoid using capitalize, access via user id instead. 
+  def getByUser
+    #@devices_owned_by_users = User.find(params[:id]).devices
+    @user = User.find_by first_name: params[:name].capitalize
+    @devices_owned_by_users = @user.devices
+    render json: @devices_owned_by_users
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_owned_device
