@@ -6,6 +6,9 @@ angular.module('starter.controllers', [])
   });
 })
 
+.controller('BorrowDetailCTRL', function($scope) {
+})
+
 .controller('LendCtrl', function($scope) {
   $scope.settings = {
     enableLending: true

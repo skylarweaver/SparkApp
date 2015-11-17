@@ -52,6 +52,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  // .state('tab.borrow-detail', {
+  //   url: '/borrow/:deviceID',
+  //   views: {
+  //     'tab-borrow': {
+  //       templateUrl: 'templates/borrow-detail.html',
+  //       controller: 'BorrowDetailCtrl'
+  //     }
+  //   }
+  // })
+
+
   .state('tab.lend', {
     url: '/lend',
     views: {
