@@ -55,7 +55,7 @@ angular.module('starter.controllers', [])
 // }
 // })
 
-.controller('LoginCtrl', function($scope, $location, Auth, $window, Login, $ionicPopup, $rootScope) {
+.controller('LoginCtrl', function($scope, $location, Auth, $window, Login, $ionicPopup, $rootScope, Register) {
   $scope.data = {};
 
   $scope.login = function() {
@@ -66,6 +66,9 @@ angular.module('starter.controllers', [])
           console.log("START")
           console.log($window.localStorage['userEmail'])
           console.log($scope.data.user)
+          console.log($scope.data.user_token)
+          console.log($scope.data.user_email)
+
           console.log("END")
       },
       function(err){
