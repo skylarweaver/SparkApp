@@ -1,0 +1,21 @@
+<ion-view view-title="{{owned_device.personal_device_name}}">
+  <ion-content class="padding">
+  &nbsp;
+    <h4>
+      How long do you need it for?
+    </h4>
+
+    <div class="item range">
+    	<i>0</i>
+    	<input type="range" name="volume" min="0" max="180" ng-model="rangeValue" ng-change="drag(rangeValue)">
+    	<i>3 hours</i>
+    </div>
+    </br>
+    <h4>{{hours}} Hours and {{minutes}} Minutes</h4>
+    &nbsp;</br>
+    <button class="button button-positive" align="center">
+    	Find Lenders
+    </button>    
+
+  </ion-content>
+</ion-view>

@@ -1,7 +1,11 @@
+<ion-nav-bar class="bar-stable">
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+</ion-nav-bar>
 <ion-view view-title="My Items">
   <ion-content class="padding">
     <div class="list" ng-repeat="owned_device in owned_devices">
-      <a class="item item-thumbnail-left" href='#'>
+      <a class="item item-thumbnail-left" href="#/tab/borrow/{{owned_device.id}}">
         <img src='{{}}'>
         {{owned_device.personal_device_name}}
       </a>
