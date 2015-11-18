@@ -1,19 +1,19 @@
 angular.module('starter.services', [])
 
 
-.factory('Owned_Devices', function($resource) {
+.factory('Owned_Devices', function ($resource) {
   return $resource("http://localhost:3000/owned_devices/:id.json");
 })
 
-.factory('Chargers', function($resource) {
+.factory('Chargers', function ($resource) {
   return $resource("http://localhost:3000/chargers/:id.json");
 })
 
-.factory('Devices', function($resource) {
+.factory('Devices', function ($resource) {
   return $resource("http://localhost:3000/devices/:id.json");
 })
 
-.factory('Login', function($resource) {
+.factory('Login', function ($resource) {
   return $resource("http://localhost:3000/users/sign_in.json");
 })
 
@@ -30,8 +30,6 @@ angular.module('starter.services', [])
     set: function(data) {
       $window.localStorage['userToken'] = data.user_token;
       $window.localStorage['userEmail'] = data.user_email;
-      // $window.localStorage['userId'] = data.id;
-      // $window.localStorage['userName'] = data.name;
     },
     get: function() {
       return { user_email: $window.localStorage['userEmail'],
