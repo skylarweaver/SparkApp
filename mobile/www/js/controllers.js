@@ -8,7 +8,13 @@ angular.module('starter.controllers', [])
     $scope.chargers = response;
   });})
 
-.controller('BorrowDetailCTRL', function($scope) {
+.controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
+  $scope.drag = function(value) {
+    $scope.hours = Math.floor(value/60);
+    $scope.minutes = value % 60;
+  };
+
+  $scope.rangeValue = 0;
 })
 
 .controller('LendCtrl', function($scope, Logout, $window, $location, Auth, $ionicPopup) {
