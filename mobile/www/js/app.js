@@ -119,8 +119,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   // if none of the above states are matched, use this as the fallback
 
-  // $urlRouterProvider.otherwise('/tab/borrow');
-
-  $urlRouterProvider.otherwise('/login');
+  //on refresh, send to redirect
+  //redirect checks for login. if logged in, send to borrow page, if not, send to login page
+  $urlRouterProvider.otherwise('/redirect');
 
 });

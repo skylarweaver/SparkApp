@@ -70,7 +70,7 @@ angular.module('starter.controllers', [])
 // }
 // })
 
-.controller('LoginCtrl', function($scope, $location, Auth, $window, Login, $ionicPopup, $rootScope) {
+.controller('LoginCtrl', function($scope, $location, Auth, $window, Login, $ionicPopup, $rootScope, Register) {
   $scope.data = {};
 
   $scope.login = function() {
@@ -79,8 +79,16 @@ angular.module('starter.controllers', [])
         Auth.set(data);
         $location.path('/tab/borrow');
           console.log("START")
-          console.log($window.localStorage['userEmail'])
+          // console.log($window.localStorage['userEmail'])
           console.log($scope.data.user)
+          // console.log("Data:", data)
+          console.log(data.user_token)
+          console.log(data.token)
+          console.log(data.user_email)
+          console.log($window.localStorage['userEmail'])
+          console.log($window.localStorage['userToken'])
+
+
           console.log("END")
       },
       function(err){
@@ -95,12 +103,15 @@ angular.module('starter.controllers', [])
 
 .controller('RedirectCtrl', function($scope, $location, $window,$rootScope) {
     $scope.$on('$ionicView.enter', function () {
+      //Is this the most secure way to do this?
       var email = $window.localStorage['userEmail'];
-      console.log("Inside RedirectCtrl:")
-      console.log(email)
+      // console.log("Inside RedirectCtrl:")
+      // console.log(email)
       if (email) {
+          //user already logged in
           $location.path('/tab/borrow');
       } else {
+        //user not logged in
         $location.path('/login');
       }
     });
