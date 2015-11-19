@@ -1,12 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('BorrowCtrl', function($scope, Owned_Devices, Chargers) {
-  Owned_Devices.query().$promise.then(function(response){
-    $scope.owned_devices = response;
+.controller('BorrowCtrl', function($scope, Devices, Chargers, Register) {
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
-  });})
+  });
+})
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
   $scope.drag = function(value) {
