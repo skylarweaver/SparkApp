@@ -4,7 +4,8 @@ class OwnedDevicesController < ApplicationController
   # GET /owned_devices
   # GET /owned_devices.json
   def index
-    @owned_devices = OwnedDevice.all
+    puts current_user
+    @owned_devices = current_user.devices #OwnedDevice.all
   end
 
   # GET /owned_devices/1
