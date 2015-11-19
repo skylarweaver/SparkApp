@@ -3,9 +3,12 @@ angular.module('starter.controllers', [])
 .controller('BorrowCtrl', function($scope, Devices, Chargers, Register) {
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
+    console.log($scope.devices);
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
+    console.log($scope.chargers);
+
   });
 })
 
