@@ -80,7 +80,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
          controller: 'ChatsCtrl'
       }
     }
-  })  
+  }) 
+
+  .state('add', {
+      url: '/add',
+      templateUrl: 'templates/add-device.html',
+      controller: 'BorrowCtrl'
+  }) 
 
   .state('tab.chat-detail', {
     url: '/chats/:chatId',

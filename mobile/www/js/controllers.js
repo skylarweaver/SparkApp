@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BorrowCtrl', function($scope, Devices, Chargers, Register) {
+.controller('BorrowCtrl', function($scope, Devices, Chargers, Owned_Devices, Register) {
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
     console.log($scope.devices);
@@ -8,8 +8,8 @@ angular.module('starter.controllers', [])
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
     console.log($scope.chargers);
-
   });
+
 })
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
