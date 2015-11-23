@@ -47,6 +47,13 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('TransactionCtrl', function($scope, Transactions) {
+    Transactions.query().$promise.then(function(response){
+    $scope.transactions = response;
+    console.log($scope.transactions);
+  });
+})
+
 // /mobile/www/controllers.js
 // .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
 // $scope.data = {};
