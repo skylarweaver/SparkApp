@@ -1,0 +1,28 @@
+<ion-nav-bar class="bar-stable">
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-view view-title="Add a Device">
+  <ion-content class="padding">
+  
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Device</span>
+        <input type="text" placeholder="Device" ng-model="data.device.name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Charger</span>
+        <input type="text" placeholder="Charger" ng-model="data.device.charger_id">
+      </label>
+    </div>
+    
+    <div class="padding">
+      <button class="button button-block button-calm" ng-click="addDevice()">Add device</button>
+    </div>
+
+
+
+
+  </ion-content>
+</ion-view>

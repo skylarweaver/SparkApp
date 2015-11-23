@@ -6,8 +6,8 @@ class OwnedDevicesController < ApplicationController
   def index
     # puts current_user
 
-    @owned_devices = current_user.owned_devices #OwnedDevice.all
     # @owned_devices = OwnedDevice.all
+    @owned_devices = current_user.owned_devices #OwnedDevice.all
   end
 
   # GET /owned_devices/1

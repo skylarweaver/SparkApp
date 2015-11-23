@@ -6,4 +6,5 @@ class Device < ActiveRecord::Base
 	def charger_name
 		Charger.find(self.charger_id).name
 	end
+
 end
