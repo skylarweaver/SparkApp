@@ -4,6 +4,7 @@ class CreateOwnedDevices < ActiveRecord::Migration
       t.integer :user_id
       t.integer :device_id
       t.string :personal_device_name
+      t.boolean :allow_lending
 
       t.timestamps null: false
     end

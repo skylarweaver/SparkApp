@@ -1,9 +1,9 @@
 angular.module('starter.controllers', [])
 
+
 .controller('BorrowCtrl', function($scope, Devices, Chargers, Owned_Devices, Register) {
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
-    console.log($scope.devices);
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
@@ -21,10 +21,30 @@ angular.module('starter.controllers', [])
   $scope.rangeValue = 0;
 })
 
-.controller('LendCtrl', function($scope, Logout, $window, $location, Auth, $ionicPopup) {
+
+
+.controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {
   $scope.settings = {
     enableLending: true
   };
+
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
+    // console.log($scope.devices);
+  });
+
+  Chargers.query().$promise.then(function(response){
+    $scope.chargers = response;
+    // console.log($scope.chargers);
+  });
+
+  Owned_Devices.query().$promise.then(function(response){
+    $scope.owned_devices = response;
+  });
+
+
+
+  $scope.userFirstName = $window.localStorage['userFirstName'];
 
   $scope.logout = function() {
     // This database call might not be necessary, if all that's needed is to removeItems...
@@ -47,28 +67,34 @@ angular.module('starter.controllers', [])
   }
 })
 
-// /mobile/www/controllers.js
-// .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
-// $scope.data = {};
 
-// $scope.login = function() {
-//   var user_session = new UserSession({ user: $scope.data });
-//   user_session.$save(
-//     function(data){
-//       window.localStorage['userId'] = data.id;
-//       window.localStorage['userName'] = data.name;
-//       $location.path('/tab/borrow');
-//     },
-//     function(err){
-//       var error = err["data"]["error"] || err.data.join('. ')
-//       var confirmPopup = $ionicPopup.alert({
-//         title: 'An error occured',
-//         template: error
-//       });
-//     }
-//   );
-// }
-// })
+
+.controller('LendDetailCtrl', function($scope, $stateParams, $window, $filter, Owned_Devices) {
+  // $stateparams access the parameter that was passed through the url
+  // defined in app.js lend_detail state
+  owned_deviceID = $stateParams.owned_deviceID;
+  console.log("OWNED DEVICE ID");
+  console.log($stateParams.owned_deviceID);
+  
+  // Not sure if we can pass in a parameter (1) like that for query
+  Owned_Devices.query(1).$promise.then(function(response){
+    $scope.owned_devices = response;
+    console.log($scope.owned_devices);
+  });
+
+
+  //.get currently gets devices by user_id, not device_id
+  // owned_devices = Owned_Devices.get(1);//$window.localStorage['userId']);
+
+  // (failed) Attempt to convert json to array.
+  // owned_devices_array = [];
+  // angular.forEach(owned_devices, function(element) {
+  //   owned_devices_array.push(element);
+  // });
+  // $scope.owned_device = $filter('filter')(owned_devices_array, {id: owned_deviceID}, true)
+
+})
+
 
 .controller('LoginCtrl', function($scope, $location, Auth, $window, Login, $ionicPopup, $rootScope, Register) {
   $scope.data = {};
@@ -109,7 +135,7 @@ angular.module('starter.controllers', [])
       // console.log(email)
       if (email) {
           //user already logged in
-          $location.path('/tab/borrow');
+          $location.path('/tab/lend');
       } else {
         //user not logged in
         $location.path('/login');
@@ -141,6 +167,50 @@ angular.module('starter.controllers', [])
     );
   }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// /mobile/www/controllers.js
+// .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
+// $scope.data = {};
+
+// $scope.login = function() {
+//   var user_session = new UserSession({ user: $scope.data });
+//   user_session.$save(
+//     function(data){
+//       window.localStorage['userId'] = data.id;
+//       window.localStorage['userName'] = data.name;
+//       $location.path('/tab/borrow');
+//     },
+//     function(err){
+//       var error = err["data"]["error"] || err.data.join('. ')
+//       var confirmPopup = $ionicPopup.alert({
+//         title: 'An error occured',
+//         template: error
+//       });
+//     }
+//   );
+// }
+// })
+
+
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

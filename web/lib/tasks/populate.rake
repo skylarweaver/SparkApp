@@ -93,6 +93,7 @@ namespace :db do
       rand(1..3).times do
         d = OwnedDevice.new
         d.user_id = user.id
+        d.allow_lending = true
         d.device_id = rand(1..Device.all.size)
         d.personal_device_name = user.first_name + "'s " + Device.find(d.device_id).name
         d.save!

@@ -1,6 +1,6 @@
 class OwnedDevice < ActiveRecord::Base
 	belongs_to :device
-  	belongs_to :user
+  belongs_to :user
 
   	def device_name 
   		Device.find(self.device_id).name
