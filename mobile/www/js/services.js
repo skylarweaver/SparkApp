@@ -34,10 +34,14 @@ angular.module('starter.services', [])
     set: function(data) {
       $window.localStorage['userToken'] = data.user_token;
       $window.localStorage['userEmail'] = data.user_email;
+      $window.localStorage['userFirstName'] = data.first_name;
+      $window.localStorage['userId'] = data.id;
     },
     get: function() {
       return { user_email: $window.localStorage['userEmail'],
-               user_token: $window.localStorage['userToken']}
+               user_token: $window.localStorage['userToken'],
+              first_name: $window.localStorage['userFirstName'],
+              id: $window.localStorage['userId']};
     }
   }
 })

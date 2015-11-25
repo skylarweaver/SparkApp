@@ -36,6 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.string :authentication_token
+      t.string :master_lend_status
     end
 
     add_index :users, :email,                unique: true

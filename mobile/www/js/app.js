@@ -72,6 +72,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+
   .state('tab.transactions', {
     url: '/transactions',
     views: {
@@ -81,6 +82,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })  
+
+  .state('tab.lend-detail', {
+    url: '/lend/:owned_deviceID',
+    views: {
+      'tab-lend': {
+        templateUrl: 'templates/lend-detail.html',
+        controller: 'LendDetailCtrl'
+      }
+    }
+  })
+
 
   .state('tab.chat', {
     url: '/chats',
