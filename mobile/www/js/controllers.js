@@ -9,7 +9,9 @@ angular.module('starter.controllers', [])
     $scope.chargers = response;
     console.log($scope.chargers);
   });
-
+  Owned_Devices.query().$promise.then(function(response){
+    $scope.owned_devices = response;
+  });
 })
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
@@ -20,8 +22,6 @@ angular.module('starter.controllers', [])
 
   $scope.rangeValue = 0;
 })
-
-
 
 .controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {
   $scope.settings = {

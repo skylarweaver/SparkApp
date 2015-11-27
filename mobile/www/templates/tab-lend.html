@@ -14,12 +14,18 @@
         Allow Lending:
       </ion-toggle> -->
 
-		<div ng-repeat="device in devices">
-      <a class="item item-thumbnail-left" href="#/tab/lend/{{owned_device.id}}">
+		<div ng-repeat="owned_device in owned_devices">
+      <div class="item item-thumbnail-left toggle-right"> <!-- href="#/tab/lend/{{owned_device.id}}"> -->
 	        <img src='{{}}'>
-	        <h2>{{device.name}}</h2>
-	        <p>{{device.charger_name}}</p>
-      </a>
+	        <h2>{{owned_device.charger_name}}</h2>
+	        <p>For {{owned_device.personal_device_name}}</p>
+	        <label class="toggle toggle-assertive">
+       <input type="checkbox">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+      </div>
     </div>
     <button class="button icon-left ion-home ion-plus button-block button-light">
       Add a Device
