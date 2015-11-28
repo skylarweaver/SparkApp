@@ -1,39 +1,39 @@
 <ion-view view-title="Lend">
   <ion-content class="padding">
-    
-    <h4>
-    	Hi {{userFirstName}}! You have <b>{{devices.length}}</b> 
-    	<span ng-if="devices.length==1"> item</span> 
-    	<span ng-if="devices.length!=1"> items</span> 
-    	ready to lend!
-    </h4>
-
-    <ion-list>
-
-<!--       <ion-toggle  ng-model="settings.enableLending">
-        Allow Lending:
-      </ion-toggle> -->
-
-		<div ng-repeat="owned_device in owned_devices">
-      <div class="item item-thumbnail-left toggle-right"> <!-- href="#/tab/lend/{{owned_device.id}}"> -->
-	        <img src='{{}}'>
-	        <h2>{{owned_device.charger_name}}</h2>
-	        <p>For {{owned_device.personal_device_name}}</p>
-	        <label class="toggle toggle-assertive">
-       <input type="checkbox">
-       <div class="track">
-         <div class="handle"></div>
-       </div>
-     </label>
-      </div>
+	  <div id="lendHeader">
+	    <h4>
+	    	Hi {{userFirstName}}! You have <b>{{devices.length}}</b> 
+	    	<span ng-if="devices.length==1"> item</span> 
+	    	<span ng-if="devices.length!=1"> items</span> 
+	    	ready to lend!
+	    </h4>
     </div>
-    <button class="button icon-left ion-home ion-plus button-block button-light">
-      Add a Device
-    </button>
+    <ion-list>
+			<div ng-repeat="owned_device in owned_devices">
+	      <div class="item item-thumbnail-left toggle-right"> <!-- href="#/tab/lend/{{owned_device.id}}" -->
+		        <img src='{{}}'>
+		        <h2>{{owned_device.charger_name}}</h2>
+		        <p>For {{owned_device.personal_device_name}}</p>
+	        	<span id = "lendToggle">lend
+			        <label class="toggle toggle-balanced">
+					       <input type="checkbox">
+					       <div class="track">
+					         <div class="handle"></div>
+					       </div>
+					     </label>
+					  </span>
+	      </div>
+	    </div>
 
-    <div class="padding">
-	 	 <button class="button button-block button-calm" ng-click="logout()">Logout</button>
-		</div>
+	    <button class="button icon-left ion-home ion-plus button-block button-light">
+	      Add a Device
+	    </button>
+	    <button class="button icon-left ion-gear-a button-block button-light" href="#/tab/lend/user/{{userId}}"><!-- /{{userId}}"> -->
+	      Edit User Information
+	    </button>
+	    <div class="padding">
+		 	 <button class="button button-block button-calm" ng-click="logout()">Logout</button>
+			</div>
     </ion-list>
   </ion-content>
 </ion-view>

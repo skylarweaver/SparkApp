@@ -23,6 +23,7 @@ angular.module('starter.controllers', [])
   $scope.rangeValue = 0;
 })
 
+
 .controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {
   $scope.settings = {
     enableLending: true
@@ -42,7 +43,7 @@ angular.module('starter.controllers', [])
     $scope.owned_devices = response;
   });
 
-
+  $scope.userId = $window.localStorage['userId'];
 
   $scope.userFirstName = $window.localStorage['userFirstName'];
 
@@ -52,6 +53,8 @@ angular.module('starter.controllers', [])
       function(data){
         $window.localStorage.removeItem('userToken');
         $window.localStorage.removeItem('userEmail');
+        $window.localStorage.removeItem('userId');
+        $window.localStorage.removeItem('userFirstName');
         //Reload all controllers
         $window.location.reload();  
         $location.path('/login');
@@ -93,8 +96,7 @@ angular.module('starter.controllers', [])
     console.log($scope.owned_devices);
   });
 
-
-  //.get currently gets devices by user_id, not device_id
+  //.get currently gets devices by userId, not device_id
   // owned_devices = Owned_Devices.get(1);//$window.localStorage['userId']);
 
   // (failed) Attempt to convert json to array.
@@ -104,6 +106,21 @@ angular.module('starter.controllers', [])
   // });
   // $scope.owned_device = $filter('filter')(owned_devices_array, {id: owned_deviceID}, true)
 
+})
+
+
+.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, Owned_Devices) {
+  // $stateparams access the parameter that was passed through the url
+  // defined in app.js lend_detail state
+  // owned_deviceID = $stateParams.owned_deviceID;
+  // console.log("OWNED DEVICE ID");
+  // console.log($stateParams.owned_deviceID);
+  
+  // // Not sure if we can pass in a parameter (1) like that for query
+  // Owned_Devices.query(1).$promise.then(function(response){
+  //   $scope.owned_devices = response;
+  //   console.log($scope.owned_devices);
+  // });
 })
 
 
