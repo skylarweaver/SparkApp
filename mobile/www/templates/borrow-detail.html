@@ -1,19 +1,21 @@
-<ion-view view-title="{{owned_device.personal_device_name}}">
+<ion-view view-title="Borrow Item">
   <ion-content class="padding">
   &nbsp;
-    <h4>
+     <h2><center> {{item_details.charger_name}}</center></h2>
+     <br/><br/>
+    <center>
       How long do you need it for?
-    </h4>
-
+    </center>
+    <br/>
     <div class="item range">
     	<i>0</i>
-    	<input type="range" name="volume" min="0" max="180" ng-model="rangeValue" ng-change="drag(rangeValue)">
-    	<i>3 hours</i>
+    	<input type="range" name="volume" min="0" max="120" ng-model="rangeValue" ng-change="drag(rangeValue)">
+    	<i>2 hours</i>
     </div>
     </br>
-    <h4>{{hours}} Hours and {{minutes}} Minutes</h4>
+    <h4><center>{{hours}} Hours and {{minutes}} Minutes<center></h4>
     &nbsp;</br>
-    <button class="button button-positive" align="center">
+    <button class="button button-block button-positive" align="center" ng-click="findLenders()">
     	Find Lenders
     </button>    
 
