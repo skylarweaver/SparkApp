@@ -74,6 +74,21 @@ class OwnedDevicesController < ApplicationController
     render json: @devices_owned_by_users
   end
 
+  def getUsersByChargerAndDistance
+    #this block gets the user ids of people who have a given charger based on a charger id
+    #First looks in Device, gets ids of all devices that use that charger
+    #then looks in owned device for all owned_devices who have that each of those device ids
+    #returns list of lists of user ids for each of those devices 
+    #list of lists is then flattened, and eliminates duplicates
+    #TODO add check to see if user is actually lending the device atm!!!!
+    #TODO add distance
+    user_ids_with_charger = Device.where(charger_id: params[:charger_id]).map {|device| device.id}.map {|id| OwnedDevice.where(device_id: id).map{|owned_device| owned_device.user_id}}.flatten.uniq
+    #@users_with_charger = user_ids_with_charger.map {|user_id| User.find_by(id: user_id).first_name}
+    @users_with_charger = User.find(user_ids_with_charger)
+    puts @users_with_charger
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_owned_device
