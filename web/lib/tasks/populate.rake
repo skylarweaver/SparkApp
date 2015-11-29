@@ -87,6 +87,8 @@ namespace :db do
       user.last_name = Faker::Name.last_name
       user.email = Faker::Internet.free_email(user.first_name)
       user.encrypted_password = User.new(:password => password).encrypted_password
+      user.longitude = Faker::Address.longitude
+      user.latitude = Faker::Address.latitude
       user.save!(validate: false) #avoid password can't be blank validation
 
       #Give each user a few devices

@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
+  get 'users/getUsersByChargerAndDistance'
+
   devise_for :users, :controllers => {sessions: 'user/sessions', registrations: 'user/registrations', passwords: 'user/passwords' }
   resources :owned_devices
   get '/owned_devices/userid/:name', to: 'owned_devices#getByUser'
   resources :chargers
   resources :devices
   resources :transactions
-
+  get '/usersByCharger/:charger_id', to: 'owned_devices#getUsersByChargerAndDistance'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

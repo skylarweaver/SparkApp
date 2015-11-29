@@ -2,8 +2,8 @@ angular.module('starter.controllers', [])
 
 
 .controller('BorrowCtrl', function($scope, Devices, Chargers, Owned_Devices, Register) {
-  Devices.query().$promise.then(function(response){
-    $scope.devices = response;
+  Owned_Devices.query().$promise.then(function(response){
+    $scope.owned_devices = response;
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
@@ -13,12 +13,31 @@ angular.module('starter.controllers', [])
 })
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
+  $scope.hours = 0;
+  $scope.minutes = 0;
   $scope.drag = function(value) {
     $scope.hours = Math.floor(value/60);
     $scope.minutes = value % 60;
   };
 
   $scope.rangeValue = 0;
+
+
+  owned_deviceID = $stateParams.owned_deviceID;
+  console.log("OWNED DEVICE ID, this is the id of the device you just clicked on");
+  console.log($stateParams.owned_deviceID);
+  $scope.item_details = Owned_Devices.get({id: $stateParams.owned_deviceID});
+
+  $scope.findLenders = function() {
+    //get list of users with the device
+      $scope.a = Owned_Devices.get({id: $scope.item_details.charger_id});
+
+    //find users with the device, then filter by who is nearby? 
+    //or is opposite quicker
+    //doesn't really matter for us i guess..
+    console.log("todo")
+  }
+
 })
 
 
@@ -88,6 +107,7 @@ angular.module('starter.controllers', [])
   console.log($stateParams.owned_deviceID);
   
   // Not sure if we can pass in a parameter (1) like that for query
+  //*** don't think we can, it just returns the whole endpoint anyways
   Owned_Devices.query(1).$promise.then(function(response){
     $scope.owned_devices = response;
     console.log($scope.owned_devices);
