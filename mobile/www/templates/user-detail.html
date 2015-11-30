@@ -1,48 +1,36 @@
-<ion-view view-title="HI"><!-- {{owned_device.personal_device_name}}"> -->
+<ion-view view-title="User Information"><!-- {{owned_device.personal_device_name}}"> -->
   <ion-content class="padding">
 
-    <!-- <div class="item range">
-    	<i>0</i>
-    	<input type="range" name="volume" min="0" max="180" ng-model="rangeValue" ng-change="drag(rangeValue)">
-    	<i>3 hours</i>
-    </div> -->
-<!--     </br>
- --><!--     <h4>{{hours}} Hours and {{minutes}} Minutes</h4>
-    &nbsp;</br> -->
-<!--     <button class="button button-positive" align="center">
-    	Find Lenders
-    </button>    
- -->
-
-<!--     <div class="row">
-      <h4>
-        {{owned_device.personal_device_name}} Details
-      </h4>
-    </div>
-    <div class="row">
-      <div class="col col-50">.col.col-50</div>
-      <div class="col">.col</div>
-      <div class="col">.col</div>
-    </div>
-
-    <div class="row">
-      <div class="col col-75">.col.col-75</div>
-      <div class="col">.col</div>
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">First Name</span>
+        <input type="text"  ng-model="data.user.first_name">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Last Name</span>
+        <input type="text" ng-model="data.user.last_name">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Email</span>
+        <input type="text" ng-model="data.user.user_email">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">New Password</span>
+        <input type="password" placeholder="Optional" ng-model="data.user.password">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Confirm New Password</span>
+        <input type="password" placeholder="Optional" ng-model="data.user.password_confirmation">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Old Password</span>
+        <input type="password" placeholder="Required" ng-model="data.user.old_password">
+      </label>
     </div>
 
-    <div class="row">
-      <div class="col">.col</div>
-      <div class="col col-75">.col.col-75</div>
-    </div>
-
-    <div class="row">
-      <div class="col">.col</div>
-      <div class="col">.col</div>
-    </div>
-
-    <button class="button icon-left button-block button-assertive">
-      Delete Device
-    </button> -->
+    <a class="button icon-left ion-loop button-block button-light" ng-click="update()">
+      Update  
+    </a>
 
   </ion-content>
 </ion-view>

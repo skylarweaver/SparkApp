@@ -29,6 +29,14 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/users.json");
 })
 
+.factory('Users', function ($resource){
+  return $resource("http://localhost:3000/users/:id.json");
+})
+
+.factory('UpdateUsers', function ($resource){
+  return $resource("http://localhost:3000/updateusers/:id.json");
+})
+
 .factory('Auth',function($window){
   return {
     set: function(data) {

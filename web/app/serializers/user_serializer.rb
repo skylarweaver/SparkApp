@@ -9,9 +9,6 @@ class UserSerializer < ActiveModel::Serializer
     user_token
   end
   
-  def balance
-    purchased - purchases
-  end
   
   def user_email
     object.email

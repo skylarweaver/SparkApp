@@ -14,6 +14,7 @@ angular.module('starter.controllers', [])
   });
 })
 
+
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
   $scope.hours = 0;
   $scope.minutes = 0;
@@ -23,7 +24,6 @@ angular.module('starter.controllers', [])
   };
 
   $scope.rangeValue = 0;
-
 
   owned_deviceID = $stateParams.owned_deviceID;
   console.log("OWNED DEVICE ID, this is the id of the device you just clicked on");
@@ -89,17 +89,13 @@ angular.module('starter.controllers', [])
   }
 })
 
+
 .controller('TransactionCtrl', function($scope, Transactions) {
     Transactions.query().$promise.then(function(response){
     $scope.transactions = response;
     console.log($scope.transactions);
   });
 })
-
-// /mobile/www/controllers.js
-// .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
-// $scope.data = {};
-
 
 
 .controller('LendDetailCtrl', function($scope, $stateParams, $window, $filter, Owned_Devices) {
@@ -126,21 +122,6 @@ angular.module('starter.controllers', [])
   // });
   // $scope.owned_device = $filter('filter')(owned_devices_array, {id: owned_deviceID}, true)
 
-})
-
-
-.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, Owned_Devices) {
-  // $stateparams access the parameter that was passed through the url
-  // defined in app.js lend_detail state
-  // owned_deviceID = $stateParams.owned_deviceID;
-  // console.log("OWNED DEVICE ID");
-  // console.log($stateParams.owned_deviceID);
-  
-  // // Not sure if we can pass in a parameter (1) like that for query
-  // Owned_Devices.query(1).$promise.then(function(response){
-  //   $scope.owned_devices = response;
-  //   console.log($scope.owned_devices);
-  // });
 })
 
 
@@ -175,6 +156,7 @@ angular.module('starter.controllers', [])
   }
 })
 
+
 .controller('RedirectCtrl', function($scope, $location, $window,$rootScope) {
     $scope.$on('$ionicView.enter', function () {
       //Is this the most secure way to do this?
@@ -191,15 +173,19 @@ angular.module('starter.controllers', [])
     });
 })
 
-  .controller('RegisterCtrl', function($scope, $location, Auth, $window, Register, $ionicPopup, $rootScope) {
-  $scope.data = {};
 
-  $scope.register = function() {
-    Register.save({user: $scope.data.user},
+.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers) {
+  // $stateparams access the parameter that was passed through the url
+  // defined in app.js lend_detail state
+  userId = $stateParams.userId;
+  $scope.data = {}
+  $scope.data.user = Users.get(6)
+
+  $scope.update = function(){
+    UpdateUsers.save({user: $scope.data.userScope},
       function(data){
-        Auth.set({user_token: data.user_token,
-                  user_email: data.user_email});
-        $location.path('/tab/borrow');
+        Auth.set({user_email: data.user_email});
+        $location.path('/tab/lend');
       },
       function(err){
         var error = "";
@@ -214,6 +200,32 @@ angular.module('starter.controllers', [])
       }
     );
   }
+})
+
+
+.controller('RegisterCtrl', function($scope, $location, Auth, $window, Register, $ionicPopup, $rootScope) {
+$scope.data = {};
+
+$scope.register = function() {
+  Register.save({user: $scope.data.user},
+    function(data){
+      Auth.set({user_token: data.user_token,
+                user_email: data.user_email});
+      $location.path('/tab/borrow');
+    },
+    function(err){
+      var error = "";
+      var errors = err["data"]["errors"];
+      for (var k in errors) {
+        error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
+      }
+      var confirmPopup = $ionicPopup.alert({
+        title: 'An error occured',
+        template: error
+      });
+    }
+  );
+}
 })
 
 
