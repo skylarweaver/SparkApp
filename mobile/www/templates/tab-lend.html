@@ -1,11 +1,12 @@
 <ion-view view-title="Lend">
 		<ion-nav-buttons side="primary">
-		  <button class="button-clear" ng-click="editClicked()">
-		    Edit
+		  <button class="button button-clear button-positive" ng-click="editClicked()">
+	    	<span ng-if="!editPressed"> Edit</span> 
+	    	<span ng-if="editPressed"> Cancel</span> 
 		  </button>
 		</ion-nav-buttons>
 		<ion-nav-buttons  side="right">
-		  <button ng-show="editPressed" class="button-clear" ng-click="deleteOwnedDevices()">
+		  <button ng-show="editPressed" class="button button-clear button-assertive" ng-click="deleteOwnedDevices()">
 		    Delete
 		  </button>
 		</ion-nav-buttons>
@@ -22,7 +23,7 @@
     </div>
 
      <ion-list ng-show="editPressed">
-			<div ng-repeat="owned_device in owned_devices">
+			<div class="list"  ng-repeat="owned_device in owned_devices">
 
 	      <div class="item  item-thumbnail-left">
 		        <img ng-src='{{owned_device.charger_photo}}'å>
@@ -37,7 +38,7 @@
 
 
     <ion-list ng-show="!editPressed">
-			<div ng-repeat="owned_device in owned_devices">
+			<div class="list" ng-repeat="owned_device in owned_devices">
 	      <div class="item item-thumbnail-left toggle-right"> <!-- href="#/tab/lend/{{owned_device.id}}" -->
 		        <img ng-src='{{owned_device.charger_photo}}'å>
 		        <h2>{{owned_device.charger_name}}</h2>
