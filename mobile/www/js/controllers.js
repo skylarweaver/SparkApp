@@ -1,11 +1,19 @@
 angular.module('starter.controllers', [])
 
-.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location) {
+
+
+
+.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location, $state) {
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
     $scope.device = response[0]; //set selected devie to first one
   });
   
+  Register.get().$promise.then(function(response){
+    current_user_id = response.id;
+    current_user_name = response.first_name;
+  });
+
   $scope.setCharger = function() {
     console.log($scope.device);
       Chargers.get({id: $scope.device.charger_id}).$promise.then(function(response){
@@ -16,16 +24,15 @@ angular.module('starter.controllers', [])
 
   $scope.addDevice = function() {
     console.log("Adding a device")
-    
-    //TODO add the following and get the correct charger
-    // t.integer  "user_id"
-    // t.integer  "device_id"
-    // t.string   "personal_device_name"
-    // t.boolean  "allow_lending"
 
-    Owned_Devices.save({user_id: $scope.device.charger_id, device_id: $scope.device.id, }).$promise.then(function(response){
+    //TODO get the correct charger to display
+    Owned_Devices.save({user_id: current_user_id, 
+                        device_id: $scope.device.id, 
+                        personal_device_name: current_user_name+"'s "+$scope.device.name, 
+                        allow_lending: true}).$promise.then(function(response){
       console.log('added!')
       $location.path('/tab/borrow');
+      //TODO get borrow page to reload on update
     });
   }
 
@@ -38,13 +45,11 @@ angular.module('starter.controllers', [])
 .controller('BorrowCtrl', function($scope, Devices, Chargers, Owned_Devices, Register) {
   Owned_Devices.query().$promise.then(function(response){
     $scope.owned_devices = response;
+    console.log('on borrow tab, these are owned devices', $scope.owned_devices);
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
     console.log($scope.chargers);
-  });
-  Owned_Devices.query().$promise.then(function(response){
-    $scope.owned_devices = response;
   });
 })
 
@@ -69,6 +74,28 @@ angular.module('starter.controllers', [])
    });
 })
 
+
+// .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+//    var options = {timeout: 10000, enableHighAccuracy: true};
+//  console.log($cordovaGeolocation);
+//   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 
+//     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+ 
+//     var mapOptions = {
+//       center: latLng,
+//       zoom: 15,
+//       mapTypeId: google.maps.MapTypeId.ROADMAP
+//     };
+ 
+//     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+ 
+//   }, function(error){
+//     console.log(error);
+//     console.log("Could not get location");
+//   });
+// })
+
 .controller('BorrowLenderMatch', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
   owned_deviceID = $stateParams.owned_deviceID;
   num_min_borrow = $stateParams.borrowTime;
@@ -79,19 +106,90 @@ angular.module('starter.controllers', [])
   console.log($stateParams.owned_deviceID);
   console.log("this is the # min it needs to be borrowed for");
   console.log(num_min_borrow);
-  // $scope.item_details = Owned_Devices.get({id: $stateParams.owned_deviceID});
-  // $scope.item_details.$promise.then(function(data) {
-  //      console.log(data.charger_id);
-  //  });
-  // console.log($scope.item_details)
-  Users_By_Charger.query({id: charger_id}).$promise.then(function(response){
-    $scope.possible_lenders = response;
-    //sort by distance from current user
-    $scope.possible_lenders.sort(function(a, b) {
-        return parseFloat(a.distance) - parseFloat(b.distance);
-    })
-    console.log("sorted list of possible lenders",$scope.possible_lenders);
+
+  var lat  = 40.4433;//position.coords.latitude;
+  var lng = -79.9436;//position.coords.longitude;
+  var myLatlng = new google.maps.LatLng(lat, lng);
+   
+  var mapOptions = {
+      center: myLatlng,
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+  };          
+   
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+   
+  $scope.map = map;  
+
+  // Users_By_Charger.query({id: charger_id}).$promise.then(function(response){
+  //   $scope.possible_lenders = response;
+  //   //sort by distance from current user
+  //   $scope.possible_lenders.sort(function(a, b) {
+  //       return parseFloat(a.distance) - parseFloat(b.distance);
+  //   })
+  //   console.log("sorted list of possible lenders",$scope.possible_lenders);
+  // });
+
+
+  function loadMarkers(){
+ 
+      //Get all of the markers from our Markers factory
+      Users_By_Charger.query({id: charger_id}).$promise.then(function(records){
+        console.log("Markers: ", records);
+        console.log(records.length)
+        for (var i = 0; i < records.length; i++) {
+          var record = records[i];  
+          console.log(record) 
+          console.log(record.latitude) 
+          console.log(record.longitude) 
+          var markerPos = new google.maps.LatLng(record.latitude, record.longitude);
+          // Add the markerto the map
+          var marker = new google.maps.Marker({
+              map: map,
+              animation: google.maps.Animation.DROP,
+              position: markerPos
+          });
+          var infoWindowContent = "<h4>" + record.first_name + "</h4>";          
+ 
+          addInfoWindow(marker, infoWindowContent, record);
+ 
+        }
+ 
+      }); 
+ 
+  }
+ 
+  function addInfoWindow(marker, message, record) {
+ 
+      var infoWindow = new google.maps.InfoWindow({
+          content: message
+      });
+ 
+      google.maps.event.addListener(marker, 'click', function () {
+          infoWindow.open(map, marker);
+      });
+ 
+  }
+
+  //Wait until the map is loaded
+  google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+    loadMarkers();
+    // var marker = new google.maps.Marker({
+    //     map: $scope.map,
+    //     animation: google.maps.Animation.DROP,
+    //     position: myLatlng
+    // });      
+   
+    // var infoWindow = new google.maps.InfoWindow({
+    //   content: "Here I am!"
+    // });
+ 
+    // google.maps.event.addListener(marker, 'click', function () {
+    //     infoWindow.open($scope.map, marker);
+    // });
+
   });
+
 
 })
 
