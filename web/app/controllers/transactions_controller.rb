@@ -3,8 +3,13 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   # GET /transactions.json
+  def currentTransactions
+    # obtain all transactions that are currently ongoing
+    # current_transactions = Transaction.where
+  end
+
   def index
-    @transactions = current_user.transactions
+    @transactions = Transaction.where(["lender_id = ? or borrower_id = ? and ", current_user.id, current_user.id])
   end
 
   # GET /transactions/1
