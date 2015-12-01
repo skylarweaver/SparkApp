@@ -40,9 +40,12 @@ ActiveRecord::Schema.define(version: 20151125201144) do
     t.integer  "charger_id"
     t.integer  "lender_id"
     t.integer  "borrower_id"
-    t.integer  "time_requested"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "length_time_requested"
+    t.boolean  "accepted"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "users", force: :cascade do |t|
