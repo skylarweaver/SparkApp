@@ -3,7 +3,7 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location, $state) {
+.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location, $state, $window) {
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
     $scope.device = response[0]; //set selected devie to first one
@@ -14,9 +14,9 @@ angular.module('starter.controllers', [])
     current_user_name = response.first_name;
   });
 
-  $scope.setCharger = function() {
-    console.log($scope.device);
-      Chargers.get({id: $scope.device.charger_id}).$promise.then(function(response){
+  $scope.setCharger = function(device) {
+    console.log(device);
+      Chargers.get({id: device.charger_id}).$promise.then(function(response){
         $scope.charger = response;
         console.log($scope.charger);
       });
@@ -33,6 +33,8 @@ angular.module('starter.controllers', [])
       console.log('added!')
       $location.path('/tab/borrow');
       //TODO get borrow page to reload on update
+      $window.location.reload();  
+
     });
   }
 
