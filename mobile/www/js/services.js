@@ -5,6 +5,10 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/owned_devices/:id.json");
 })
 
+.factory('Users_By_Charger', function ($resource) {
+  return $resource("http://localhost:3000/usersByCharger/:id.json");
+})
+
 .factory('Chargers', function ($resource) {
   return $resource("http://localhost:3000/chargers/:id.json");
 })

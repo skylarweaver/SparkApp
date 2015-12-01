@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   def distance_from_current_user(lat,long)
     Geocoder::Calculations.distance_between([self.latitude,self.longitude],[lat,long])
   end
-
   
   # relationships
   has_many :owned_devices

@@ -12,7 +12,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
+.controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
   $scope.hours = 0;
   $scope.minutes = 0;
   $scope.drag = function(value) {
@@ -29,13 +29,17 @@ angular.module('starter.controllers', [])
   $scope.item_details = Owned_Devices.get({id: $stateParams.owned_deviceID});
 
   $scope.findLenders = function() {
-    //get list of users with the device
-      $scope.a = Owned_Devices.get({id: $scope.item_details.charger_id});
+    //get list of users with the same charger
+    Users_By_Charger.query({id: $scope.item_details.charger_id}).$promise.then(function(response){
+      $scope.possible_lenders = response;
+      //sort by distance from current user
+      $scope.possible_lenders.sort(function(a, b) {
+          return parseFloat(a.distance) - parseFloat(b.distance);
+      })
+      console.log("sorted list of possible lenders",$scope.possible_lenders);
 
-    //find users with the device, then filter by who is nearby? 
-    //or is opposite quicker
-    //doesn't really matter for us i guess..
-    console.log("todo")
+    });
+
   }
 
 })
