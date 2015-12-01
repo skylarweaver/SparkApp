@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :chargers
   resources :devices
   
-
+ 
   resources :transactions
   get '/usersByCharger/:charger_id', to: 'owned_devices#getUsersByChargerAndDistance'
   # The priority is based upon order of creation: first created -> highest priority.
