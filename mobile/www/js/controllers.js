@@ -195,54 +195,38 @@ angular.module('starter.controllers', [])
 
 
 .controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {
-  $scope.settings = {
-    enableLending: true
-  };
+  // $scope.settings = {
+  //   enableLending: true
+  // };
+  $scope.userId = $window.localStorage['userId'];
+  $scope.userFirstName = $window.localStorage['userFirstName'];
+  $scope.editPressed = false;
 
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
     // console.log($scope.devices);
   });
-
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
     // console.log($scope.chargers);
   });
-
   Owned_Devices.query().$promise.then(function(response){
     $scope.owned_devices = response;
   });
 
-  $scope.userId = $window.localStorage['userId'];
-  $scope.userFirstName = $window.localStorage['userFirstName'];
-
-  // console.log('ContactCtrl started');
+  $scope.editClicked = function(){
+    if ($scope.editPressed === false) {
+      $scope.editPressed = true;
+    }
+    else{
+      $scope.editPressed = false;
+    }
+  };
 
   $scope.toggleChange = function(owned_device) {
-      //I think the toggle automatically changes the value of allow_lending
-      if (owned_device.allow_lending == false) {
-          // owned_device.allow_lending = true;
-          //if toggle changed value to false, update the database to reflect that change
-          Owned_Devices.update({id: owned_device.id, allow_lending: false},
-          function(data){
-          },
-          function(err){
-            var error = "";
-            var errors = err["data"]["errors"];
-            for (var k in errors) {
-              error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
-            }
-            var confirmPopup = $ionicPopup.alert({
-              title: 'An error occured',
-              template: error
-            });
-          }
-        );
-
-      } else {
-        // owned_device.allow_lending = false;
-        console.log(owned_device.id);
-        Owned_Devices.update({id: owned_device.id, allow_lending: true},
+      //if toggle changed value, update the database to reflect that change
+      //I think the toggle in view automatically changes the value of allow_lending
+      Owned_Devices.update({id: owned_device.id, allow_lending: owned_device.allow_lending},
         function(data){
         },
         function(err){
@@ -257,9 +241,6 @@ angular.module('starter.controllers', [])
           });
         }
       );
-      }
-
-      // $window.location.reload();  
       console.log('id:' + owned_device.id + 'testToggle changed to ' + owned_device.allow_lending);
   };
 
