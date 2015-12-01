@@ -13,37 +13,52 @@ angular.module('starter.controllers', [])
 })
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
-  $scope.hours = 0;
+  //set inital text to read 1 hr 0 min
+  $scope.hours = 1;
   $scope.minutes = 0;
   $scope.drag = function(value) {
     $scope.hours = Math.floor(value/60);
     $scope.minutes = value % 60;
   };
+  //set initial time to 1 hr
+  $scope.rangeValue = 60;
 
-  $scope.rangeValue = 0;
-
-
-  owned_deviceID = $stateParams.owned_deviceID;
+  //set owned_deviceID to scope var to pass along again
+  $scope.owned_deviceID = $stateParams.owned_deviceID;
   console.log("OWNED DEVICE ID, this is the id of the device you just clicked on");
-  console.log($stateParams.owned_deviceID);
-  $scope.item_details = Owned_Devices.get({id: $stateParams.owned_deviceID});
-
-  $scope.findLenders = function() {
-    //get list of users with the same charger
-    Users_By_Charger.query({id: $scope.item_details.charger_id}).$promise.then(function(response){
-      $scope.possible_lenders = response;
-      //sort by distance from current user
-      $scope.possible_lenders.sort(function(a, b) {
-          return parseFloat(a.distance) - parseFloat(b.distance);
-      })
-      console.log("sorted list of possible lenders",$scope.possible_lenders);
-
-    });
-
-  }
-
+  console.log($scope.owned_deviceID);
+  $scope.item_details = Owned_Devices.get({id: $scope.owned_deviceID});
+  $scope.item_details.$promise.then(function(data) {
+       $scope.charger_id = data.charger_id;
+   });
 })
 
+.controller('BorrowLenderMatch', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
+
+  owned_deviceID = $stateParams.owned_deviceID;
+  num_min_borrow = $stateParams.borrowTime;
+  charger_id = $stateParams.charger_id;
+  console.log("OWNED DEVICE ID, this is the id  of the owned device that needs a charger");
+  console.log($stateParams.owned_deviceID);
+  console.log("charger ID, this is the id  of the charger so you can look for other users who have it");
+  console.log($stateParams.owned_deviceID);
+  console.log("this is the # min it needs to be borrowed for");
+  console.log(num_min_borrow);
+  // $scope.item_details = Owned_Devices.get({id: $stateParams.owned_deviceID});
+  // $scope.item_details.$promise.then(function(data) {
+  //      console.log(data.charger_id);
+  //  });
+  // console.log($scope.item_details)
+  Users_By_Charger.query({id: charger_id}).$promise.then(function(response){
+    $scope.possible_lenders = response;
+    //sort by distance from current user
+    $scope.possible_lenders.sort(function(a, b) {
+        return parseFloat(a.distance) - parseFloat(b.distance);
+    })
+    console.log("sorted list of possible lenders",$scope.possible_lenders);
+  });
+
+})
 
 
 .controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {

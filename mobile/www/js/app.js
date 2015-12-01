@@ -62,6 +62,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.borrow-lender-match', {
+    url: '/borrow/findLender/:owned_deviceID/:charger_id/:borrowTime',
+    views: {
+      'tab-borrow': {
+        templateUrl: 'templates/borrow-lender-match.html',
+        controller: 'BorrowLenderMatch'
+      }
+    }
+  })
+
   .state('tab.lend', {
     url: '/lend',
     views: {

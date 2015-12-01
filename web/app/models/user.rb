@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   acts_as_token_authenticatable
 
   def distance_from_current_user(lat,long)
-    Geocoder::Calculations.distance_between([self.latitude,self.longitude],[lat,long])
+    Geocoder::Calculations.distance_between([self.latitude,self.longitude],[lat,long], options = {:units => :mi})
   end
   
   # relationships
