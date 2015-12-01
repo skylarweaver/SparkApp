@@ -110,7 +110,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
   
   // .state('tab.user-detail', {
-  //   url: '/user/:userId',
+  //   url: '/user/:userID',
   //   views: {
   //     'tab-lend': {
   //       templateUrl: 'templates/user-detail.html',
