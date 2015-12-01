@@ -81,9 +81,9 @@ class OwnedDevicesController < ApplicationController
     #returns list of lists of user ids for each of those devices 
     #list of lists is then flattened, and eliminates duplicates
     #TODO add check to see if user is actually lending the device atm!!!!
-    #TODO add distance
     user_ids_with_charger = Device.where(charger_id: params[:charger_id]).map {|device| device.id}.map {|id| OwnedDevice.where(device_id: id).map{|owned_device| owned_device.user_id}}.flatten.uniq
     @users_with_charger = User.find(user_ids_with_charger)
+    @users_with_charger = @users_with_charger - [current_user] #get rid of current user, can't borrow from yourself
   end
 
   private

@@ -89,8 +89,9 @@ namespace :db do
       user.encrypted_password = User.new(:password => password).encrypted_password
       # 40.4434 N, 79.9436 W cmu coords
       # so that all users are around CMU somewhere
-      user.longitude = rand * (79.9536-79.9336) + 79.9336
-      user.latitude = rand * (40.4534-40.4334) + 40.4334
+
+      user.longitude = rand * (79.940797-79.946762) - 79.940797
+      user.latitude = rand * (40.444331-40.440265) + 40.440265
       user.save!(validate: false) #avoid password can't be blank validation
 
       #Give each user a few devices
