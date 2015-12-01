@@ -1,5 +1,39 @@
 angular.module('starter.controllers', [])
 
+.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location) {
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
+    $scope.device = response[0]; //set selected devie to first one
+  });
+  
+  $scope.setCharger = function() {
+    console.log($scope.device);
+      Chargers.get({id: $scope.device.charger_id}).$promise.then(function(response){
+        $scope.charger = response;
+        console.log($scope.charger);
+      });
+  }
+
+  $scope.addDevice = function() {
+    console.log("Adding a device")
+    
+    //TODO add the following and get the correct charger
+    // t.integer  "user_id"
+    // t.integer  "device_id"
+    // t.string   "personal_device_name"
+    // t.boolean  "allow_lending"
+
+    Owned_Devices.save({user_id: $scope.device.charger_id, device_id: $scope.device.id, }).$promise.then(function(response){
+      console.log('added!')
+      $location.path('/tab/borrow');
+    });
+  }
+
+  $scope.close = function() {
+    $location.path('/tab/borrow');
+  }
+
+})
 
 .controller('BorrowCtrl', function($scope, Devices, Chargers, Owned_Devices, Register) {
   Owned_Devices.query().$promise.then(function(response){
@@ -14,84 +48,87 @@ angular.module('starter.controllers', [])
   });
 })
 
-
-.controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices) {
-  $scope.hours = 0;
+.controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
+  //set inital text to read 1 hr 0 min
+  $scope.hours = 1;
   $scope.minutes = 0;
   $scope.drag = function(value) {
     $scope.hours = Math.floor(value/60);
     $scope.minutes = value % 60;
   };
+  //set initial time to 1 hr
+  $scope.rangeValue = 60;
 
-  $scope.rangeValue = 0;
-
-  owned_deviceID = $stateParams.owned_deviceID;
+  //set owned_deviceID to scope var to pass along again
+  $scope.owned_deviceID = $stateParams.owned_deviceID;
   console.log("OWNED DEVICE ID, this is the id of the device you just clicked on");
+  console.log($scope.owned_deviceID);
+  $scope.item_details = Owned_Devices.get({id: $scope.owned_deviceID});
+  $scope.item_details.$promise.then(function(data) {
+       $scope.charger_id = data.charger_id;
+   });
+})
+
+.controller('BorrowLenderMatch', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
+  owned_deviceID = $stateParams.owned_deviceID;
+  num_min_borrow = $stateParams.borrowTime;
+  charger_id = $stateParams.charger_id;
+  console.log("OWNED DEVICE ID, this is the id  of the owned device that needs a charger");
   console.log($stateParams.owned_deviceID);
-  $scope.item_details = Owned_Devices.get({id: $stateParams.owned_deviceID});
-
-  $scope.findLenders = function() {
-    //get list of users with the device
-      $scope.a = Owned_Devices.get({id: $scope.item_details.charger_id});
-
-    //find users with the device, then filter by who is nearby? 
-    //or is opposite quicker
-    //doesn't really matter for us i guess..
-    console.log("todo")
-  }
+  console.log("charger ID, this is the id  of the charger so you can look for other users who have it");
+  console.log($stateParams.owned_deviceID);
+  console.log("this is the # min it needs to be borrowed for");
+  console.log(num_min_borrow);
+  // $scope.item_details = Owned_Devices.get({id: $stateParams.owned_deviceID});
+  // $scope.item_details.$promise.then(function(data) {
+  //      console.log(data.charger_id);
+  //  });
+  // console.log($scope.item_details)
+  Users_By_Charger.query({id: charger_id}).$promise.then(function(response){
+    $scope.possible_lenders = response;
+    //sort by distance from current user
+    $scope.possible_lenders.sort(function(a, b) {
+        return parseFloat(a.distance) - parseFloat(b.distance);
+    })
+    console.log("sorted list of possible lenders",$scope.possible_lenders);
+  });
 
 })
 
 
 .controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {
-  $scope.settings = {
-    enableLending: true
-  };
+  // $scope.settings = {
+  //   enableLending: true
+  // };
+  $scope.userId = $window.localStorage['userId'];
+  $scope.userFirstName = $window.localStorage['userFirstName'];
+  $scope.editPressed = false;
 
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
     // console.log($scope.devices);
   });
-
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
     // console.log($scope.chargers);
   });
-
   Owned_Devices.query().$promise.then(function(response){
     $scope.owned_devices = response;
   });
 
-  $scope.userId = $window.localStorage['userId'];
-  $scope.userFirstName = $window.localStorage['userFirstName'];
-
-  // console.log('ContactCtrl started');
+  $scope.editClicked = function(){
+    if ($scope.editPressed === false) {
+      $scope.editPressed = true;
+    }
+    else{
+      $scope.editPressed = false;
+    }
+  };
 
   $scope.toggleChange = function(owned_device) {
-      //I think the toggle automatically changes the value of allow_lending
-      if (owned_device.allow_lending == false) {
-          // owned_device.allow_lending = true;
-          //if toggle changed value to false, update the database to reflect that change
-          Owned_Devices.update({id: owned_device.id, allow_lending: false},
-          function(data){
-          },
-          function(err){
-            var error = "";
-            var errors = err["data"]["errors"];
-            for (var k in errors) {
-              error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
-            }
-            var confirmPopup = $ionicPopup.alert({
-              title: 'An error occured',
-              template: error
-            });
-          }
-        );
-
-      } else {
-        // owned_device.allow_lending = false;
-        console.log(owned_device.id);
-        Owned_Devices.update({id: owned_device.id, allow_lending: true},
+      //if toggle changed value, update the database to reflect that change
+      //I think the toggle in view automatically changes the value of allow_lending
+      Owned_Devices.update({id: owned_device.id, allow_lending: owned_device.allow_lending},
         function(data){
         },
         function(err){
@@ -106,9 +143,6 @@ angular.module('starter.controllers', [])
           });
         }
       );
-      }
-
-      // $window.location.reload();  
       console.log('id:' + owned_device.id + 'testToggle changed to ' + owned_device.allow_lending);
   };
 

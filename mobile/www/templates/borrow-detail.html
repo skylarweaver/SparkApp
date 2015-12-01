@@ -8,16 +8,15 @@
     </center>
     <br/>
     <div class="item range">
-    	<i>0</i>
+    	<i>0 hours</i>
     	<input type="range" name="volume" min="0" max="120" ng-model="rangeValue" ng-change="drag(rangeValue)">
     	<i>2 hours</i>
     </div>
     </br>
     <h4><center>{{hours}} Hours and {{minutes}} Minutes<center></h4>
     &nbsp;</br>
-    <button class="button button-block button-positive" align="center" ng-click="findLenders()">
-    	Find Lenders
-    </button>    
+     <a href="#/tab/borrow/findLender/{{owned_deviceID}}/{{charger_id}}/{{rangeValue}}" class="button button-block button-positive" align="center">Find Lenders</a>
+     
 
   </ion-content>
 </ion-view>

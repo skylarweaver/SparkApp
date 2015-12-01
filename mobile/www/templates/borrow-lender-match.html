@@ -1,0 +1,12 @@
+<ion-view view-title="Pick Lender">
+  <ion-content class="padding">
+     <div class="list" ng-repeat="user in possible_lenders">
+      <a class="item item-thumbnail-left" href="#">
+        <img src='http://www.adtechnology.co.uk/images/UGM-default-user.png'>
+        <h2>{{user.first_name}} {{user.last_name}}</h2>
+        <p>{{user.distance}} miles away</p>
+      </a>
+    </div>
+
+  </ion-content>
+</ion-view>

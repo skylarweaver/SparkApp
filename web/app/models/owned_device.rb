@@ -10,4 +10,13 @@ class OwnedDevice < ActiveRecord::Base
   		Charger.find(Device.find(self.device_id).charger_id).name
   	end
 
+  	def charger_id
+  		Charger.find(Device.find(self.device_id).charger_id).id
+  	end
+
+    def charger_photo
+      Charger.find(Device.find(self.device_id).charger_id).charger_photo
+    end
+
+
 end

@@ -1,31 +1,47 @@
 <ion-view view-title="Lend">
-  <ion-content class="padding">
-  <button class="button button-clear button-positive">Edit</button>
+		<ion-nav-buttons side="primary">
+		  <button class="button-clear" ng-click="editClicked()">
+		    Edit
+		  </button>
+		</ion-nav-buttons>
+		<ion-nav-buttons  side="right">
+		  <button ng-show="editPressed" class="button-clear" ng-click="deleteOwnedDevices()">
+		    Delete
+		  </button>
+		</ion-nav-buttons>
 
-<div class="bar bar-header">
-  <button class="button button-icon icon ion-navicon"></button>
-  <div class="h1 title">Header Buttons</div>
-</div>
-<!--   <div class="bar bar-header">
-  <button class="button icon ion-navicon"></button>
-  <h1 class="title">Header Buttons</h1>
-  <button class="button">Edit</button>
-</div> -->
+		<ion-content class="padding">
+
 	  <div id="lendHeader">
 	    <h4>
-	    	Hi {{userFirstName}}! You have <b>{{devices.length}}</b> 
+	    	Hi {{userFirstName}}! You have <b>{{owned_devices.length}}</b> 
 	    	<span ng-if="devices.length==1"> item</span> 
 	    	<span ng-if="devices.length!=1"> items</span> 
 	    	ready to lend!
 	    </h4>
     </div>
-    <ion-list>
+
+     <ion-list ng-show="editPressed">
 			<div ng-repeat="owned_device in owned_devices">
-	      <div class="item item-thumbnail-left toggle-right"> <!-- href="#/tab/lend/{{owned_device.id}}" -->
-		        <img src='{{}}'>
+
+	      <div class="item  item-thumbnail-left">
+		        <img ng-src='{{owned_device.charger_photo}}'å>
+	      		<label class="checkbox">
 		        <h2>{{owned_device.charger_name}}</h2>
 		        <p>For {{owned_device.personal_device_name}}</p>
-	        	<span id = "lendToggle">lend {{owned_device.allow_lending}}
+							<input type="checkbox">
+						</label>
+	      </div>
+	    </div>
+    </ion-list>
+
+
+    <ion-list ng-show="!editPressed">
+			<div ng-repeat="owned_device in owned_devices">
+	      <div class="item item-thumbnail-left toggle-right"> <!-- href="#/tab/lend/{{owned_device.id}}" -->
+		        <img ng-src='{{owned_device.charger_photo}}'å>
+		        <h2>{{owned_device.charger_name}}</h2>
+		        <p>For {{owned_device.personal_device_name}}</p>
 			        <label class="toggle toggle-balanced">
 					      <input ng-model="owned_device.allow_lending" ng-change="toggleChange(owned_device)" type="checkbox">
 					       <div class="track">
@@ -33,7 +49,10 @@
 					       </div>
 					     </input>
 				     </label>
-					  </span>
+ 	        	<span id = "lendToggle">Lending 
+   	        	<span ng-if="owned_device.allow_lending==false"> Off</span> 
+	    				<span ng-if="owned_device.allow_lending==true"> On</span>
+	    			</span>
 	      </div>
 	    </div>
 

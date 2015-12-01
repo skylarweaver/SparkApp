@@ -6,20 +6,34 @@
 <ion-view view-title="Add a Device">
   <ion-content class="padding">
   
-    <div class="list">
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Device</span>
-        <input type="text" placeholder="Device" ng-model="data.device.name">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Charger</span>
-        <input type="text" placeholder="Charger" ng-model="data.device.charger_id">
-      </label>
+{{device}}
+
+
+<div class="list">
+
+<!-- TODO fix...not registering on change event -->
+  <label class="item item-input item-select">
+    <div class="input-label">
+     <strong> Device </strong>
     </div>
-    
-    <div class="padding">
+        <select ng-change="setCharger()" ng-model="device" ng-options="device as device.name for device in devices"></select>
+
+  </label>
+
+  <label class="item">
+    <strong>Charger</strong>
+    <span class="item-note">
+        {{charger.name}}
+    </span>
+  </label>
+
+  <div class="padding">
       <button class="button button-block button-calm" ng-click="addDevice()">Add device</button>
-    </div>
+  </div> 
+
+ <div class="padding">
+      <button class="button button-block button-assertive" ng-click="close()">Close</button>
+  </div> 
 
 
 
