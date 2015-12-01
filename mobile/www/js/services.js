@@ -8,6 +8,10 @@ angular.module('starter.services', [])
     );
 })
 
+.factory('Users_By_Charger', function ($resource) {
+  return $resource("http://localhost:3000/usersByCharger/:id.json");
+})
+
 .factory('Chargers', function ($resource) {
   return $resource("http://localhost:3000/chargers/:id.json");
 })

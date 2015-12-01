@@ -83,10 +83,7 @@ class OwnedDevicesController < ApplicationController
     #TODO add check to see if user is actually lending the device atm!!!!
     #TODO add distance
     user_ids_with_charger = Device.where(charger_id: params[:charger_id]).map {|device| device.id}.map {|id| OwnedDevice.where(device_id: id).map{|owned_device| owned_device.user_id}}.flatten.uniq
-    #@users_with_charger = user_ids_with_charger.map {|user_id| User.find_by(id: user_id).first_name}
     @users_with_charger = User.find(user_ids_with_charger)
-    puts @users_with_charger
-
   end
 
   private

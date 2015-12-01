@@ -7,7 +7,7 @@
   Tap a device to find a nearby charger. <br/><br/>
     <div class="list" ng-repeat="owned_device in owned_devices">
       <a class="item item-thumbnail-left" href="#/tab/borrow/{{owned_device.id}}">
-        <img src='{{}}'>
+        <img ng-src='{{owned_device.charger_photo}}'>
         <h2>{{owned_device.personal_device_name}}</h2>
         <p>{{owned_device.charger_name}}</p>
       </a>

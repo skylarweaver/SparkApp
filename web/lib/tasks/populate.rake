@@ -44,7 +44,7 @@ namespace :db do
     #Add Devices 
     lightningDeviceNames = ["iPhone 5", "iPhone 5C","iPhone 5S", "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", "iPod Touch (5th gen)", "iPod Nano (7th gen)", "iPad mini", "iPad 4", "iPad Air", "iPad Air 2" ]
     appleThirtyPinDeviceNames = ["iPhone 3G", "iPhone 3GS", "iPhone 4", "iPhone 4S", "iPod Touch (1st-4th gen)", "iPad", "iPad 2", "iPad 3"]
-    microUSBDeviceNames = []
+    microUSBDeviceNames = ["kindle", "Nook Color", "Blackberry"]
     miniUSBDeviceNames = []
     #https://support.apple.com/en-us/HT201700
 
@@ -87,8 +87,10 @@ namespace :db do
       user.last_name = Faker::Name.last_name
       user.email = Faker::Internet.free_email(user.first_name)
       user.encrypted_password = User.new(:password => password).encrypted_password
-      user.longitude = Faker::Address.longitude
-      user.latitude = Faker::Address.latitude
+      # 40.4434 N, 79.9436 W cmu coords
+      # so that all users are around CMU somewhere
+      user.longitude = rand * (79.9536-79.9336) + 79.9336
+      user.latitude = rand * (40.4534-40.4334) + 40.4334
       user.save!(validate: false) #avoid password can't be blank validation
 
       #Give each user a few devices
