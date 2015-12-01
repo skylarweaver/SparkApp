@@ -97,28 +97,26 @@ angular.module('starter.controllers', [])
 // })
 
 .controller('BorrowLenderMatch', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
-  owned_deviceID = $stateParams.owned_deviceID;
-  num_min_borrow = $stateParams.borrowTime;
-  charger_id = $stateParams.charger_id;
+  $scope.owned_deviceID = $stateParams.owned_deviceID;
+  $scope.num_min_borrow = $stateParams.borrowTime;
+  $scope.charger_id = $stateParams.charger_id;
   console.log("OWNED DEVICE ID, this is the id  of the owned device that needs a charger");
-  console.log($stateParams.owned_deviceID);
+  console.log($scope.owned_deviceID);
   console.log("charger ID, this is the id  of the charger so you can look for other users who have it");
-  console.log($stateParams.owned_deviceID);
+  console.log($scope.charger_id);
   console.log("this is the # min it needs to be borrowed for");
-  console.log(num_min_borrow);
+  console.log($scope.num_min_borrow);
 
   var lat  = 40.4433;//position.coords.latitude;
   var lng = -79.9436;//position.coords.longitude;
   var myLatlng = new google.maps.LatLng(lat, lng);
-   
   var mapOptions = {
       center: myLatlng,
-      zoom: 16,
+      zoom: 17,
       mapTypeId: google.maps.MapTypeId.ROADMAP
   };          
-   
+  
   var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
-   
   $scope.map = map;  
 
   // Users_By_Charger.query({id: charger_id}).$promise.then(function(response){
@@ -134,7 +132,7 @@ angular.module('starter.controllers', [])
   function loadMarkers(){
  
       //Get all of the markers from our Markers factory
-      Users_By_Charger.query({id: charger_id}).$promise.then(function(records){
+      Users_By_Charger.query({id: $scope.charger_id}).$promise.then(function(records){
         console.log("Markers: ", records);
         console.log(records.length)
         for (var i = 0; i < records.length; i++) {
@@ -149,7 +147,7 @@ angular.module('starter.controllers', [])
               animation: google.maps.Animation.DROP,
               position: markerPos
           });
-          var infoWindowContent = "<h4>" + record.first_name + "</h4>";          
+          var infoWindowContent = "<a href='#/tab/borrow/findLender/"+$scope.owned_deviceID+"/"+$scope.charger_id+"/"+$scope.num_min_borrow+"/"+ record.id +"'>" + record.first_name + " " + record.last_name + "</a>";          
  
           addInfoWindow(marker, infoWindowContent, record);
  
@@ -193,6 +191,24 @@ angular.module('starter.controllers', [])
 
 })
 
+
+.controller('BorrowLenderSelected', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
+  owned_deviceID = $stateParams.owned_deviceID;
+  num_min_borrow = $stateParams.borrowTime;
+  charger_id = $stateParams.charger_id;
+  lender_id = $stateParams.lender_id;
+  console.log("OWNED DEVICE ID, this is the id  of the owned device that needs a charger");
+  console.log($stateParams.owned_deviceID);
+  console.log("charger ID, this is the id  of the charger so you can look for other users who have it");
+  console.log($stateParams.owned_deviceID);
+  console.log("this is the # misn it needs to be borrowed for");
+  console.log(num_min_borrow);
+  console.log("this is the user id of the lender you have selected");
+  console.log(lender_id);
+
+
+
+})
 
 .controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {
   // $scope.settings = {
@@ -352,7 +368,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers) {
+.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers, Auth, $location) {
   // $stateparams access the parameter that was passed through the url
   // defined in app.js lend_detail state
   userId = 6 //$stateParams.userId;
