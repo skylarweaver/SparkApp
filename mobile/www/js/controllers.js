@@ -368,7 +368,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers) {
+.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers, Auth, $location) {
   // $stateparams access the parameter that was passed through the url
   // defined in app.js lend_detail state
   userId = 6 //$stateParams.userId;
