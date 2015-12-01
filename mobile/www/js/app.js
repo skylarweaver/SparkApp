@@ -117,7 +117,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('add', {
       url: '/add',
       templateUrl: 'templates/add-device.html',
-      controller: 'BorrowCtrl'
+      controller: 'AddDeviceCtrl'
   }) 
 
   .state('tab.chat-detail', {

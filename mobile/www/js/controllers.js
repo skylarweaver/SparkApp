@@ -1,5 +1,39 @@
 angular.module('starter.controllers', [])
 
+.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location) {
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
+    $scope.device = response[0]; //set selected devie to first one
+  });
+  
+  $scope.setCharger = function() {
+    console.log($scope.device);
+      Chargers.get({id: $scope.device.charger_id}).$promise.then(function(response){
+        $scope.charger = response;
+        console.log($scope.charger);
+      });
+  }
+
+  $scope.addDevice = function() {
+    console.log("Adding a device")
+    
+    //TODO add the following and get the correct charger
+    // t.integer  "user_id"
+    // t.integer  "device_id"
+    // t.string   "personal_device_name"
+    // t.boolean  "allow_lending"
+
+    Owned_Devices.save({user_id: $scope.device.charger_id, device_id: $scope.device.id, }).$promise.then(function(response){
+      console.log('added!')
+      $location.path('/tab/borrow');
+    });
+  }
+
+  $scope.close = function() {
+    $location.path('/tab/borrow');
+  }
+
+})
 
 .controller('BorrowCtrl', function($scope, Devices, Chargers, Owned_Devices, Register) {
   Owned_Devices.query().$promise.then(function(response){
