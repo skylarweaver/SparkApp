@@ -2,7 +2,10 @@ angular.module('starter.services', [])
 
 
 .factory('Owned_Devices', function ($resource) {
-  return $resource("http://localhost:3000/owned_devices/:id.json");
+  return $resource("http://localhost:3000/owned_devices/:id.json", 
+    {id: '@id'}, 
+    {update: {method:'PUT'} }
+    );
 })
 
 .factory('Chargers', function ($resource) {
@@ -33,9 +36,18 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/users/:id.json");
 })
 
-.factory('UpdateUsers', function ($resource){
-  return $resource("http://localhost:3000/updateusers/:id.json");
-})
+// .factory('UpdateUsers', function ($resource){
+//   return $resource("http://localhost:3000/updateuser/:id.json", {
+//     id: '@userScopeId'
+//   });
+// })
+
+.factory('UpdateUsers', function ($resource) {
+    return $resource('http://localhost:3000/updateuser/:id.json',
+    {id: '@id'}, 
+    {update: {method:'PUT'} }
+    );
+  })
 
 .factory('Auth',function($window){
   return {

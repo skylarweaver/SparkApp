@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
   get 'users/index'
+
   get 'users/show'
+
+  get 'users/edit'
+
+  get 'users/update'
+  get 'users/:id/edit' => 'users#edit'
   get 'users' => 'users#index'
   get 'users/:id' => 'users#show'
-  patch 'updateusers/:id' => 'users#update'
-  put 'updateusers/:id' => 'users#update'
-  post 'updateusers/:id' => 'users#update'
+  # patch 'updateuser/:id' => 'users#update'
+  put 'updateuser/:id' => 'users#update'
+  post '/updateuser/:id' => 'users#update'
+  get '/updateuser/:id' => 'users#show'
 
 
   get 'users/getUsersByChargerAndDistance'

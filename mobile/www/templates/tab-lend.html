@@ -14,13 +14,14 @@
 		        <img src='{{}}'>
 		        <h2>{{owned_device.charger_name}}</h2>
 		        <p>For {{owned_device.personal_device_name}}</p>
-	        	<span id = "lendToggle">lend
+	        	<span id = "lendToggle">lend {{owned_device.allow_lending}}
 			        <label class="toggle toggle-balanced">
-					       <input type="checkbox">
+					      <input ng-model="owned_device.allow_lending" ng-change="toggleChange(owned_device)" type="checkbox">
 					       <div class="track">
 					         <div class="handle"></div>
 					       </div>
-					     </label>
+					     </input>
+				     </label>
 					  </span>
 	      </div>
 	    </div>

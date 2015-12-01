@@ -14,6 +14,12 @@ class UsersController < ApplicationController
     render json: @user
   end
 
+    # GET /transactions/1/edit
+  def edit
+  	@user = current_user #User.find(params[:id])
+    # render json: @user
+  end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
@@ -37,7 +43,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :user_email)
+      params.require(:user).permit(:id, :first_name, :last_name, :user_email, :password, :password_confirmation, :old_password)
     end
 
 end

@@ -63,8 +63,54 @@ angular.module('starter.controllers', [])
   });
 
   $scope.userId = $window.localStorage['userId'];
-
   $scope.userFirstName = $window.localStorage['userFirstName'];
+
+  // console.log('ContactCtrl started');
+
+  $scope.toggleChange = function(owned_device) {
+      //I think the toggle automatically changes the value of allow_lending
+      if (owned_device.allow_lending == false) {
+          // owned_device.allow_lending = true;
+          //if toggle changed value to false, update the database to reflect that change
+          Owned_Devices.update({id: owned_device.id, allow_lending: false},
+          function(data){
+          },
+          function(err){
+            var error = "";
+            var errors = err["data"]["errors"];
+            for (var k in errors) {
+              error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
+            }
+            var confirmPopup = $ionicPopup.alert({
+              title: 'An error occured',
+              template: error
+            });
+          }
+        );
+
+      } else {
+        // owned_device.allow_lending = false;
+        console.log(owned_device.id);
+        Owned_Devices.update({id: owned_device.id, allow_lending: true},
+        function(data){
+        },
+        function(err){
+          var error = "";
+          var errors = err["data"]["errors"];
+          for (var k in errors) {
+            error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
+          }
+          var confirmPopup = $ionicPopup.alert({
+            title: 'An error occured',
+            template: error
+          });
+        }
+      );
+      }
+
+      // $window.location.reload();  
+      console.log('id:' + owned_device.id + 'testToggle changed to ' + owned_device.allow_lending);
+  };
 
   $scope.logout = function() {
     // This database call might not be necessary, if all that's needed is to removeItems...
@@ -177,12 +223,13 @@ angular.module('starter.controllers', [])
 .controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers) {
   // $stateparams access the parameter that was passed through the url
   // defined in app.js lend_detail state
-  userId = $stateParams.userId;
+  userId = 6 //$stateParams.userId;
   $scope.data = {}
   $scope.data.user = Users.get(6)
 
   $scope.update = function(){
-    UpdateUsers.save({user: $scope.data.userScope},
+    UpdateUsers.update({id: userId,
+     first_name: $scope.data.user.first_name, last_name: $scope.data.user.last_name},
       function(data){
         Auth.set({user_email: data.user_email});
         $location.path('/tab/lend');
