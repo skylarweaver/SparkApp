@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+  get 'users/index'
+
+  get 'users/show'
+
+  get 'users/edit'
+
+  get 'users/update'
+  get 'users/:id/edit' => 'users#edit'
+  get 'users' => 'users#index'
+  get 'users/:id' => 'users#show'
+  # patch 'updateuser/:id' => 'users#update'
+  put 'updateuser/:id' => 'users#update'
+  post '/updateuser/:id' => 'users#update'
+  get '/updateuser/:id' => 'users#show'
+
+
   get 'users/getUsersByChargerAndDistance'
 
   devise_for :users, :controllers => {sessions: 'user/sessions', registrations: 'user/registrations', passwords: 'user/passwords' }
@@ -6,6 +22,8 @@ Rails.application.routes.draw do
   get '/owned_devices/userid/:name', to: 'owned_devices#getByUser'
   resources :chargers
   resources :devices
+  
+
   resources :transactions
   get '/usersByCharger/:charger_id', to: 'owned_devices#getUsersByChargerAndDistance'
   # The priority is based upon order of creation: first created -> highest priority.
