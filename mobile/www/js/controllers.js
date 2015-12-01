@@ -1,11 +1,16 @@
 angular.module('starter.controllers', [])
 
-.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location) {
+.controller('AddDeviceCtrl', function($scope, Devices, Chargers, Owned_Devices, Register, $location, $state) {
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
     $scope.device = response[0]; //set selected devie to first one
   });
   
+  Register.get().$promise.then(function(response){
+    current_user_id = response.id;
+    current_user_name = response.first_name;
+  });
+
   $scope.setCharger = function() {
     console.log($scope.device);
       Chargers.get({id: $scope.device.charger_id}).$promise.then(function(response){
@@ -16,16 +21,15 @@ angular.module('starter.controllers', [])
 
   $scope.addDevice = function() {
     console.log("Adding a device")
-    
-    //TODO add the following and get the correct charger
-    // t.integer  "user_id"
-    // t.integer  "device_id"
-    // t.string   "personal_device_name"
-    // t.boolean  "allow_lending"
 
-    Owned_Devices.save({user_id: $scope.device.charger_id, device_id: $scope.device.id, }).$promise.then(function(response){
+    //TODO get the correct charger to display
+    Owned_Devices.save({user_id: current_user_id, 
+                        device_id: $scope.device.id, 
+                        personal_device_name: current_user_name+"'s "+$scope.device.name, 
+                        allow_lending: true}).$promise.then(function(response){
       console.log('added!')
       $location.path('/tab/borrow');
+      //TODO get borrow page to reload on update
     });
   }
 
@@ -38,13 +42,11 @@ angular.module('starter.controllers', [])
 .controller('BorrowCtrl', function($scope, Devices, Chargers, Owned_Devices, Register) {
   Owned_Devices.query().$promise.then(function(response){
     $scope.owned_devices = response;
+    console.log('on borrow tab, these are owned devices', $scope.owned_devices);
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
     console.log($scope.chargers);
-  });
-  Owned_Devices.query().$promise.then(function(response){
-    $scope.owned_devices = response;
   });
 })
 
