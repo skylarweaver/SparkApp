@@ -78,6 +78,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.borrow-lender-selected', {
+    url: '/borrow/findLender/:owned_deviceID/:charger_id/:borrowTime/:lender_id',
+    views: {
+      'tab-borrow': {
+        templateUrl: 'templates/borrow-lender-selected.html',
+        controller: 'BorrowLenderSelected'
+      }
+    }
+  })
+
   .state('tab.lend', {
     url: '/lend',
     views: {
@@ -110,7 +120,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
   
   // .state('tab.user-detail', {
-  //   url: '/user/:userId',
+  //   url: '/user/:userID',
   //   views: {
   //     'tab-lend': {
   //       templateUrl: 'templates/user-detail.html',

@@ -105,6 +105,19 @@ namespace :db do
       end
     end
 
+    all_user_ids = User.all.map {|u| u.id }
+
+    #Transactions
+    rand(100..150).times do
+      t = Transaction.new
+      t.borrower_id = all_user_ids.sample #random borrower
+      t.lender_id = (all_user_ids - [t.borrower_id]).sample #random lender thats not the borrower
+      t.charger_id = Charger.find(User.find(t.borrower_id).devices.sample.charger_id) #random charger that the borrower has
+      t.length_time_requested = rand(10..120) #randpm time between 10 min and 2 hrs
+      t.accepted = true
+      t.start_time = Faker::Time.between(DateTime.now - 15, DateTime.now)
+      t.end_time = t.start_time + rand(600..7200) #end time is up to two hours after
+    end
 
   
   end

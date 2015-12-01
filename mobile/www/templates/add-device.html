@@ -5,9 +5,6 @@
 
 <ion-view view-title="Add a Device">
   <ion-content class="padding">
-  
-{{device}}
-
 
 <div class="list">
 
@@ -16,7 +13,7 @@
     <div class="input-label">
      <strong> Device </strong>
     </div>
-        <select ng-change="setCharger()" ng-model="device" ng-options="device as device.name for device in devices"></select>
+        <select ng-change="setCharger(device)" ng-model="device" ng-options="device as device.name for device in devices"></select>
 
   </label>
 
