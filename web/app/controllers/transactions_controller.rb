@@ -5,7 +5,7 @@ class TransactionsController < ApplicationController
   # GET /transactions.json
   def currentTransactions
     # obtain all transactions that are currently ongoing
-    # current_transactions = Transaction.where
+    @current_transactions = Transaction.where(["lender_id = ? or borrower_id = ? and ", current_user.id, current_user.id])
   end
 
   def index
