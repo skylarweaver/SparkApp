@@ -102,6 +102,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+  // .state('tab.user-detail', {
+  //   url: '/user/:userId',
+  //   views: {
+  //     'tab-lend': {
+  //       templateUrl: 'templates/user-detail.html',
+  //       controller: 'UserDetailCtrl'
+  //     }
+  //   }
+  // })
+
+
+  .state('user–detail', {
+      url: '/user/:userID',
+      templateUrl: 'templates/user-detail.html',
+      controller: 'UserDetailCtrl'
+  }) 
+
+
+
 
 
   .state('tab.chat', {

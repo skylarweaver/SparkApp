@@ -43,7 +43,9 @@ angular.module('starter.controllers', [])
     $scope.chargers = response;
     console.log($scope.chargers);
   });
-
+  Owned_Devices.query().$promise.then(function(response){
+    $scope.owned_devices = response;
+  });
 })
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
@@ -68,7 +70,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('BorrowLenderMatch', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
-
   owned_deviceID = $stateParams.owned_deviceID;
   num_min_borrow = $stateParams.borrowTime;
   charger_id = $stateParams.charger_id;
@@ -114,9 +115,55 @@ angular.module('starter.controllers', [])
     $scope.owned_devices = response;
   });
 
-
-
+  $scope.userId = $window.localStorage['userId'];
   $scope.userFirstName = $window.localStorage['userFirstName'];
+
+  // console.log('ContactCtrl started');
+
+  $scope.toggleChange = function(owned_device) {
+      //I think the toggle automatically changes the value of allow_lending
+      if (owned_device.allow_lending == false) {
+          // owned_device.allow_lending = true;
+          //if toggle changed value to false, update the database to reflect that change
+          Owned_Devices.update({id: owned_device.id, allow_lending: false},
+          function(data){
+          },
+          function(err){
+            var error = "";
+            var errors = err["data"]["errors"];
+            for (var k in errors) {
+              error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
+            }
+            var confirmPopup = $ionicPopup.alert({
+              title: 'An error occured',
+              template: error
+            });
+          }
+        );
+
+      } else {
+        // owned_device.allow_lending = false;
+        console.log(owned_device.id);
+        Owned_Devices.update({id: owned_device.id, allow_lending: true},
+        function(data){
+        },
+        function(err){
+          var error = "";
+          var errors = err["data"]["errors"];
+          for (var k in errors) {
+            error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
+          }
+          var confirmPopup = $ionicPopup.alert({
+            title: 'An error occured',
+            template: error
+          });
+        }
+      );
+      }
+
+      // $window.location.reload();  
+      console.log('id:' + owned_device.id + 'testToggle changed to ' + owned_device.allow_lending);
+  };
 
   $scope.logout = function() {
     // This database call might not be necessary, if all that's needed is to removeItems...
@@ -124,6 +171,8 @@ angular.module('starter.controllers', [])
       function(data){
         $window.localStorage.removeItem('userToken');
         $window.localStorage.removeItem('userEmail');
+        $window.localStorage.removeItem('userId');
+        $window.localStorage.removeItem('userFirstName');
         //Reload all controllers
         $window.location.reload();  
         $location.path('/login');
@@ -139,17 +188,13 @@ angular.module('starter.controllers', [])
   }
 })
 
+
 .controller('TransactionCtrl', function($scope, Transactions) {
     Transactions.query().$promise.then(function(response){
     $scope.transactions = response;
     console.log($scope.transactions);
   });
 })
-
-// /mobile/www/controllers.js
-// .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
-// $scope.data = {};
-
 
 
 .controller('LendDetailCtrl', function($scope, $stateParams, $window, $filter, Owned_Devices) {
@@ -166,8 +211,7 @@ angular.module('starter.controllers', [])
     console.log($scope.owned_devices);
   });
 
-
-  //.get currently gets devices by user_id, not device_id
+  //.get currently gets devices by userId, not device_id
   // owned_devices = Owned_Devices.get(1);//$window.localStorage['userId']);
 
   // (failed) Attempt to convert json to array.
@@ -211,6 +255,7 @@ angular.module('starter.controllers', [])
   }
 })
 
+
 .controller('RedirectCtrl', function($scope, $location, $window,$rootScope) {
     $scope.$on('$ionicView.enter', function () {
       //Is this the most secure way to do this?
@@ -227,15 +272,20 @@ angular.module('starter.controllers', [])
     });
 })
 
-  .controller('RegisterCtrl', function($scope, $location, Auth, $window, Register, $ionicPopup, $rootScope) {
-  $scope.data = {};
 
-  $scope.register = function() {
-    Register.save({user: $scope.data.user},
+.controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers) {
+  // $stateparams access the parameter that was passed through the url
+  // defined in app.js lend_detail state
+  userId = 6 //$stateParams.userId;
+  $scope.data = {}
+  $scope.data.user = Users.get(6)
+
+  $scope.update = function(){
+    UpdateUsers.update({id: userId,
+     first_name: $scope.data.user.first_name, last_name: $scope.data.user.last_name},
       function(data){
-        Auth.set({user_token: data.user_token,
-                  user_email: data.user_email});
-        $location.path('/tab/borrow');
+        Auth.set({user_email: data.user_email});
+        $location.path('/tab/lend');
       },
       function(err){
         var error = "";
@@ -250,6 +300,32 @@ angular.module('starter.controllers', [])
       }
     );
   }
+})
+
+
+.controller('RegisterCtrl', function($scope, $location, Auth, $window, Register, $ionicPopup, $rootScope) {
+$scope.data = {};
+
+$scope.register = function() {
+  Register.save({user: $scope.data.user},
+    function(data){
+      Auth.set({user_token: data.user_token,
+                user_email: data.user_email});
+      $location.path('/tab/borrow');
+    },
+    function(err){
+      var error = "";
+      var errors = err["data"]["errors"];
+      for (var k in errors) {
+        error += k.charAt(0).toUpperCase() + k.replace(/_/g, ' ').substring(1) + ' ' + errors[k] + '. ';
+      }
+      var confirmPopup = $ionicPopup.alert({
+        title: 'An error occured',
+        template: error
+      });
+    }
+  );
+}
 })
 
 

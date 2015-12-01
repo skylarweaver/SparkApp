@@ -14,20 +14,40 @@
         Allow Lending:
       </ion-toggle> -->
 
-		<div ng-repeat="owned_device in owned_devices">
+<!-- 		<div ng-repeat="owned_device in owned_devices">
       <a class="item item-thumbnail-left" href="#/tab/lend/{{owned_device.id}}">
 	        <img ng-src='{{owned_device.charger_photo}}'>
 	        <h2>{{owned_device.charger_name}}</h2>
 	        <p>{{owned_device.personal_device_name}}</p>
       </a>
-    </div>
-    <button class="button icon-left ion-home ion-plus button-block button-light">
-      Add a Device
-    </button>
+    </div> -->
+    <ion-list>
+			<div ng-repeat="owned_device in owned_devices">
+	      <div class="item item-thumbnail-left toggle-right"> <!-- href="#/tab/lend/{{owned_device.id}}" -->
+		        <img ng-src='{{owned_device.charger_photo}}'å>
+		        <h2>{{owned_device.charger_name}}</h2>
+		        <p>For {{owned_device.personal_device_name}}</p>
+	        	<span id = "lendToggle">lend {{owned_device.allow_lending}}
+			        <label class="toggle toggle-balanced">
+					      <input ng-model="owned_device.allow_lending" ng-change="toggleChange(owned_device)" type="checkbox">
+					       <div class="track">
+					         <div class="handle"></div>
+					       </div>
+					     </input>
+				     </label>
+					  </span>
+	      </div>
+	    </div>
 
-    <div class="padding">
-	 	 <button class="button button-block button-calm" ng-click="logout()">Logout</button>
-		</div>
+	    <a href="#/add" class="button icon-left ion-home ion-plus button-block button-light">
+	      Add a Device
+	    </a>
+	    <a class="button icon-left ion-gear-a button-block button-light" href = "#/user/{{userId}}"><!-- /{{userId}}"> -->
+	      Edit User Information
+	    </a>
+	    <div class="padding">
+		 	 <button class="button button-block button-calm" ng-click="logout()">Logout</button>
+			</div>
     </ion-list>
   </ion-content>
 </ion-view>
