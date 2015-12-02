@@ -20,8 +20,16 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/devices/:id.json");
 })
 
-.factory('Transactions', function ($resource) {
+.factory('Requested_Transactions', function ($resource) {
+  return $resource("http://localhost:3000/requestedTransactions/:id.json");
+})
+
+.factory('Past_Transactions', function ($resource) {
   return $resource("http://localhost:3000/transactions/:id.json");
+})
+
+.factory('Current_Transactions', function ($resource) {
+  return $resource("http://localhost:3000/currentTransactions/:id.json");
 })
 
 .factory('Login', function ($resource) {
