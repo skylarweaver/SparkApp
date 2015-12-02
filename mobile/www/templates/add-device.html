@@ -1,9 +1,12 @@
-<ion-nav-bar class="bar-stable">
-  <ion-nav-back-button>
-  </ion-nav-back-button>
-</ion-nav-bar>
-
 <ion-view view-title="Add a Device">
+    <ion-nav-buttons side="primary">
+      <button class="button button-clear button-calm" ng-click="close()">
+        Back
+      </button>
+    </ion-nav-buttons>
+
+
+
   <ion-content class="padding">
 
 <div class="list">
@@ -28,9 +31,9 @@
       <button class="button button-block button-calm" ng-click="addDevice()">Add device</button>
   </div> 
 
- <div class="padding">
+<!--  <div class="padding">
       <button class="button button-block button-assertive" ng-click="close()">Close</button>
-  </div> 
+  </div>  -->
 
 
 
