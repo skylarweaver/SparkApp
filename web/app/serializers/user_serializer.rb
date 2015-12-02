@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :user_email, :first_name, :last_name, :token, :user_token, :last_sign_in_at, :created_at
+  attributes :id, :user_email, :first_name, :last_name, :token, :user_token, :created_at
   
   def last_sign_in_at
     object.last_sign_in_at.strftime("%d/%m/%y %I:%M %p")
