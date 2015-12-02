@@ -179,7 +179,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('BorrowLenderSelected', function($scope, $stateParams, Owned_Devices, Users, $window) {
+.controller('BorrowLenderSelected', function($scope, $stateParams, Owned_Devices, Users, Users_By_Charger, $window) {
   owned_deviceID = $stateParams.owned_deviceID;
   num_min_borrow = $stateParams.borrowTime;
   charger_id = $stateParams.charger_id;
@@ -194,12 +194,47 @@ angular.module('starter.controllers', [])
   console.log(lender_id);
 
   Owned_Devices.get({id: owned_deviceID}).$promise.then(function(data) {
-       $scope.item = data;
+    $scope.item = data;
   });
 
   Users.get({id: lender_id}).$promise.then(function(data) {
-       $scope.lender = data;
-       console.log("hey",$scope.lender);
+    $scope.lender = data;
+    $scope.rounded_distance = Number(data.distance_from_current_user).toFixed(2);
+    $scope.lenderLatLng = new google.maps.LatLng($scope.lender.latitude, $scope.lender.longitude);
+
+  });
+
+  Users.get({id: $window.localStorage['userId']}).$promise.then(function(data) {
+    $scope.current_user = data;
+    $scope.curUserLatLng = new google.maps.LatLng(data.latitude, data.longitude);
+
+    //create map
+    var mapOptions = {
+        center: $scope.curUserLatLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    $scope.map = new google.maps.Map(document.getElementById("map2"), mapOptions);
+    //Wait until the map is loaded
+    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+      console.log('hi map is loaded')
+      //drop my marker
+      var myMarker = new google.maps.Marker({
+          map: $scope.map,
+          animation: google.maps.Animation.DROP,
+          position: $scope.curUserLatLng
+      });      
+    
+      //drop lender marker
+      var lenderMarker = new google.maps.Marker({
+          map: $scope.map,
+          animation: google.maps.Animation.DROP,
+          position: $scope.lenderLatLng,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+      }); 
+  
+    });
+
   });
 
 
