@@ -222,16 +222,17 @@ angular.module('starter.controllers', [])
       var myMarker = new google.maps.Marker({
           map: $scope.map,
           animation: google.maps.Animation.DROP,
-          position: $scope.curUserLatLng
+          position: $scope.curUserLatLng,
+          icon: "http://m.bostonusa.com/core/icons/map/blue-dot.png"
       });      
-    
+
       //drop lender marker
       var lenderMarker = new google.maps.Marker({
           map: $scope.map,
           animation: google.maps.Animation.DROP,
-          position: $scope.lenderLatLng,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+          position: $scope.lenderLatLng
       }); 
+
   
     });
 
