@@ -50,7 +50,6 @@ angular.module('starter.controllers', [])
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
-    console.log($scope.chargers);
   });
 })
 
