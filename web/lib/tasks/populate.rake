@@ -112,7 +112,7 @@ namespace :db do
       t = Transaction.new
       t.borrower_id = all_user_ids.sample #random borrower
       t.lender_id = (all_user_ids - [t.borrower_id]).sample #random lender thats not the borrower
-      t.charger_id = Charger.find(User.find(t.borrower_id).devices.sample.charger_id) #random charger that the borrower has
+      t.charger_id = rand(1..Charger.all.size) #Charger.find(User.find(t.borrower_id).devices.sample.charger_id) #random charger that the borrower has
       t.length_time_requested = rand(10..120) #randpm time between 10 min and 2 hrs
       t.accepted = true
       t.start_time = Faker::Time.between(DateTime.now - 1, DateTime.now)

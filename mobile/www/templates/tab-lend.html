@@ -15,22 +15,23 @@
 
 	  <div id="lendHeader">
 	    <h4>
-	    	Hi {{userFirstName}}! You have <b>{{owned_devices.length}}</b> 
+	    	Hey {{userFirstName}}! 
+	    </h4>
+	    <h5>You have <b>{{owned_devices.length}}</b> 
 	    	<span ng-if="devices.length==1"> item</span> 
 	    	<span ng-if="devices.length!=1"> items</span> 
 	    	ready to lend!
-	    </h4>
+	    </h5>
     </div>
 
      <ion-list ng-show="editPressed">
 			<div class="list"  ng-repeat="owned_device in owned_devices">
-
 	      <div class="item  item-thumbnail-left">
 		        <img ng-src='{{owned_device.charger_photo}}'å>
-	      		<label class="checkbox">
-		        <h2>{{owned_device.charger_name}}</h2>
-		        <p>For {{owned_device.personal_device_name}}</p>
-							<input type="checkbox">
+	      		<label class="checkbox" ng-model ="ids[owned_device.id]">
+		       		<h2>{{owned_device.charger_name}}</h2>
+		       		<p>For {{owned_device.personal_device_name}}</p>
+							<input type="checkbox" ng-model ="ids[owned_device.id]">
 						</label>
 	      </div>
 	    </div>
