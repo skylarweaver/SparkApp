@@ -279,10 +279,20 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TransactionCtrl', function($scope, Transactions) {
-    Transactions.query().$promise.then(function(response){
-    $scope.transactions = response;
-    console.log($scope.transactions);
+.controller('TransactionCtrl', function($scope, $window, Current_Transactions, Past_Transactions, Requested_Transactions) {
+  $scope.userId = $window.localStorage['userId'];
+
+  Current_Transactions.query().$promise.then(function(response){
+    $scope.current_transactions = response;
+    console.log($scope.current_transactions);
+  });
+  Past_Transactions.query().$promise.then(function(response){
+    $scope.past_transactions = response;
+    console.log($scope.past_transactions);
+  });
+  Requested_Transactions.query().$promise.then(function(response){
+    $scope.requested_transactions = response;
+    console.log($scope.requested_transactions);
   });
 })
 
