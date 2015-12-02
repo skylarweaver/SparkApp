@@ -2,9 +2,9 @@
   <ion-nav-back-button>
   </ion-nav-back-button>
 </ion-nav-bar>
-<ion-view view-title="Devices">
+<ion-view view-title="Borrow a Charger">
   <ion-content class="padding">
-  Tap a device to find a nearby charger. <br/><br/>
+  <h5>Tap a device to find a nearby charger. </h5>
     <div class="list" ng-repeat="owned_device in owned_devices">
       <a class="item item-thumbnail-left" href="#/tab/borrow/{{owned_device.id}}">
         <img ng-src='{{owned_device.charger_photo}}'>

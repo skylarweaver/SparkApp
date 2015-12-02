@@ -300,7 +300,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TransactionCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users) {
+.controller('TransactionCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
   $scope.userId = $window.localStorage['userId'];
 
 
@@ -316,6 +316,45 @@ angular.module('starter.controllers', [])
     $scope.requested_transactions = response;
     console.log($scope.requested_transactions);
   });
+
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
+    // console.log($scope.devices);
+  });
+  Chargers.query().$promise.then(function(response){
+    $scope.chargers = response;
+    // console.log($scope.chargers);
+  });
+  Owned_Devices.query().$promise.then(function(response){
+    $scope.owned_devices = response;
+  });
+
+  // Users.query().$promise.then(function(response){
+  //   $scope.users = response;
+  //   console.log("USERS:" + $scope.users)
+  // });
+
+  // $scope.findUserName = function(user_id){
+  //   Users.get({id: user_id}).$promise.then(function(data) {
+  //        $scope.user = data;
+  //        return $scope.user
+  //        // console.log("hey",$scope.lender);
+  //   });
+  // }
+
+  // Users.get({id: lender_id}).$promise.then(function(data) {
+  //      $scope.lender = data;
+  //      console.log("hey",$scope.lender);
+  // });
+
+ //  $scope.findChargerPhoto = function(charger_id) {
+ //     var found = $filter('filter')($scope.chargers, {id: charger_id}, true);
+ //     if (found.length) {
+ //         $scope.selected = JSON.stringify(found[0]);
+ //     } else {
+ //         $scope.selected = 'Not found';
+ //     }
+ // }
 
 })
 
@@ -360,7 +399,7 @@ angular.module('starter.controllers', [])
       // console.log(email)
       if (email) {
           //user already logged in
-          $location.path('/tab/lend');
+          $location.path('/tab/transactions');
       } else {
         //user not logged in
         $location.path('/login');

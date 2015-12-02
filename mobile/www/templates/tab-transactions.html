@@ -5,21 +5,57 @@
 <ion-view view-title="My Transactions">
   <ion-content class="padding">
 
-    <div class="card">
-    <div class="item item-divider">
-      Requested Transactions
-    </div>
-    <div class="item item-text-wrap">
-      <div class="list" ng-repeat="requested_transaction in requested_transactions">
-        <span ng-if="requested_transaction.lender_id==userId"> 
-        <p>You are lending</p>
-        </span> 
-        <span ng-if="requested_transaction.borrower_id==userId">
-        <p>You are borrowing</p>
-        </span> 
+  <h3>      
+    Requested Transactions
+  </h3>
+  <h5>None</h5>
+  <div ng-repeat="requested_transaction in requested_transactions">
+    <div class="list card">
+      <div class="item item-avatar">
+        <img src="mcfly.jpg">
+        <h2>Borrow Request for iPhone 6S Charger</h2>
+        <p>From Sarah Smith</p>
+      </div>
+      <div class="item item-text-wrap">
+          <span ng-if="requested_transaction.lender_id==userId"> 
+            <p>You are lending</p>
+          </span> 
+          <span ng-if="requested_transaction.borrower_id==userId">
+            <p>You are borrowing</p>
+          </span> 
       </div>
     </div>
   </div>
+
+
+  <h3>      
+      Current Transactions
+  </h3>
+  <div ng-repeat="current_transaction in current_transactions">
+    <div class="list card">
+      <div ng-repeat="charger in chargers | filter:{id: current_transaction.charger_id }">
+        <div class="item item-avatar">
+          <img src="{{charger.charger_photo}}">
+          <!-- <p>{{charger.name}}</p> -->
+          <span ng-if="current_transaction.lender_id==userId">
+            <!-- all charger_id are null because not set in the populate file -->
+            <h3>Currently Lending {{charger.name}} </h3>
+            <!-- <div ng-repeat="user in users | filter:{id: current_transaction.borrower_id }"> -->
+            <!-- <p>to {{findUserName(borrower_id)}}</p> -->
+            <!-- <p> current_transaction.borrower_id</p> -->
+            <p> Currently lending from Lender Name</p>
+          </span> 
+          <span ng-if="current_transaction.borrower_id==userId">
+            <h3>Borrowing {{current_transaction.charger_id}}</h3>
+            <p> from {{current_transaction.lender_id}}</p>
+          </span> 
+        </div>
+      </div>
+<!--     <div class="item item-text-wrap">
+      </div> -->
+    </div>
+  </div>
+
 
   <div class="card">
     <div class="item item-divider">
