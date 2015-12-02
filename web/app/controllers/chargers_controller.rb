@@ -5,6 +5,7 @@ class ChargersController < ApplicationController
   # GET /chargers.json
   def index
     @chargers = Charger.all
+    render json: @chargers
   end
 
   # GET /chargers/1
