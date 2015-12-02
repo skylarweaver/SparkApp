@@ -18,17 +18,16 @@ angular.module('starter.controllers', [])
     console.log(device);
       Chargers.get({id: device.charger_id}).$promise.then(function(response){
         $scope.charger = response;
-        console.log($scope.charger);
       });
   }
 
-  $scope.addDevice = function() {
+  $scope.addDevice = function(device) {
     console.log("Adding a device")
 
     //TODO get the correct charger to display
     Owned_Devices.save({user_id: current_user_id, 
-                        device_id: $scope.device.id, 
-                        personal_device_name: current_user_name+"'s "+$scope.device.name, 
+                        device_id: device.id, 
+                        personal_device_name: current_user_name+"'s "+device.name, 
                         allow_lending: true}).$promise.then(function(response){
       console.log('added!')
       $location.path('/tab/borrow');
@@ -37,7 +36,7 @@ angular.module('starter.controllers', [])
 
     });
   }
-
+  // TODO figure out how to see where page is coming from or something
   $scope.close = function() {
     $location.path('/tab/borrow');
   }
