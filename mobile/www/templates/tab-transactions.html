@@ -4,23 +4,36 @@
 </ion-nav-bar>
 <ion-view view-title="My Transactions">
   <ion-content class="padding">
+
     <div class="card">
     <div class="item item-divider">
       Requested Transactions
     </div>
     <div class="item item-text-wrap">
       <div class="list" ng-repeat="requested_transaction in requested_transactions">
-        <p>{{requested_transaction.time_requested}}</p>
+        <span ng-if="requested_transaction.lender_id==userId"> 
+        <p>You are lending</p>
+        </span> 
+        <span ng-if="requested_transaction.borrower_id==userId">
+        <p>You are borrowing</p>
+        </span> 
       </div>
     </div>
   </div>
+
   <div class="card">
     <div class="item item-divider">
       Current Transactions
     </div>
     <div class="item item-text-wrap">
       <div class="list" ng-repeat="current_transaction in current_transactions">
-        <p>{{current_transaction.length_time_requested}}</p>
+        <span ng-if="current_transaction.lender_id==userId">
+          <!-- all charger_id are null because not set in the populate file -->
+        <p>You are lending {{current_transaction.charger_id}} to {{current_transaction.borrower_id}}</p>
+        </span> 
+        <span ng-if="current_transaction.borrower_id==userId">
+        <p>You are borrowing {{current_transaction.charger_id}} from {{current_transaction.lender_id}}</p>
+        </span> 
       </div>
     </div>
   </div>
@@ -31,7 +44,12 @@
     </div>
     <div class="item item-text-wrap">
       <div class="list" ng-repeat="past_transaction in past_transactions">
-        <p>{{past_transaction.length_time_requested}}</p>
+        <span ng-if="past_transaction.lender_id==userId"> 
+        <p>You lent {{past_transaction.charger_id}} to {{past_transaction.borrower_id}}</p>
+        </span> 
+        <span ng-if="past_transaction.borrower_id==userId">
+        <p>You borrowed {{past_transaction.charger_id}} from {{past_transaction.lender_id}}</p>
+        </span> 
       </div>
     </div>
   </div>
