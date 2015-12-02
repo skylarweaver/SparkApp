@@ -4,15 +4,13 @@
 </ion-nav-bar>
 <ion-view view-title="My Transactions">
   <ion-content class="padding">
-    These are your transactions listed. <br/>
     <div class="card">
     <div class="item item-divider">
       Requested Transactions
     </div>
     <div class="item item-text-wrap">
-      <div class="list" ng-repeat="transaction in transactions">
-        <h2>{{transaction.created_at}}</h2>
-        <p>{{transaction.time_requested}}</p>
+      <div class="list" ng-repeat="requested_transaction in requested_transactions">
+        <p>{{requested_transaction.time_requested}}</p>
       </div>
     </div>
   </div>
@@ -21,9 +19,8 @@
       Current Transactions
     </div>
     <div class="item item-text-wrap">
-      <div class="list" ng-repeat="transaction in transactions">
-        <h2>{{transaction.created_at}}</h2>
-        <p>{{transaction.time_requested}}</p>
+      <div class="list" ng-repeat="current_transaction in current_transactions">
+        <p>{{current_transaction.length_time_requested}}</p>
       </div>
     </div>
   </div>
@@ -33,9 +30,8 @@
       Past Transactions
     </div>
     <div class="item item-text-wrap">
-      <div class="list" ng-repeat="transaction in transactions">
-        <h2>{{transaction.created_at}}</h2>
-        <p>{{transaction.time_requested}}</p>
+      <div class="list" ng-repeat="past_transaction in past_transactions">
+        <p>{{past_transaction.length_time_requested}}</p>
       </div>
     </div>
   </div>

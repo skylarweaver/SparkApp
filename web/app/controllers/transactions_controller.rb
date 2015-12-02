@@ -3,13 +3,32 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   # GET /transactions.json
+  def requestedTransactions
+    @lender_transactions = Transaction.where(lender_id: current_user.id, accepted: false)
+    @borrow_transactions = Transaction.where(borrower_id: current_user.id, accepted: false)
+    @requested_transactions = @lender_transactions + @borrow_transactions
+    render json: @requested_transactions
+  end
+
   def currentTransactions
     # obtain all transactions that are currently ongoing
-    @current_transactions = Transaction.where(["lender_id = ? or borrower_id = ? and ", current_user.id, current_user.id])
+    @lender_transactions = Transaction.where(lender_id: current_user.id, end_time: nil)
+    @borrow_transactions = Transaction.where(borrower_id: current_user.id, end_time: nil)
+    @current_transactions = @lender_transactions + @borrow_transactions
+    render json: @current_transactions
   end
 
   def index
-    @transactions = Transaction.where(["lender_id = ? or borrower_id = ? and ", current_user.id, current_user.id])
+    @nil_transactions = Transaction.where.not(end_time: nil)
+
+    @lender_user_transactions = Transaction.where(lender_id: current_user.id)
+    @lender_transactions = @nil_transactions & @lender_user_transactions
+
+    @borrow_user_transactions = Transaction.where(borrower_id: current_user.id)
+    @borrow_transactions = @nil_transactions & @borrow_user_transactions
+
+    @past_transactions = @lender_transactions + @borrow_transactions
+    render json: @past_transactions
   end
 
   # GET /transactions/1
