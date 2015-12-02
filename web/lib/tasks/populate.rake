@@ -22,22 +22,22 @@ namespace :db do
     #Add Chargers
     lightning = Charger.new
     lightning.name = "Apple Lightning Charger"
-    lightning.charger_photo = "http://placehold.it/100x100.png/000"
+    lightning.charger_photo = "http://www.naztech.com/image/cache/data/product-193/12204_5-500x500.jpg"
     lightning.save! 
 
     appleThirtyPin = Charger.new
     appleThirtyPin.name = "Apple 30pin Charger"
-    appleThirtyPin.charger_photo = "http://placehold.it/100x100.png/000"
+    appleThirtyPin.charger_photo = "http://imgsrv.worldstart.com/images/ct-images/2015/02/30pin.jpg"
     appleThirtyPin.save!
 
     microUSB = Charger.new
     microUSB.name = "microUSB charger"
-    microUSB.charger_photo = "http://placehold.it/100x100.png/000"
+    microUSB.charger_photo = "http://ridepowerusa.com/wp-content/uploads/2013/04/microUSB-charger.jpg"
     microUSB.save! 
 
     miniUSB = Charger.new
     miniUSB.name = "miniUSB charger"
-    miniUSB.charger_photo = "http://placehold.it/100x100.png/000"
+    miniUSB.charger_photo = "http://sockitz.com.au/media/catalog/category/mini-usb-connector.jpg"
     miniUSB.save! 
 
 
@@ -115,8 +115,13 @@ namespace :db do
       t.charger_id = Charger.find(User.find(t.borrower_id).devices.sample.charger_id) #random charger that the borrower has
       t.length_time_requested = rand(10..120) #randpm time between 10 min and 2 hrs
       t.accepted = true
-      t.start_time = Faker::Time.between(DateTime.now - 15, DateTime.now)
-      t.end_time = t.start_time + rand(600..7200) #end time is up to two hours after
+      t.start_time = Faker::Time.between(DateTime.now - 1, DateTime.now)
+      if t.start_time < DateTime.now - 2.hours
+        t.end_time = nil
+      else 
+        t.end_time = t.start_time + rand(600..7200) #end time is up to two hours after
+      end
+      t.save!
     end
 
   

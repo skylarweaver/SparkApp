@@ -18,17 +18,16 @@ angular.module('starter.controllers', [])
     console.log(device);
       Chargers.get({id: device.charger_id}).$promise.then(function(response){
         $scope.charger = response;
-        console.log($scope.charger);
       });
   }
 
-  $scope.addDevice = function() {
+  $scope.addDevice = function(device) {
     console.log("Adding a device")
 
     //TODO get the correct charger to display
     Owned_Devices.save({user_id: current_user_id, 
-                        device_id: $scope.device.id, 
-                        personal_device_name: current_user_name+"'s "+$scope.device.name, 
+                        device_id: device.id, 
+                        personal_device_name: current_user_name+"'s "+device.name, 
                         allow_lending: true}).$promise.then(function(response){
       console.log('added!')
       $location.path('/tab/borrow');
@@ -37,7 +36,7 @@ angular.module('starter.controllers', [])
 
     });
   }
-
+  // TODO figure out how to see where page is coming from or something
   $scope.close = function() {
     $location.path('/tab/borrow');
   }
@@ -171,30 +170,16 @@ angular.module('starter.controllers', [])
  
   }
 
-  //Wait until the map is loaded
+  //Wait until the map is loaded and drop markers
   google.maps.event.addListenerOnce($scope.map, 'idle', function(){
     loadMarkers();
-    // var marker = new google.maps.Marker({
-    //     map: $scope.map,
-    //     animation: google.maps.Animation.DROP,
-    //     position: myLatlng
-    // });      
-   
-    // var infoWindow = new google.maps.InfoWindow({
-    //   content: "Here I am!"
-    // });
- 
-    // google.maps.event.addListener(marker, 'click', function () {
-    //     infoWindow.open($scope.map, marker);
-    // });
-
   });
 
 
 })
 
 
-.controller('BorrowLenderSelected', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
+.controller('BorrowLenderSelected', function($scope, $stateParams, Owned_Devices, Users, $window) {
   owned_deviceID = $stateParams.owned_deviceID;
   num_min_borrow = $stateParams.borrowTime;
   charger_id = $stateParams.charger_id;
@@ -208,6 +193,14 @@ angular.module('starter.controllers', [])
   console.log("this is the user id of the lender you have selected");
   console.log(lender_id);
 
+  Owned_Devices.get({id: owned_deviceID}).$promise.then(function(data) {
+       $scope.item = data;
+  });
+
+  Users.get({id: lender_id}).$promise.then(function(data) {
+       $scope.lender = data;
+       console.log("hey",$scope.lender);
+  });
 
 
 })
@@ -308,10 +301,20 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TransactionCtrl', function($scope, Transactions) {
-    Transactions.query().$promise.then(function(response){
-    $scope.transactions = response;
-    console.log($scope.transactions);
+.controller('TransactionCtrl', function($scope, $window, Current_Transactions, Past_Transactions, Requested_Transactions) {
+  $scope.userId = $window.localStorage['userId'];
+
+  Current_Transactions.query().$promise.then(function(response){
+    $scope.current_transactions = response;
+    console.log($scope.current_transactions);
+  });
+  Past_Transactions.query().$promise.then(function(response){
+    $scope.past_transactions = response;
+    console.log($scope.past_transactions);
+  });
+  Requested_Transactions.query().$promise.then(function(response){
+    $scope.requested_transactions = response;
+    console.log($scope.requested_transactions);
   });
 })
 

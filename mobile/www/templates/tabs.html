@@ -14,23 +14,25 @@ navigation history that also transitions its views in and out.
     <ion-nav-view name="tab-borrow"></ion-nav-view>
   </ion-tab>
 
+  <!-- Transactions Tab -->
+  <ion-tab 
+    title="Transactions" 
+    icon-off="ion-arrow-swap" 
+    icon-on="ion-arrow-swap" 
+    href="#/tab/transactions">
+    <ion-nav-view name="tab-transactions"></ion-nav-view>
+  </ion-tab>  
+  
   <!-- Lending Tab -->
   <ion-tab 
-    title="Lend" 
-    icon-off="ion-ios-timer-outline" 
-    icon-on="ion-ios-timer" 
+    title="Lend/Manage" 
+    icon-off="ion-ios-gear-outline" 
+    icon-on="ion-ios-gear" 
     href="#/tab/lend">
     <ion-nav-view name="tab-lend"></ion-nav-view>
   </ion-tab>
 
-  <!-- Transactions Tab -->
-  <ion-tab 
-    title="Transactions" 
-    icon-off="ion-ios-timer-outline" 
-    icon-on="ion-ios-timer" 
-    href="#/tab/transactions">
-    <ion-nav-view name="tab-transactions"></ion-nav-view>
-  </ion-tab>  
+
 
    <!-- Chats Tab -->
 <!--   <ion-tab title="Chats" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/chats">
