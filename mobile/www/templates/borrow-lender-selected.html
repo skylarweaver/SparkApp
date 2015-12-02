@@ -1,13 +1,31 @@
 <ion-view view-title="Contact Lender?">
 
 <ion-content class="padding">
-  &nbsp;
-     <h2><center> Borrow {{item.charger_name}} from {{lender.first_name}} {{lender.last_name}}</center></h2>
-     <br/><br/>
-    <center>
-      <img ng-src='{{item.charger_photo}}' width="100px">
-    </center>
+    <div class="list card">
+      <div class="item item-avatar">
+                      <img ng-src='{{item.charger_photo}}'>
+
+        <h2> Borow {{item.charger_name}} </h2>
+        <p>for {{item.personal_device_name}}</p>
+      </div>
+      <div class="item item-avatar">
+        <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+        <h2>{{lender.first_name}} {{lender.last_name}}</h2>
+        <p>{{rounded_distance}} miles away</p>
+      </div>
+    
+    <div class-"item" id="map2" data-tap-disabled="true">
+    </div>
+     
+    
+      <div class="item">
      <a href="#/idk" class="button button-block button-balanced" align="center">Send {{lender.first_name}} a borrow request</a>
+
+      </div>
+    
+
+
+
 
 </ion-content>
 </ion-view>
