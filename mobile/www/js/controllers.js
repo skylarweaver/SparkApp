@@ -50,7 +50,6 @@ angular.module('starter.controllers', [])
   });
   Chargers.query().$promise.then(function(response){
     $scope.chargers = response;
-    console.log($scope.chargers);
   });
 })
 
@@ -248,6 +247,9 @@ angular.module('starter.controllers', [])
   $scope.userId = $window.localStorage['userId'];
   $scope.userFirstName = $window.localStorage['userFirstName'];
   $scope.editPressed = false;
+  $scope.ids = {};
+
+
 
   Devices.query().$promise.then(function(response){
     $scope.devices = response;
@@ -269,6 +271,25 @@ angular.module('starter.controllers', [])
       $scope.editPressed = false;
     }
   };
+
+  $scope.deleteOwnedDevices = function(){
+    console.log($scope.ids);
+    for (id in $scope.ids){
+      Owned_Devices.delete({id: id}, function(data){
+        },
+        function(err){
+          var error = err["data"]["errors"] || err["data"]["errors"].join('. ')
+          var confirmPopup = $ionicPopup.alert({
+            title: 'An error occured',
+            template: error
+          });
+        }
+      );
+   }
+  $scope.ids = {};
+  $location.path('/tab/lend');
+  $window.location.reload();  
+  } 
 
   $scope.toggleChange = function(owned_device) {
       //if toggle changed value, update the database to reflect that change
@@ -315,7 +336,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TransactionCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users) {
+.controller('TransactionCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
   $scope.userId = $window.localStorage['userId'];
 
 
@@ -332,32 +353,44 @@ angular.module('starter.controllers', [])
     console.log($scope.requested_transactions);
   });
 
-})
-
-
-.controller('LendDetailCtrl', function($scope, $stateParams, $window, $filter, Owned_Devices) {
-  // $stateparams access the parameter that was passed through the url
-  // defined in app.js lend_detail state
-  owned_deviceID = $stateParams.owned_deviceID;
-  console.log("OWNED DEVICE ID");
-  console.log($stateParams.owned_deviceID);
-  
-  // Not sure if we can pass in a parameter (1) like that for query
-  //*** don't think we can, it just returns the whole endpoint anyways
-  Owned_Devices.query(1).$promise.then(function(response){
+  Devices.query().$promise.then(function(response){
+    $scope.devices = response;
+    // console.log($scope.devices);
+  });
+  Chargers.query().$promise.then(function(response){
+    $scope.chargers = response;
+    // console.log($scope.chargers);
+  });
+  Owned_Devices.query().$promise.then(function(response){
     $scope.owned_devices = response;
-    console.log($scope.owned_devices);
   });
 
-  //.get currently gets devices by userId, not device_id
-  // owned_devices = Owned_Devices.get(1);//$window.localStorage['userId']);
-
-  // (failed) Attempt to convert json to array.
-  // owned_devices_array = [];
-  // angular.forEach(owned_devices, function(element) {
-  //   owned_devices_array.push(element);
+  // Users.query().$promise.then(function(response){
+  //   $scope.users = response;
+  //   console.log("USERS:" + $scope.users)
   // });
-  // $scope.owned_device = $filter('filter')(owned_devices_array, {id: owned_deviceID}, true)
+
+  // $scope.findUserName = function(user_id){
+  //   Users.get({id: user_id}).$promise.then(function(data) {
+  //        $scope.user = data;
+  //        return $scope.user
+  //        // console.log("hey",$scope.lender);
+  //   });
+  // }
+
+  // Users.get({id: lender_id}).$promise.then(function(data) {
+  //      $scope.lender = data;
+  //      console.log("hey",$scope.lender);
+  // });
+
+ //  $scope.findChargerPhoto = function(charger_id) {
+ //     var found = $filter('filter')($scope.chargers, {id: charger_id}, true);
+ //     if (found.length) {
+ //         $scope.selected = JSON.stringify(found[0]);
+ //     } else {
+ //         $scope.selected = 'Not found';
+ //     }
+ // }
 
 })
 
@@ -402,7 +435,7 @@ angular.module('starter.controllers', [])
       // console.log(email)
       if (email) {
           //user already logged in
-          $location.path('/tab/lend');
+          $location.path('/tab/transactions');
       } else {
         //user not logged in
         $location.path('/login');
@@ -414,16 +447,23 @@ angular.module('starter.controllers', [])
 .controller('UserDetailCtrl', function($scope, $stateParams, $window, $filter, $ionicPopup, Users, UpdateUsers, Auth, $location) {
   // $stateparams access the parameter that was passed through the url
   // defined in app.js lend_detail state
-  userId = 6 //$stateParams.userId;
+  userId = $stateParams.userID;
   $scope.data = {}
   $scope.data.user = Users.get(6)
 
+  $scope.close = function() {
+    $location.path('/tab/lend');
+  }
+
   $scope.update = function(){
     UpdateUsers.update({id: userId,
-     first_name: $scope.data.user.first_name, last_name: $scope.data.user.last_name},
+     first_name: $scope.data.user.first_name, last_name: $scope.data.user.last_name, 
+     user_email: $scope.data.user.user_email, new_password: $scope.data.user.new_password, 
+     password_confirmation: $scope.data.user.password_confirmation, old_password: $scope.data.user.old_password},
       function(data){
-        Auth.set({user_email: data.user_email});
+        Auth.set({user_email: data.user_email, first_name: $scope.data.user.first_name, id: userId});
         $location.path('/tab/lend');
+        $window.location.reload();  
       },
       function(err){
         var error = "";
