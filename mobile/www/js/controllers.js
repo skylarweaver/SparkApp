@@ -71,7 +71,26 @@ angular.module('starter.controllers', [])
   $scope.item_details = Owned_Devices.get({id: $scope.owned_deviceID});
   $scope.item_details.$promise.then(function(data) {
        $scope.charger_id = data.charger_id;
+
+
+  Users_By_Charger.query({id: $scope.charger_id}).$promise.then(function(response){
+    $scope.possible_lenders = response;
+    //sort by distance from current user
+    $scope.possible_lenders.sort(function(a, b) {
+        return parseFloat(a.distance) - parseFloat(b.distance);
+    })
+    console.log("sorted list of possible lenders",$scope.possible_lenders);
+      $scope.nearest_lender_id = $scope.possible_lenders[0]["id"]
+
+  });
+
+
+
    });
+
+
+
+
 })
 
 
@@ -145,7 +164,8 @@ angular.module('starter.controllers', [])
           var marker = new google.maps.Marker({
               map: map,
               animation: google.maps.Animation.DROP,
-              position: markerPos
+              position: markerPos,
+              icon: "http://i.imgur.com/4Xkiyfp.png"
           });
           var infoWindowContent = "<a href='#/tab/borrow/findLender/"+$scope.owned_deviceID+"/"+$scope.charger_id+"/"+$scope.num_min_borrow+"/"+ record.id +"'>" + record.first_name + " " + record.last_name + "</a>";          
  
