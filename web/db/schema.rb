@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20151125201144) do
     t.string   "last_name"
     t.string   "authentication_token"
     t.string   "master_lend_status"
+    t.float    "rating"
     t.float    "latitude"
     t.float    "longitude"
   end
