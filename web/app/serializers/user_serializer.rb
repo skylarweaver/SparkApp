@@ -9,6 +9,9 @@ class UserSerializer < ActiveModel::Serializer
     user_token
   end
   
+  def rating
+    object.rating
+  end
   
   def user_email
     object.email

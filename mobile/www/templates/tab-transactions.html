@@ -34,7 +34,7 @@
     <div class="list card">
       <div ng-repeat="charger in chargers | filter:{id: requested_transaction.charger_id }">
         <div class="item item-avatar">
-          <img src="{{charger.charger_photo}}">
+          <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="requested_transaction.lender_id==userId">
             <!-- all charger_id are null because not set in the populate file -->
@@ -65,7 +65,7 @@
     <div class="list card">
       <div ng-repeat="charger in chargers | filter:{id: current_transaction.charger_id }">
         <div class="item item-avatar">
-          <img src="{{charger.charger_photo}}">
+          <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="current_transaction.lender_id==userId">
             <!-- all charger_id are null because not set in the populate file -->
@@ -116,7 +116,7 @@
     <div class="list card">
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
         <div class="item item-avatar">
-          <img src="{{charger.charger_photo}}">
+          <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">
             <!-- all charger_id are null because not set in the populate file -->
