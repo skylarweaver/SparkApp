@@ -125,7 +125,7 @@ angular.module('starter.controllers', [])
   var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
   $scope.map = map;  
 
-  
+
   Users_By_Charger.query({id: $scope.charger_id}).$promise.then(function(response){
     $scope.possible_lenders = response;
     //sort by distance from current user
@@ -134,7 +134,7 @@ angular.module('starter.controllers', [])
     })
     console.log("sorted list of possible lenders",$scope.possible_lenders);
       $scope.nearest_lender_id = $scope.possible_lenders[0]["id"]
-      
+
   });
 
 
@@ -164,8 +164,7 @@ angular.module('starter.controllers', [])
           var marker = new google.maps.Marker({
               map: map,
               animation: google.maps.Animation.DROP,
-              position: markerPos,
-              icon: "http://findicons.com/files/icons/974/glyphish/12/lightning_bolt.png"
+              position: markerPos
           });
           var infoWindowContent = "<a href='#/tab/borrow/findLender/"+$scope.owned_deviceID+"/"+$scope.charger_id+"/"+$scope.num_min_borrow+"/"+ record.id +"'>" + record.first_name  + "</a>";          
  
