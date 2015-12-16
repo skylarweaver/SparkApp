@@ -40,12 +40,18 @@ namespace :db do
     miniUSB.charger_photo = "http://sockitz.com.au/media/catalog/category/mini-usb-connector.jpg"
     miniUSB.save! 
 
+    magsafe = Charger.new
+    magsafe.name = "MagSafe 2 60W charger"
+    magsafe.charger_photo = "http://img2.owcnow.com/imgs/ndesc/Apple/APLMD506xxx/APLMD506_hero.jpg"
+    magsafe.save! 
+
 
     #Add Devices 
     lightningDeviceNames = ["iPhone 5", "iPhone 5C","iPhone 5S", "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", "iPod Touch (5th gen)", "iPod Nano (7th gen)", "iPad mini", "iPad 4", "iPad Air", "iPad Air 2" ]
     appleThirtyPinDeviceNames = ["iPhone 3G", "iPhone 3GS", "iPhone 4", "iPhone 4S", "iPod Touch (1st-4th gen)", "iPad", "iPad 2", "iPad 3"]
     microUSBDeviceNames = ["kindle", "Nook Color", "Blackberry"]
     miniUSBDeviceNames = []
+    magsafeDeviceNames = ["MacBook Pro", "MacBook Air"]
     #https://support.apple.com/en-us/HT201700
 
 
@@ -77,6 +83,13 @@ namespace :db do
       device.save!
     end
 
+    magsafeDeviceNames.each do |d|
+      device = Device.new
+      device.name = d
+      device.charger_id = magsafe.id
+      device.save!
+    end
+
     #Add Users 
 
     password = "secret"
@@ -92,6 +105,8 @@ namespace :db do
 
       user.longitude = rand * (79.940797-79.946762) - 79.940797
       user.latitude = rand * (40.444331-40.440265) + 40.440265
+      user.rating = rand(3.0...5.0).round(2)
+      user.facebook_mutual_friend_count = rand(1..40)
       user.save!(validate: false) #avoid password can't be blank validation
 
       #Give each user a few devices
@@ -103,6 +118,70 @@ namespace :db do
         d.personal_device_name = user.first_name + "'s " + Device.find(d.device_id).name
         d.save!
       end
+    end
+
+
+    aditi = User.new
+    aditi.first_name = "Aditi"
+    aditi.last_name = "Sarkar"
+    aditi.email = "aditi@cmu.edu"
+    aditi.encrypted_password = User.new(:password => password).encrypted_password
+    # baker hall...      40.441657, -79.946250
+    aditi.longitude =  -79.946250
+    aditi.latitude = 40.441657
+    aditi.rating = 4.95
+    aditi.facebook_mutual_friend_count = rand(1..40)
+    aditi.save!(validate: false) #avoid password can't be blank validation
+    #Give each user a few devices
+    rand(1..3).times do
+      d = OwnedDevice.new
+      d.user_id = aditi.id
+      d.allow_lending = true
+      d.device_id = rand(1..Device.all.size)
+      d.personal_device_name = aditi.first_name + "'s " + Device.find(d.device_id).name
+      d.save!
+    end
+
+    skylar = User.new
+    skylar.first_name = "Skylar"
+    skylar.last_name = "Weaver"
+    skylar.email = "skylar@cmu.edu"
+    skylar.encrypted_password = User.new(:password => password).encrypted_password
+    # baker hall...     40.441620, -79.946524
+    skylar.longitude =  -79.946524
+    skylar.latitude = 40.441620
+    skylar.rating = 4.95
+    skylar.facebook_mutual_friend_count = rand(1..40)
+    skylar.save!(validate: false) #avoid password can't be blank validation
+    #Give each user a few devices
+    rand(1..3).times do
+      d = OwnedDevice.new
+      d.user_id = skylar.id
+      d.allow_lending = true
+      d.device_id = rand(1..Device.all.size)
+      d.personal_device_name = skylar.first_name + "'s " + Device.find(d.device_id).name
+      d.save!
+    end
+
+    nathan = User.new
+    nathan.first_name = "Nathan"
+    nathan.last_name = "Oh"
+    nathan.email = "nathan@cmu.edu"
+    nathan.encrypted_password = User.new(:password => password).encrypted_password
+    # baker hall...      40.441631, -79.945593
+    nathan.longitude =  -79.945593
+    nathan.latitude = 40.441631
+    nathan.rating = 4.95
+    nathan.facebook_mutual_friend_count = rand(1..40)
+    nathan.save!(validate: false) #avoid password can't be blank validation
+    #Give each user a few devices
+    rand(1..3).times do
+      d = OwnedDevice.new
+      d.user_id = nathan.id
+      d.allow_lending = true
+      d.device_id = rand(1..Device.all.size)
+      d.personal_device_name = nathan.first_name + "'s " + Device.find(d.device_id).name
+      d.save!
     end
 
     all_user_ids = User.all.map {|u| u.id }
