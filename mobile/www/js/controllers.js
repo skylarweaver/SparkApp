@@ -384,14 +384,23 @@ angular.module('starter.controllers', [])
   $scope.userHasCurrentTransactions = false;
   $scope.userHasPastTransactions = false;
   Current_Transactions.query().$promise.then(function(response){
+    if (response.length > 0) {
+        $scope.userHasCurrentTransactions = true;
+    }
     $scope.current_transactions = response;
     console.log($scope.current_transactions);
   });
   Past_Transactions.query().$promise.then(function(response){
     $scope.past_transactions = response;
+    if (response.length > 0) {
+        $scope.userHasPastTransactions = true;
+    }
     console.log($scope.past_transactions);
   });
   Requested_Transactions.query().$promise.then(function(response){
+    if (response.length > 0) {
+        $scope.userHasRequestedTransactions = true;
+    }
     $scope.requested_transactions = response;
     console.log($scope.requested_transactions);
   });

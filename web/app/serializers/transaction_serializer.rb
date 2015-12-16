@@ -1,5 +1,5 @@
 class TransactionSerializer < ActiveModel::Serializer
-  attributes :id, :charger_id, :lender_id, :lender_user, :borrower_user, :borrower_id, :length_time_requested, :start_time, :end_time, :accepted
+  attributes :id, :charger_id, :lender_id, :lender_user, :borrower_user, :borrower_id, :length_time_requested, :start_time, :end_time, :accepted, :created_at
 
   def lender_user
     User.find(object.lender_id)
