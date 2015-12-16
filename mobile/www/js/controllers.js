@@ -125,7 +125,7 @@ angular.module('starter.controllers', [])
   var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
   $scope.map = map;  
 
-  
+
   Users_By_Charger.query({id: $scope.charger_id}).$promise.then(function(response){
     $scope.possible_lenders = response;
     //sort by distance from current user
@@ -134,7 +134,7 @@ angular.module('starter.controllers', [])
     })
     console.log("sorted list of possible lenders",$scope.possible_lenders);
       $scope.nearest_lender_id = $scope.possible_lenders[0]["id"]
-      
+
   });
 
 
@@ -164,8 +164,7 @@ angular.module('starter.controllers', [])
           var marker = new google.maps.Marker({
               map: map,
               animation: google.maps.Animation.DROP,
-              position: markerPos,
-              icon: "http://findicons.com/files/icons/974/glyphish/12/lightning_bolt.png"
+              position: markerPos
           });
           var infoWindowContent = "<a href='#/tab/borrow/findLender/"+$scope.owned_deviceID+"/"+$scope.charger_id+"/"+$scope.num_min_borrow+"/"+ record.id +"'>" + record.first_name  + "</a>";          
  
@@ -266,11 +265,9 @@ angular.module('starter.controllers', [])
  
   $scope.createTransaction = function(){
 
-    Transactions.save({borrower_id: localStorage.userId, lender_id: lender_id,
-                        charger_id: charger_id, 
-                        length_time_requested: num_min_borrow, accepted: false }).$promise.then(function(response){
+    Transactions.save({borrower_id: localStorage.userId, lender_id: lender_id, charger_id: charger_id, length_time_requested: num_min_borrow, accepted: false }).$promise.then(function(response){
       console.log('added a transaction')
-      console.log('added a transaction with lender', lender_id, "borrower", localStorage.userId )
+      console.log('added a transaction with lender', lender_id, "borrower", localStorage.userId, "charger",charger_id, "length_time_requested", num_min_borrow, "accepted", false  )
       $location.path('/tab/transactions');
       //TODO get borrow page to reload on update
       $window.location.reload();  
@@ -391,8 +388,8 @@ angular.module('starter.controllers', [])
 
    
   $scope.userId = $window.localStorage['userId'];
-  $scope.userHasRequestedTransactions = false;
-  $scope.userHasCurrentTransactions = false;
+  // $scope.userHasRequestedTransactions = false;
+  // $scope.userHasCurrentTransactions = false;
   $scope.userHasPastTransactions = false;
   Current_Transactions.query().$promise.then(function(response){
     $scope.current_transactions = response;
@@ -445,6 +442,26 @@ angular.module('starter.controllers', [])
  //         $scope.selected = 'Not found';
  //     }
  // }
+
+})
+
+.controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
+  $scope.userId = $window.localStorage['userId'];
+  // $scope.userHasRequestedTransactions = false;
+  // $scope.userHasCurrentTransactions = false;
+  $scope.userHasPastTransactions = false;
+  Current_Transactions.query().$promise.then(function(response){
+    $scope.current_transactions = response;
+    console.log($scope.current_transactions);
+  });
+  Past_Transactions.query().$promise.then(function(response){
+    $scope.past_transactions = response;
+    console.log($scope.past_transactions);
+  });
+  Requested_Transactions.query().$promise.then(function(response){
+    $scope.requested_transactions = response;
+    console.log($scope.requested_transactions);
+  });
 
 })
 
