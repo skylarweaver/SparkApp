@@ -444,6 +444,16 @@ angular.module('starter.controllers', [])
  //     }
  // }
 
+
+ $scope.transactionAccepted = function(transactionId){
+    console.log("accepted clicked with id", transactionId)
+ }
+
+ $scope.transactionRejected = function(transactionId){
+    console.log("rejected clicked with id", transactionId)
+
+ }
+
 })
 
 .controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {

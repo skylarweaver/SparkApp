@@ -9,4 +9,7 @@ class TransactionSerializer < ActiveModel::Serializer
     User.find(object.borrower_id)
   end
 
+  def created_at 
+  	object.created_at.strftime("%-m/%d %l:%M%P")
+  end
 end

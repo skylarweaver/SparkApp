@@ -35,8 +35,8 @@
 
             <div class=" button-bar item item-divider">
 
-              <a class="button button-small button-block button-balanced">Accept</a>
-              <a class="button button-small button-block button-assertive">Reject</a>
+              <a ng-click="transactionAccepted({{requested_transaction.id}})" class="button button-small button-block button-balanced">Accept</a>
+              <a ng-click="transactionRejected({{requested_transaction.id}})"class="button button-small button-block button-assertive">Reject</a>
             </div>
         </span>
 
