@@ -116,6 +116,7 @@ namespace :db do
     # baker hall...      40.441657, -79.946250
     aditi.longitude =  -79.946250
     aditi.latitude = 40.441657
+    aditi.rating = 4.95
     aditi.facebook_mutual_friend_count = rand(1..40)
     aditi.save!(validate: false) #avoid password can't be blank validation
     #Give each user a few devices
@@ -136,6 +137,7 @@ namespace :db do
     # baker hall...     40.441620, -79.946524
     skylar.longitude =  -79.946524
     skylar.latitude = 40.441620
+    skylar.rating = 4.95
     skylar.facebook_mutual_friend_count = rand(1..40)
     skylar.save!(validate: false) #avoid password can't be blank validation
     #Give each user a few devices
@@ -156,6 +158,7 @@ namespace :db do
     # baker hall...      40.441631, -79.945593
     nathan.longitude =  -79.945593
     nathan.latitude = 40.441631
+    nathan.rating = 4.95
     nathan.facebook_mutual_friend_count = rand(1..40)
     nathan.save!(validate: false) #avoid password can't be blank validation
     #Give each user a few devices
