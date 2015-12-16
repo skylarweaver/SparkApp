@@ -265,11 +265,9 @@ angular.module('starter.controllers', [])
  
   $scope.createTransaction = function(){
 
-    Transactions.save({borrower_id: localStorage.userId, lender_id: lender_id,
-                        charger_id: charger_id, 
-                        length_time_requested: num_min_borrow, accepted: false }).$promise.then(function(response){
+    Transactions.save({borrower_id: localStorage.userId, lender_id: lender_id, charger_id: charger_id, length_time_requested: num_min_borrow, accepted: false }).$promise.then(function(response){
       console.log('added a transaction')
-      console.log('added a transaction with lender', lender_id, "borrower", localStorage.userId )
+      console.log('added a transaction with lender', lender_id, "borrower", localStorage.userId, "charger",charger_id, "length_time_requested", num_min_borrow, "accepted", false  )
       $location.path('/tab/transactions');
       //TODO get borrow page to reload on update
       $window.location.reload();  
