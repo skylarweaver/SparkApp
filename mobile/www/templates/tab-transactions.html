@@ -8,10 +8,9 @@
       Requested Transactions
   </h3>
   <div ng-repeat="requested_transaction in requested_transactions">
-    <div class="list card">
+    <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: requested_transaction.charger_id }">
         <div class="item item-avatar item-icon-right">
-          <img src="{{charger.charger_photo}}"></img>
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="requested_transaction.lender_id==userId">
@@ -42,7 +41,7 @@
   </h3>
 
   <div ng-repeat="current_transaction in current_transactions">
-    <div class="list card">
+    <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: current_transaction.charger_id }">
         <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{current_transaction.id}}">
           <img ng-src="{{charger.charger_photo}}">
@@ -97,7 +96,7 @@
       Past Transactions
   </h3>
   <div ng-repeat="past_transaction in past_transactions">
-    <div class="list card">
+    <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
         <div class="item item-avatar item-icon-right">
           <img ng-src="{{charger.charger_photo}}">
