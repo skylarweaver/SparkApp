@@ -20,6 +20,10 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/devices/:id.json");
 })
 
+.factory('Transactions', function ($resource) {
+  return $resource("http://localhost:3000/transactions/:id.json");
+})
+
 .factory('Requested_Transactions', function ($resource) {
   return $resource("http://localhost:3000/requestedTransactions/:id.json");
 })
