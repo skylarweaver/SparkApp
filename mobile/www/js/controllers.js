@@ -383,7 +383,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TransactionCtrl', function($scope, $stateParams, $window, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
+.controller('TransactionCtrl', function($scope, $stateParams, $window, UpdateTransactions, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
 
 
    
@@ -455,11 +455,19 @@ angular.module('starter.controllers', [])
 
  $scope.transactionAccepted = function(transactionId){
     console.log("accepted clicked with id", transactionId)
+    UpdateTransactions.update({id: transactionId,
+     accepted: true}).$promise.then(function(response){
+      $window.location.reload();  
+     });
+
  }
 
  $scope.transactionRejected = function(transactionId){
     console.log("rejected clicked with id", transactionId)
-
+    UpdateTransactions.update({id: transactionId,
+     accepted: false, end_time: Date()}).$promise.then(function(response){
+      $window.location.reload();  
+     });
  }
 
 })
