@@ -282,6 +282,10 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('BorrowRating', function($scope, Users, $window){
+
+})
+
 .controller('LendCtrl', function($scope, Logout, Devices, Chargers, Owned_Devices, $window, $location, Auth, $ionicPopup) {
   // $scope.settings = {
   //   enableLending: true
@@ -375,6 +379,10 @@ angular.module('starter.controllers', [])
       }
     );
   }
+})
+
+.controller('LendRating', function($scope, Users, $window){
+  
 })
 
 
