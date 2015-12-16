@@ -93,6 +93,7 @@ namespace :db do
       user.longitude = rand * (79.940797-79.946762) - 79.940797
       user.latitude = rand * (40.444331-40.440265) + 40.440265
       user.rating = rand(3.0...5.0).round(2)
+      user.facebook_mutual_friend_count = rand(1..40)
       user.save!(validate: false) #avoid password can't be blank validation
 
       #Give each user a few devices

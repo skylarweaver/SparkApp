@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :user_email, :first_name, :last_name, :token, :user_token, :created_at, :distance_from_current_user, :latitude, :longitude, :rating
+  attributes :id, :user_email, :first_name, :last_name, :token, :user_token, :created_at, :distance_from_current_user, :latitude, :longitude, :rating, :facebook_mutual_friend_count
   
   # def last_sign_in_at
   #   object.last_sign_in_at.strftime("%d/%m/%y %I:%M %p")
@@ -9,6 +9,9 @@ class UserSerializer < ActiveModel::Serializer
     user_token
   end
   
+  def rating
+    object.rating
+  end
   
   def user_email
     object.email

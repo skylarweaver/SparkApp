@@ -34,13 +34,13 @@
     <div class="list card">
       <div ng-repeat="charger in chargers | filter:{id: requested_transaction.charger_id }">
         <div class="item item-avatar">
-          <img src="{{charger.charger_photo}}">
+          <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="requested_transaction.lender_id==userId">
             <!-- all charger_id are null because not set in the populate file -->
             <h3>Lending {{charger.name}} </h3>
             <!-- <div ng-repeat="user in users | filter:{id: current_transaction.borrower_id }"> -->
-            <p>Lending to {{requested_transaction.lender_user.first_name + " " + requested_transaction.lender_user.last_name}}</p>
+            <p>Lending to {{requested_transaction.borrower_user.first_name + " " + requested_transaction.borrower_user.last_name}}</p>
             {{userHasRequestedTransactions = true; ""}}
             <!-- <p> current_transaction.borrower_id</p> -->
             <!-- <p> Currently lending from Lender Name</p> -->
@@ -65,13 +65,13 @@
     <div class="list card">
       <div ng-repeat="charger in chargers | filter:{id: current_transaction.charger_id }">
         <div class="item item-avatar">
-          <img src="{{charger.charger_photo}}">
+          <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="current_transaction.lender_id==userId">
             <!-- all charger_id are null because not set in the populate file -->
             <h3>Lending {{charger.name}} </h3>
             <!-- <div ng-repeat="user in users | filter:{id: current_transaction.borrower_id }"> -->
-            <p>Lending to {{current_transaction.lender_user.first_name + " " + current_transaction.lender_user.last_name}}</p>
+            <p>Lending to {{current_transaction.borrower_user.first_name + " " + current_transaction.borrower_user.last_name}}</p>
             {{userHasCurrentTransactions = true; ""}}
             <!-- <p> current_transaction.borrower_id</p> -->
             <!-- <p> Currently lending from Lender Name</p> -->
@@ -116,7 +116,7 @@
     <div class="list card">
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
         <div class="item item-avatar">
-          <img src="{{charger.charger_photo}}">
+          <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">
             <!-- all charger_id are null because not set in the populate file -->

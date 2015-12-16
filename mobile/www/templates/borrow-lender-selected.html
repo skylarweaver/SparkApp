@@ -10,8 +10,10 @@
       </div>
       <div class="item item-avatar">
         <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
-        <h2>{{lender.first_name}} {{lender.last_name}}</h2>
+        <h2>{{lender.first_name}}</h2>
         <p>{{rounded_distance}} miles away</p>
+        <p>Average Rating: {{lender.rating}} stars</p>
+        <p>{{lender.facebook_mutual_friend_count}} mutual friends</p>
       </div>
     
     <div class-"item" id="map2" data-tap-disabled="true">
@@ -19,14 +21,8 @@
      
     
       <div class="item">
-     <a href="#/idk" class="button button-block button-balanced" align="center">Send {{lender.first_name}} a borrow request</a>
-
-
+           <button class="button button-block button-balanced" ng-click="createTransaction()">Send {{lender.first_name}} a borrow request</button>
       </div>
     
-
-
-
-
 </ion-content>
 </ion-view>
