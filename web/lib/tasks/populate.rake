@@ -40,12 +40,18 @@ namespace :db do
     miniUSB.charger_photo = "http://sockitz.com.au/media/catalog/category/mini-usb-connector.jpg"
     miniUSB.save! 
 
+    magsafe = Charger.new
+    magsafe.name = "MagSafe 2 60W charger"
+    magsafe.charger_photo = "http://img2.owcnow.com/imgs/ndesc/Apple/APLMD506xxx/APLMD506_hero.jpg"
+    magsafe.save! 
+
 
     #Add Devices 
     lightningDeviceNames = ["iPhone 5", "iPhone 5C","iPhone 5S", "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", "iPod Touch (5th gen)", "iPod Nano (7th gen)", "iPad mini", "iPad 4", "iPad Air", "iPad Air 2" ]
     appleThirtyPinDeviceNames = ["iPhone 3G", "iPhone 3GS", "iPhone 4", "iPhone 4S", "iPod Touch (1st-4th gen)", "iPad", "iPad 2", "iPad 3"]
     microUSBDeviceNames = ["kindle", "Nook Color", "Blackberry"]
     miniUSBDeviceNames = []
+    magsafeDeviceNames = ["MacBook Pro", "MacBook Air"]
     #https://support.apple.com/en-us/HT201700
 
 
@@ -74,6 +80,13 @@ namespace :db do
       device = Device.new
       device.name = d
       device.charger_id = miniUSB.id
+      device.save!
+    end
+
+    magsafeDeviceNames.each do |d|
+      device = Device.new
+      device.name = d
+      device.charger_id = magsafe.id
       device.save!
     end
 
