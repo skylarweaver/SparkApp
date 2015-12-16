@@ -15,21 +15,34 @@
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="requested_transaction.lender_id==userId">
             <!-- all charger_id are null because not set in the populate file -->
-            <h3>Lending {{charger.name}} </h3>
+            <h3>Lend {{charger.name}} </h3>
             <!-- <div ng-repeat="user in users | filter:{id: current_transaction.borrower_id }"> -->
-            <p>Lending to {{requested_transaction.borrower_user.first_name + " " + requested_transaction.borrower_user.last_name}}</p>
+            <p>to {{requested_transaction.borrower_user.first_name + " " + requested_transaction.borrower_user.last_name}}?</p>
             {{userHasRequestedTransactions = true; ""}}
             <!-- <p> current_transaction.borrower_id</p> -->
             <!-- <p> Currently lending from Lender Name</p> -->
           </span> 
           <span ng-if="requested_transaction.borrower_id==userId">
-            <h3>Borrowing {{charger.name}} </h3>
-            <p>Borrowing from {{requested_transaction.lender_user.first_name + " " + requested_transaction.lender_user.last_name}}</p>
+            <h3>{{charger.name}} </h3>
+            <p>Sent borrow request to {{requested_transaction.lender_user.first_name + " " + requested_transaction.lender_user.last_name}}</p>
+            <p>{{requested_transaction.created_at}}</p>
             {{userHasRequestedTransactions = true; ""}}
           </span> 
           <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
         </div>
+
+        <span ng-if="requested_transaction.lender_id==userId">
+
+            <div class=" button-bar item item-divider">
+
+              <a ng-click="transactionAccepted({{requested_transaction.id}})" class="button button-small button-block button-balanced">Accept</a>
+              <a ng-click="transactionRejected({{requested_transaction.id}})"class="button button-small button-block button-assertive">Reject</a>
+            </div>
+        </span>
+
       </div>
+
+
     </div>
   </div>
   <div ng-if="userHasRequestedTransactions===false"> 
