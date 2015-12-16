@@ -4,37 +4,13 @@
 </ion-nav-bar>
 <ion-view view-title="My Transactions">
   <ion-content class="padding">
-
-<!--   <h3>      
-    Requested Transactions
-  </h3>
-  <h5>None</h5>
-  <div ng-repeat="requested_transaction in requested_transactions">
-    <div class="list card">
-      <div class="item item-avatar">
-        <img src="mcfly.jpg">
-        <h2>Borrow Request for iPhone 6S Charger</h2>
-        <p>From Sarah Smith</p>
-      </div>
-      <div class="item item-text-wrap">
-          <span ng-if="requested_transaction.lender_id==userId"> 
-            <p>You are lending</p>
-          </span> 
-          <span ng-if="requested_transaction.borrower_id==userId">
-            <p>You are borrowing</p>
-          </span> 
-      </div>
-    </div>
-  </div> -->
-
   <h3>      
       Requested Transactions
   </h3>
   <div ng-repeat="requested_transaction in requested_transactions">
-    
-    <div class="list card">
+    <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: requested_transaction.charger_id }">
-        <div class="item item-avatar">
+        <div class="item item-avatar item-icon-right">
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="requested_transaction.lender_id==userId">
@@ -52,6 +28,7 @@
             <p>{{requested_transaction.created_at}}</p>
             {{userHasRequestedTransactions = true; ""}}
           </span> 
+          <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
         </div>
 
         <span ng-if="requested_transaction.lender_id==userId">
@@ -68,17 +45,18 @@
 
     </div>
   </div>
-  <div ng-if="userHasRequestedTransactions == false"> 
+  <div ng-if="userHasRequestedTransactions===false"> 
     <h5>None</h5>
   </div>
 
   <h3>      
       Current Transactions
   </h3>
+
   <div ng-repeat="current_transaction in current_transactions">
-    <div class="list card">
+    <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: current_transaction.charger_id }">
-        <div class="item item-avatar">
+        <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{current_transaction.id}}">
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="current_transaction.lender_id==userId">
@@ -86,22 +64,26 @@
             <h3>Lending {{charger.name}} </h3>
             <!-- <div ng-repeat="user in users | filter:{id: current_transaction.borrower_id }"> -->
             <p>Lending to {{current_transaction.borrower_user.first_name + " " + current_transaction.borrower_user.last_name}}</p>
+            <p>Lent at {{current_transaction.start_time | date: 'shortTime'}}</p>
             {{userHasCurrentTransactions = true; ""}}
             <!-- <p> current_transaction.borrower_id</p> -->
             <!-- <p> Currently lending from Lender Name</p> -->
           </span> 
-          <span ng-if="current_transaction.borrower_id==userId">
+          <span ng-if="current_transaction.borrower_id==userId" ng-init="userHasCurrentTransactions='true'">
             <h3>Borrowing {{charger.name}} </h3>
             <p>Borrowing from {{current_transaction.lender_user.first_name + " " + current_transaction.lender_user.last_name}}</p>
             {{userHasCurrentTransactions = true; ""}}
+            {{userHasCurrentTransactions = 'true'; ""}}
+            <p>Borrowed at {{current_transaction.start_time | date: 'shortTime'}}</p>
           </span> 
-        </div>
+          <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
+        </a>
       </div>
 <!--     <div class="item item-text-wrap">
       </div> -->
     </div>
   </div>
-  <div ng-if="userHasCurrentTransactions == false"> 
+  <div ng-if="userHasCurrentTransactions===false"> 
     <h5>None</h5>
   </div>
 
@@ -127,9 +109,9 @@
       Past Transactions
   </h3>
   <div ng-repeat="past_transaction in past_transactions">
-    <div class="list card">
+    <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
-        <div class="item item-avatar">
+        <div class="item item-avatar item-icon-right">
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">
@@ -138,23 +120,28 @@
             <!-- <div ng-repeat="user in users | filter:{id: past_transaction.borrower_id }"> -->
             <p>Lent to {{past_transaction.lender_user.first_name + " " + past_transaction.lender_user.last_name}}</p>
             {{userHasPastTransactions = true; ""}}
+            <p>Lent on {{past_transaction.start_time | date: "MM/dd 'at' h:mma" }}</p>
+            <p>Returned on {{past_transaction.end_time | date: "MM/dd 'at' h:mma" }}</p>
             <!-- <p> past_transaction.borrower_id</p> -->
             <!-- <p> Currently lending from Lender Name</p> -->
           </span> 
           <span ng-if="past_transaction.borrower_id==userId" ng-init="userHasPastTransactions=true">
             <h3>Borrowed {{charger.name}} </h3>
             <p>Borrowed from {{past_transaction.lender_user.first_name + " " + past_transaction.lender_user.last_name}}</p>
+            <p>Borrowed on {{past_transaction.start_time | date: "MM/dd 'at' h:mma" }}</p>
+            <p>Returned on {{past_transaction.end_time | date: "MM/dd 'at' h:mma" }}</p>
             {{userHasPastTransactions = true; ""}}    
           </span> 
+          <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
         </div>
       </div>
 <!--     <div class="item item-text-wrap">
       </div> -->
     </div>
   </div>
-  <div ng-if="userHasPastTransactions == false"> 
+<!--   <div ng-if="userHasPastTransactions == false"> 
     <h5>None</h5>
-  </div>
+  </div> -->
 
 </ion-content>
 </ion-view>

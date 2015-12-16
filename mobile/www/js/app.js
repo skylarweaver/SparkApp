@@ -103,25 +103,39 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })  
 
-  .state('tab.lend-detail', {
-    url: '/lend/:owned_deviceID',
+
+  .state('tab.transaction-detail', {
+    url: '/transactions/:transactionID',
     views: {
-      'tab-lend': {
-        templateUrl: 'templates/lend-detail.html',
-        controller: 'LendDetailCtrl'
+      'tab-transactions': {
+        templateUrl: 'templates/transaction-detail.html',
+        controller: 'TransactionDetailCtrl'
+      }
+    }
+  })  
+
+
+  .state('tab.chat-detail', {
+    url: '/chats/:chatId',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/chat-detail.html',
+         controller: 'ChatDetailCtrl'
       }
     }
   })
-  
-  // .state('tab.user-detail', {
-  //   url: '/user/:userID',
+
+
+  // .state('tab.lend-detail', {
+  //   url: '/lend/:owned_deviceID',
   //   views: {
   //     'tab-lend': {
-  //       templateUrl: 'templates/user-detail.html',
-  //       controller: 'UserDetailCtrl'
+  //       templateUrl: 'templates/lend-detail.html',
+  //       controller: 'LendDetailCtrl'
   //     }
   //   }
   // })
+
 
 
   .state('user–detail', {
@@ -150,15 +164,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       controller: 'AddDeviceCtrl'
   }) 
 
-  .state('tab.chat-detail', {
-    url: '/chats/:chatId',
-    views: {
-      'tab-chats': {
-        templateUrl: 'templates/chat-detail.html',
-         controller: 'ChatDetailCtrl'
-      }
-    }
-  })
   
   .state('login', {
       url: '/login',
