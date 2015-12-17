@@ -448,13 +448,51 @@ angular.module('starter.controllers', [])
 
 .controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
   $scope.transactionID = $stateParams.transactionID;
-  $scope.userId = $window.localStorage['userId'];
+  $scope.userID = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
   $scope.userHasPastTransactions = false;
   
   Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {
     $scope.transaction = data;
+    $scope.lender_id = $scope.transaction.lender_id
+
+
+    // Users.get({id: lender_id}).$promise.then(function(data) {
+    //   $scope.lender = data;
+    //   $scope.rounded_distance = Number(data.distance_from_current_user).toFixed(2);
+    //   $scope.lenderLatLng = new google.maps.LatLng($scope.lender.latitude, $scope.lender.longitude);
+    // });
+
+    // Users.get({id: $window.localStorage['userId']}).$promise.then(function(data) {
+    //   $scope.current_user = data;
+    //   $scope.curUserLatLng = new google.maps.LatLng(data.latitude, data.longitude);
+
+    //   //create map
+    //   var mapOptions = {
+    //       center: $scope.curUserLatLng,
+    //       zoom: 15,
+    //       mapTypeId: google.maps.MapTypeId.ROADMAP
+    //   };
+    //   $scope.map = new google.maps.Map(document.getElementById("map3"), mapOptions);
+    //   //Wait until the map is loaded
+    //   google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+    //     console.log('hi map is loaded')
+    //     //drop my marker
+    //     var myMarker = new google.maps.Marker({
+    //         map: $scope.map,
+    //         animation: google.maps.Animation.DROP,
+    //         position: $scope.curUserLatLng,
+    //         icon: "http://m.bostonusa.com/core/icons/map/blue-dot.png"
+    //     });      
+    //     //drop lender marker
+    //     var lenderMarker = new google.maps.Marker({
+    //         map: $scope.map,
+    //         animation: google.maps.Animation.DROP,
+    //         position: $scope.lenderLatLng
+    //     }); 
+    //   });
+    // });
   });
 
   Current_Transactions.query().$promise.then(function(response){
@@ -471,7 +509,7 @@ angular.module('starter.controllers', [])
   });
 
 
-
+  
 })
 
 
@@ -585,48 +623,6 @@ $scope.register = function() {
   );
 }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /mobile/www/controllers.js
-// .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
-// $scope.data = {};
-
-// $scope.login = function() {
-//   var user_session = new UserSession({ user: $scope.data });
-//   user_session.$save(
-//     function(data){
-//       window.localStorage['userId'] = data.id;
-//       window.localStorage['userName'] = data.name;
-//       $location.path('/tab/borrow');
-//     },
-//     function(err){
-//       var error = err["data"]["error"] || err.data.join('. ')
-//       var confirmPopup = $ionicPopup.alert({
-//         title: 'An error occured',
-//         template: error
-//       });
-//     }
-//   );
-// }
-// })
 
 
 

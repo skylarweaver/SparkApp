@@ -1,23 +1,123 @@
 <ion-view view-title="Transaction Details">
   <ion-content class="">
-    <div class="item item-avatar">
-      <img ng-src='{{transaction.charger_object.charger_photo}}'>
-      <h2> Borrow {{transaction.charger_object.name}} </h2>
-      <p>Requested for {{transaction.length_time_requested}} minutes</p>
-    </div>
-    <div class="item item-avatar">
-      <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
-      <h2>{{transaction.lender_user.first_name}}</h2>
-      <!-- <p>{{rounded_distance}} miles away</p> -->
-      <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
-      <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
+    <!-- if user is borrowerlender  and transaction not started-->
+    <div ng-if="lender_id != userID && transaction.start_time == nil">
+      <div class="item item-avatar">
+        <img ng-src='{{transaction.charger_object.charger_photo}}'>
+        <h2> Borrowing {{transaction.charger_object.name}} </h2>
+        <p>Requested for {{transaction.length_time_requested}} minutes</p>
+      </div>
+      <div class="item item-avatar">
+        <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+        <h2>{{transaction.lender_user.first_name}} has accepted!</h2>
+        <!-- <p>{{rounded_distance}} miles away</p> -->
+        <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
+        <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
+      </div>
+
+      <div class-"item" id="map2" data-tap-disabled="true">
+      </div>
+
+      <div class="item">
+        <p>Send Dudley a message to retrieve the charger!</p>
+        <button class="button button-block button-balanced icon-right ion-chatbubble" ng-click="createTransaction()">Send {{transaction.lender_user.first_name}} a message</button>
+      </div>
     </div>
 
-    <div class-"item" id="map2" data-tap-disabled="true">
+    <!-- if user is lender  transaction not started-->
+    <div ng-if="lender_id == userID && transaction.start_time == nil">
+      <div class="item item-avatar">
+        <img ng-src='{{transaction.charger_object.charger_photo}}'>
+        <h2> Lending {{transaction.charger_object.name}} </h2>
+        <p>Requested for {{transaction.length_time_requested}} minutes</p>
+      </div>
+      <div class="item item-avatar">
+        <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+        <h2>{{transaction.borrower_user.first_name}}</h2>
+        <!-- <p>{{rounded_distance}} miles away</p> -->
+        <p>Average Rating: {{transaction.borrower_user.rating}} stars</p>
+        <p>{{transaction.borrower_user.facebook_mutual_friend_count}} mutual friends</p>
+      </div>
+
+      <div class-"item" id="map2" data-tap-disabled="true">
+      </div>
+
+      <div class="item">
+      <!--       Message the lender
+        <i class="icon ion-chatbubble"></i> -->
+        <!-- <span id="userPhone">717.544.6345</span> -->
+        <p>Wait for {{transaction.borrower_user.first_name}} to pick up the charger!</p>
+        <div class="row">
+          <div class="col">
+            <button class="button button-block button-stable" ng-click="createTransaction()">Message {{transaction.lender_user.first_name}}</button>
+          </div>
+          <div class="col">
+            <button class="button button-block button-balanced" ng-click="createTransaction()">Charger Picked up</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="item">
-     <button class="button button-block button-balanced" ng-click="createTransaction()">Send {{transaction.lender_user.first_name}} a borrow request</button>
-   </div>
+
+      <!-- if user is borrower and transaction started-->
+      <div ng-if="lender_id != userID && transaction.start_time != nil">
+        <div class="item item-avatar">
+          <img ng-src='{{transaction.charger_object.charger_photo}}'>
+          <h2> Lending {{transaction.charger_object.name}} </h2>
+          <p>Requested for {{transaction.length_time_requested}} minutes</p>
+        </div>
+        <div class="item item-avatar">
+          <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+          <h2>{{transaction.borrower_user.first_name}}</h2>
+          <!-- <p>{{rounded_distance}} miles away</p> -->
+          <p>Average Rating: {{transaction.borrower_user.rating}} stars</p>
+          <p>{{transaction.borrower_user.facebook_mutual_friend_count}} mutual friends</p>
+        </div>
+
+        <div class-"item" id="map2" data-tap-disabled="true">
+        </div>
+
+        <div class="item">
+        <!--       Message the lender
+          <i class="icon ion-chatbubble"></i> -->
+          <!-- <span id="userPhone">717.544.6345</span> -->
+          <p>Message {{transaction.lender_user.first_name}} to return the charger</p>
+          <button class="button button-block button-balanced icon-right ion-chatbubble" ng-click="createTransaction()">Send {{transaction.lender_user.first_name}} a message</button>
+        </div>
+      </div>
+   
+        <!-- if user is Lender and transaction started-->
+        <div ng-if="lender_id == userID && transaction.start_time != nil">
+          <div class="item item-avatar">
+            <img ng-src='{{transaction.charger_object.charger_photo}}'>
+            <h2> Lending {{transaction.charger_object.name}} </h2>
+            <p>Requested for {{transaction.length_time_requested}} minutes</p>
+          </div>
+          <div class="item item-avatar">
+            <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+            <h2>{{transaction.borrower_user.first_name}}</h2>
+            <!-- <p>{{rounded_distance}} miles away</p> -->
+            <p>Average Rating: {{transaction.borrower_user.rating}} stars</p>
+            <p>{{transaction.borrower_user.facebook_mutual_friend_count}} mutual friends</p>
+          </div>
+
+          <div class-"item" id="map2" data-tap-disabled="true">
+          </div>
+
+          <div class="item">
+          <!--       Message the lender
+            <i class="icon ion-chatbubble"></i> -->
+            <!-- <span id="userPhone">717.544.6345</span> -->
+            <p>Message {{transaction.borrower_user.first_name}} to request charger return</p>
+            <div class="row">
+            <div class="col">
+                <button class="button button-block button-stable" ng-click="createTransaction()">Message {{transaction.lender_user.first_name}}</button>
+              </div>
+              <div class="col">
+                <button class="button button-block button-balanced" ng-click="createTransaction()">Charger Returned</button>
+              </div>
+            </div>          
+          </div>
+        </div>
   </ion-content>
 </ion-view>

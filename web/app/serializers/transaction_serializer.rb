@@ -15,6 +15,7 @@ class TransactionSerializer < ActiveModel::Serializer
   end
 
   def created_at 
-  	object.created_at.strftime("%-m/%d %l:%M%P")
+  	#Format on the front end
+  	object.created_at #.strftime("%-m/%d %l:%M%P")
   end
 end
