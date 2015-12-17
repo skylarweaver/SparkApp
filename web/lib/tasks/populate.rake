@@ -130,7 +130,7 @@ namespace :db do
     aditi.longitude =  -79.946250
     aditi.latitude = 40.441657
     aditi.rating = 4.95
-    aditi.facebook_mutual_friend_count = rand(1..40)
+    aditi.facebook_mutual_friend_count = 39
     aditi.save!(validate: false) #avoid password can't be blank validation
     #Give each user a few devices
     rand(1..3).times do
@@ -151,7 +151,7 @@ namespace :db do
     skylar.longitude =  -79.946524
     skylar.latitude = 40.441620
     skylar.rating = 4.95
-    skylar.facebook_mutual_friend_count = rand(1..40)
+    skylar.facebook_mutual_friend_count = 39
     skylar.save!(validate: false) #avoid password can't be blank validation
     #Give each user a few devices
     rand(1..3).times do
@@ -172,7 +172,7 @@ namespace :db do
     nathan.longitude =  -79.945593
     nathan.latitude = 40.441631
     nathan.rating = 4.95
-    nathan.facebook_mutual_friend_count = rand(1..40)
+    nathan.facebook_mutual_friend_count = 39
     nathan.save!(validate: false) #avoid password can't be blank validation
     #Give each user a few devices
     rand(1..3).times do
@@ -195,7 +195,7 @@ namespace :db do
       t.length_time_requested = rand(10..120) #randpm time between 10 min and 2 hrs
       t.accepted = true
       t.start_time = Faker::Time.between(DateTime.now - 1, DateTime.now)
-      if t.start_time < DateTime.now - 2.hours
+      if t.start_time < DateTime.now - 1.hours
         t.end_time = nil
       else 
         t.end_time = t.start_time + rand(600..7200) #end time is up to two hours after
