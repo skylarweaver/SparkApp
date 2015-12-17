@@ -1,32 +1,23 @@
-<ion-view view-title="Contact Lender?">
+<ion-view view-title="Transaction Details">
+  <ion-content class="">
+    <div class="item item-avatar">
+      <img ng-src='{{transaction.charger_object.charger_photo}}'>
+      <h2> Borrow {{transaction.charger_object.name}} </h2>
+      <p>Requested for {{transaction.length_time_requested}} minutes</p>
+    </div>
+    <div class="item item-avatar">
+      <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+      <h2>{{transaction.lender_user.first_name}}</h2>
+      <!-- <p>{{rounded_distance}} miles away</p> -->
+      <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
+      <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
+    </div>
 
-<ion-content class="padding">
-<!--     <div class="list card">
-      <div class="item item-avatar">
-                      <img ng-src='{{item.charger_photo}}'>
-
-        <h2> Borrow {{item.charger_name}} </h2>
-        <p>for {{item.personal_device_name}}</p>
-      </div>
-      <div class="item item-avatar">
-        <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
-        <h2>{{lender.first_name}} {{lender.last_name}}</h2>
-        <p>{{rounded_distance}} miles away</p>
-      </div>
-    
     <div class-"item" id="map2" data-tap-disabled="true">
     </div>
-     
-    
-      <div class="item">
-     <a href="#/idk" class="button button-block button-balanced" align="center">Send {{lender.first_name}} a borrow request</a>
 
-
-      </div>
-    
-
-
- -->
-
-</ion-content>
+    <div class="item">
+     <button class="button button-block button-balanced" ng-click="createTransaction()">Send {{transaction.lender_user.first_name}} a borrow request</button>
+   </div>
+  </ion-content>
 </ion-view>

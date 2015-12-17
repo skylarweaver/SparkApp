@@ -387,10 +387,12 @@ angular.module('starter.controllers', [])
     $scope.current_transactions = response;
     console.log($scope.current_transactions);
   });
+  
   Past_Transactions.query().$promise.then(function(response){
     $scope.past_transactions = response;
     console.log($scope.past_transactions);
   });
+
   Requested_Transactions.query().$promise.then(function(response){
     $scope.requested_transactions = response;
     console.log($scope.requested_transactions);
@@ -407,41 +409,19 @@ angular.module('starter.controllers', [])
   Owned_Devices.query().$promise.then(function(response){
     $scope.owned_devices = response;
   });
-
-  // Users.query().$promise.then(function(response){
-  //   $scope.users = response;
-  //   console.log("USERS:" + $scope.users)
-  // });
-
-  // $scope.findUserName = function(user_id){
-  //   Users.get({id: user_id}).$promise.then(function(data) {
-  //        $scope.user = data;
-  //        return $scope.user
-  //        // console.log("hey",$scope.lender);
-  //   });
-  // }
-
-  // Users.get({id: lender_id}).$promise.then(function(data) {
-  //      $scope.lender = data;
-  //      console.log("hey",$scope.lender);
-  // });
-
- //  $scope.findChargerPhoto = function(charger_id) {
- //     var found = $filter('filter')($scope.chargers, {id: charger_id}, true);
- //     if (found.length) {
- //         $scope.selected = JSON.stringify(found[0]);
- //     } else {
- //         $scope.selected = 'Not found';
- //     }
- // }
-
 })
 
-.controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
+.controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
+  $scope.transactionID = $stateParams.transactionID;
   $scope.userId = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
   $scope.userHasPastTransactions = false;
+  
+  Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {
+    $scope.transaction = data;
+  });
+
   Current_Transactions.query().$promise.then(function(response){
     $scope.current_transactions = response;
     console.log($scope.current_transactions);
@@ -454,6 +434,8 @@ angular.module('starter.controllers', [])
     $scope.requested_transactions = response;
     console.log($scope.requested_transactions);
   });
+
+
 
 })
 

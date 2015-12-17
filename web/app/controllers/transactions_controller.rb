@@ -19,6 +19,11 @@ class TransactionsController < ApplicationController
   end
 
   def index
+    @all_transactions = Transaction.all
+    render json: @all_transactions
+  end
+
+  def pastTransactions
     @nil_transactions = Transaction.where.not(end_time: nil)
 
     @lender_user_transactions = Transaction.where(lender_id: current_user.id)
@@ -34,6 +39,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/1
   # GET /transactions/1.json
   def show
+    render json: Transaction.find(params[:id])
   end
 
   # GET /transactions/new
