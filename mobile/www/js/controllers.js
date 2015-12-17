@@ -446,17 +446,33 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
+.controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices, UpdateTransactions) {
   $scope.transactionID = $stateParams.transactionID;
   $scope.userID = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
   $scope.userHasPastTransactions = false;
   
+  $scope.chargerPickedUp = function(transaction){
+   console.log("Transaction started", transaction.id)
+   UpdateTransactions.update({id: transaction.id,
+    start_time: new Date()}).$promise.then(function(response){
+     $window.location.reload();  
+   });
+  }
+
+  $scope.chargerReturned = function(transaction){
+   console.log("charger returned", transaction.id)
+   UpdateTransactions.update({id: transaction.id,
+    end_time: new Date()}).$promise.then(function(response){
+     //NATE: send user to rating page right here
+     $window.location.reload();  
+   });
+  }
+
   Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {
     $scope.transaction = data;
     $scope.lender_id = $scope.transaction.lender_id
-
 
     // Users.get({id: lender_id}).$promise.then(function(data) {
     //   $scope.lender = data;
