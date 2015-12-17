@@ -82,12 +82,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.borrow-rating', {
+    url: '/borrow/findLender/:owned_deviceID/:charger_id/:borrowTime/:lender_id/rating',
+    views: {
+      'tab-borrow': {
+        templateUrl: 'templates/borrow-rating.html',
+        controller: 'BorrowRating'
+      }
+    }
+  })
+
   .state('tab.lend', {
     url: '/lend',
     views: {
       'tab-lend': {
         templateUrl: 'templates/tab-lend.html',
         controller: 'LendCtrl'
+      }
+    }
+  })
+
+  .state('tab.lend-rating', {
+    url: '/lend/rating',
+    views: {
+      'tab-lend': {
+        templateUrl: 'templates/lend-rating.html',
+        controller: 'LendRating'
       }
     }
   })

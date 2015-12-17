@@ -65,6 +65,13 @@ angular.module('starter.services', [])
     );
   })
 
+.factory('UpdateTransactions', function ($resource) {
+    return $resource('http://localhost:3000/transactions/:id.json',
+    {id: '@id'}, 
+    {update: {method:'PUT'} }
+    );
+  })
+
 .factory('Auth',function($window){
   return {
     set: function(data) {

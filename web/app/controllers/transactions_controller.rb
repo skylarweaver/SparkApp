@@ -4,16 +4,16 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.json
   def requestedTransactions
-    @lender_transactions = Transaction.where(lender_id: current_user.id, accepted: false)
-    @borrow_transactions = Transaction.where(borrower_id: current_user.id, accepted: false)
+    @lender_transactions = Transaction.where(lender_id: current_user.id, accepted: false, end_time: nil)
+    @borrow_transactions = Transaction.where(borrower_id: current_user.id, accepted: false, end_time: nil)
     @requested_transactions = @lender_transactions + @borrow_transactions
     render json: @requested_transactions
   end
 
   def currentTransactions
     # obtain all transactions that are currently ongoing
-    @lender_transactions = Transaction.where(lender_id: current_user.id, end_time: nil)
-    @borrow_transactions = Transaction.where(borrower_id: current_user.id, end_time: nil)
+    @lender_transactions = Transaction.where(lender_id: current_user.id, accepted: true, end_time: nil)
+    @borrow_transactions = Transaction.where(borrower_id: current_user.id, accepted: true, end_time: nil)
     @current_transactions = @lender_transactions + @borrow_transactions
     render json: @current_transactions
   end
@@ -99,6 +99,6 @@ class TransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_params
-      params.require(:transaction).permit(:charger_id, :lender_id, :borrower_id, :length_time_requested, :accepted)
+      params.require(:transaction).permit(:charger_id, :lender_id, :borrower_id, :length_time_requested, :accepted, :id, :end_time)
     end
 end
