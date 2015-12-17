@@ -29,7 +29,7 @@ angular.module('starter.services', [])
 })
 
 .factory('Past_Transactions', function ($resource) {
-  return $resource("http://localhost:3000/transactions/:id.json");
+  return $resource("http://localhost:3000/pastTransactions/:id.json");
 })
 
 .factory('Current_Transactions', function ($resource) {

@@ -28,7 +28,8 @@ Rails.application.routes.draw do
 
   get '/currentTransactions', to: 'transactions#currentTransactions'
   get '/requestedTransactions', to: 'transactions#requestedTransactions'
-  
+  get '/pastTransactions', to: 'transactions#pastTransactions'
+
   get '/usersByCharger/:charger_id', to: 'owned_devices#getUsersByChargerAndDistance'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

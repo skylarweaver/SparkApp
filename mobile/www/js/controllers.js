@@ -398,6 +398,7 @@ angular.module('starter.controllers', [])
     $scope.current_transactions = response;
     console.log($scope.current_transactions);
   });
+  
   Past_Transactions.query().$promise.then(function(response){
     $scope.past_transactions = response;
     if (response.length > 0) {
@@ -405,6 +406,7 @@ angular.module('starter.controllers', [])
     }
     console.log($scope.past_transactions);
   });
+
   Requested_Transactions.query().$promise.then(function(response){
     if (response.length > 0) {
         $scope.userHasRequestedTransactions = true;
@@ -425,58 +427,90 @@ angular.module('starter.controllers', [])
     $scope.owned_devices = response;
   });
 
-  // Users.query().$promise.then(function(response){
-  //   $scope.users = response;
-  //   console.log("USERS:" + $scope.users)
-  // });
+   $scope.transactionAccepted = function(transactionId){
+      console.log("accepted clicked with id", transactionId)
+      UpdateTransactions.update({id: transactionId,
+       accepted: true}).$promise.then(function(response){
+        $window.location.reload();  
+       });
 
-  // $scope.findUserName = function(user_id){
-  //   Users.get({id: user_id}).$promise.then(function(data) {
-  //        $scope.user = data;
-  //        return $scope.user
-  //        // console.log("hey",$scope.lender);
-  //   });
-  // }
+   }
 
-  // Users.get({id: lender_id}).$promise.then(function(data) {
-  //      $scope.lender = data;
-  //      console.log("hey",$scope.lender);
-  // });
-
- //  $scope.findChargerPhoto = function(charger_id) {
- //     var found = $filter('filter')($scope.chargers, {id: charger_id}, true);
- //     if (found.length) {
- //         $scope.selected = JSON.stringify(found[0]);
- //     } else {
- //         $scope.selected = 'Not found';
- //     }
- // }
-
-
- $scope.transactionAccepted = function(transactionId){
-    console.log("accepted clicked with id", transactionId)
-    UpdateTransactions.update({id: transactionId,
-     accepted: true}).$promise.then(function(response){
-      $window.location.reload();  
-     });
-
- }
-
- $scope.transactionRejected = function(transactionId){
-    console.log("rejected clicked with id", transactionId)
-    UpdateTransactions.update({id: transactionId,
-     accepted: false, end_time: Date()}).$promise.then(function(response){
-      $window.location.reload();  
-     });
- }
+   $scope.transactionRejected = function(transactionId){
+      console.log("rejected clicked with id", transactionId)
+      UpdateTransactions.update({id: transactionId,
+       accepted: false, end_time: Date()}).$promise.then(function(response){
+        $window.location.reload();  
+       });
+   }
 
 })
 
-.controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
-  $scope.userId = $window.localStorage['userId'];
+.controller('TransactionDetailCtrl', function($scope, $stateParams, $window, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices, UpdateTransactions) {
+  $scope.transactionID = $stateParams.transactionID;
+  $scope.userID = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
   $scope.userHasPastTransactions = false;
+  
+  $scope.chargerPickedUp = function(transaction){
+   console.log("Transaction started", transaction.id)
+   UpdateTransactions.update({id: transaction.id,
+    start_time: new Date()}).$promise.then(function(response){
+     $window.location.reload();  
+   });
+  }
+
+  $scope.chargerReturned = function(transaction){
+   console.log("charger returned", transaction.id)
+   UpdateTransactions.update({id: transaction.id,
+    end_time: new Date()}).$promise.then(function(response){
+     //NATE: send user to rating page right here
+     $window.location.reload();  
+   });
+  }
+
+  Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {
+    $scope.transaction = data;
+    $scope.lender_id = $scope.transaction.lender_id
+
+    // Users.get({id: lender_id}).$promise.then(function(data) {
+    //   $scope.lender = data;
+    //   $scope.rounded_distance = Number(data.distance_from_current_user).toFixed(2);
+    //   $scope.lenderLatLng = new google.maps.LatLng($scope.lender.latitude, $scope.lender.longitude);
+    // });
+
+    // Users.get({id: $window.localStorage['userId']}).$promise.then(function(data) {
+    //   $scope.current_user = data;
+    //   $scope.curUserLatLng = new google.maps.LatLng(data.latitude, data.longitude);
+
+    //   //create map
+    //   var mapOptions = {
+    //       center: $scope.curUserLatLng,
+    //       zoom: 15,
+    //       mapTypeId: google.maps.MapTypeId.ROADMAP
+    //   };
+    //   $scope.map = new google.maps.Map(document.getElementById("map3"), mapOptions);
+    //   //Wait until the map is loaded
+    //   google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+    //     console.log('hi map is loaded')
+    //     //drop my marker
+    //     var myMarker = new google.maps.Marker({
+    //         map: $scope.map,
+    //         animation: google.maps.Animation.DROP,
+    //         position: $scope.curUserLatLng,
+    //         icon: "http://m.bostonusa.com/core/icons/map/blue-dot.png"
+    //     });      
+    //     //drop lender marker
+    //     var lenderMarker = new google.maps.Marker({
+    //         map: $scope.map,
+    //         animation: google.maps.Animation.DROP,
+    //         position: $scope.lenderLatLng
+    //     }); 
+    //   });
+    // });
+  });
+
   Current_Transactions.query().$promise.then(function(response){
     $scope.current_transactions = response;
     console.log($scope.current_transactions);
@@ -490,6 +524,8 @@ angular.module('starter.controllers', [])
     console.log($scope.requested_transactions);
   });
 
+
+  
 })
 
 
@@ -603,48 +639,6 @@ $scope.register = function() {
   );
 }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /mobile/www/controllers.js
-// .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
-// $scope.data = {};
-
-// $scope.login = function() {
-//   var user_session = new UserSession({ user: $scope.data });
-//   user_session.$save(
-//     function(data){
-//       window.localStorage['userId'] = data.id;
-//       window.localStorage['userName'] = data.name;
-//       $location.path('/tab/borrow');
-//     },
-//     function(err){
-//       var error = err["data"]["error"] || err.data.join('. ')
-//       var confirmPopup = $ionicPopup.alert({
-//         title: 'An error occured',
-//         template: error
-//       });
-//     }
-//   );
-// }
-// })
 
 
 
