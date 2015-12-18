@@ -427,6 +427,16 @@ angular.module('starter.controllers', [])
     $scope.owned_devices = response;
   });
 
+
+  $scope.cancelRequest = function(transactionId){
+      console.log("transaction deleting with id", transactionId)
+      Transactions.delete({id: transactionId,
+       accepted: true}).$promise.then(function(response){
+        $window.location.reload();  
+       });
+   }
+
+
    $scope.transactionAccepted = function(transactionId){
       console.log("accepted clicked with id", transactionId)
       UpdateTransactions.update({id: transactionId,
