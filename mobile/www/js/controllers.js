@@ -55,14 +55,14 @@ angular.module('starter.controllers', [])
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
   //set inital text to read 1 hr 0 min
-  $scope.hours = 1;
-  $scope.minutes = 0;
+  $scope.hours = 0;
+  $scope.minutes = 30;
   $scope.drag = function(value) {
     $scope.hours = Math.floor(value/60);
     $scope.minutes = value % 60;
   };
   //set initial time to 1 hr
-  $scope.rangeValue = 60;
+  $scope.rangeValue = 30;
 
   //set owned_deviceID to scope var to pass along again
   $scope.owned_deviceID = $stateParams.owned_deviceID;

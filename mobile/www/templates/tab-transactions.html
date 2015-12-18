@@ -69,7 +69,14 @@
             <h3>Lending {{charger.name}} </h3>
             <!-- <div ng-repeat="user in users | filter:{id: current_transaction.borrower_id }"> -->
             <p>Lending to {{current_transaction.borrower_user.first_name + " " + current_transaction.borrower_user.last_name}}</p>
-            <p>Lent at {{current_transaction.start_time | date: 'shortTime'}}</p>
+                    <span ng-if="current_transaction.start_time == nil">
+                        <p>Waiting for {{current_transaction.borrower_user.first_name}} to get charger </p>
+
+                    </span>
+                    <span ng-if="current_transaction.start_time != nil">
+                        <p>Lent at {{current_transaction.start_time | date: 'shortTime'}}</p>
+
+                    </span>
             {{userHasCurrentTransactions = true; ""}}
             <!-- <p> current_transaction.borrower_id</p> -->
             <!-- <p> Currently lending from Lender Name</p> -->
