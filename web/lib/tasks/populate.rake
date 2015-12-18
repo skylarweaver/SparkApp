@@ -105,7 +105,7 @@ namespace :db do
 
       user.longitude = rand * (79.940797-79.946762) - 79.940797
       user.latitude = rand * (40.444331-40.440265) + 40.440265
-      user.rating = rand(3.0...5.0).round(2)
+      user.rating = rand(4.5...5.0).round(2)
       user.facebook_mutual_friend_count = rand(1..40)
       user.save!(validate: false) #avoid password can't be blank validation
 
@@ -118,70 +118,6 @@ namespace :db do
         d.personal_device_name = user.first_name + "'s " + Device.find(d.device_id).name
         d.save!
       end
-    end
-
-
-    aditi = User.new
-    aditi.first_name = "Aditi"
-    aditi.last_name = "Sarkar"
-    aditi.email = "aditi@cmu.edu"
-    aditi.encrypted_password = User.new(:password => password).encrypted_password
-    # baker hall...      40.441657, -79.946250
-    aditi.longitude =  -79.946250
-    aditi.latitude = 40.441657
-    aditi.rating = 4.95
-    aditi.facebook_mutual_friend_count = 39
-    aditi.save!(validate: false) #avoid password can't be blank validation
-    #Give each user a few devices
-    rand(1..3).times do
-      d = OwnedDevice.new
-      d.user_id = aditi.id
-      d.allow_lending = true
-      d.device_id = rand(1..Device.all.size)
-      d.personal_device_name = aditi.first_name + "'s " + Device.find(d.device_id).name
-      d.save!
-    end
-
-    skylar = User.new
-    skylar.first_name = "Skylar"
-    skylar.last_name = "Weaver"
-    skylar.email = "skylar@cmu.edu"
-    skylar.encrypted_password = User.new(:password => password).encrypted_password
-    # baker hall...     40.441620, -79.946524
-    skylar.longitude =  -79.946524
-    skylar.latitude = 40.441620
-    skylar.rating = 4.95
-    skylar.facebook_mutual_friend_count = 39
-    skylar.save!(validate: false) #avoid password can't be blank validation
-    #Give each user a few devices
-    rand(1..3).times do
-      d = OwnedDevice.new
-      d.user_id = skylar.id
-      d.allow_lending = true
-      d.device_id = rand(1..Device.all.size)
-      d.personal_device_name = skylar.first_name + "'s " + Device.find(d.device_id).name
-      d.save!
-    end
-
-    nathan = User.new
-    nathan.first_name = "Nathan"
-    nathan.last_name = "Oh"
-    nathan.email = "nathan@cmu.edu"
-    nathan.encrypted_password = User.new(:password => password).encrypted_password
-    # baker hall...      40.441631, -79.945593
-    nathan.longitude =  -79.945593
-    nathan.latitude = 40.441631
-    nathan.rating = 4.95
-    nathan.facebook_mutual_friend_count = 39
-    nathan.save!(validate: false) #avoid password can't be blank validation
-    #Give each user a few devices
-    rand(1..3).times do
-      d = OwnedDevice.new
-      d.user_id = nathan.id
-      d.allow_lending = true
-      d.device_id = rand(1..Device.all.size)
-      d.personal_device_name = nathan.first_name + "'s " + Device.find(d.device_id).name
-      d.save!
     end
 
     all_user_ids = User.all.map {|u| u.id }
@@ -202,6 +138,46 @@ namespace :db do
       end
       t.save!
     end
+
+
+
+    aditi = User.new
+    aditi.first_name = "Aditi"
+    aditi.last_name = "Sarkar"
+    aditi.email = "aditi@cmu.edu"
+    aditi.encrypted_password = User.new(:password => password).encrypted_password
+    # baker hall...      40.441657, -79.946250
+    aditi.longitude =  -79.946250
+    aditi.latitude = 40.441657
+    aditi.rating = 4.95
+    aditi.facebook_mutual_friend_count = 39
+    aditi.save!(validate: false) #avoid password can't be blank validation
+
+
+    skylar = User.new
+    skylar.first_name = "Skylar"
+    skylar.last_name = "Weaver"
+    skylar.email = "skylar@cmu.edu"
+    skylar.encrypted_password = User.new(:password => password).encrypted_password
+    # baker hall...     40.441620, -79.946524
+    skylar.longitude =  -79.946524
+    skylar.latitude = 40.441620
+    skylar.rating = 4.95
+    skylar.facebook_mutual_friend_count = 39
+    skylar.save!(validate: false) #avoid password can't be blank validation
+
+
+    nathan = User.new
+    nathan.first_name = "Nathan"
+    nathan.last_name = "Oh"
+    nathan.email = "nathan@cmu.edu"
+    nathan.encrypted_password = User.new(:password => password).encrypted_password
+    # baker hall...      40.441690, -79.946270
+    nathan.longitude =  -79.946270
+    nathan.latitude = 40.441690
+    nathan.rating = 4.95
+    nathan.facebook_mutual_friend_count = 39
+    nathan.save!(validate: false) #avoid password can't be blank validation
 
   
   end

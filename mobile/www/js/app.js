@@ -82,15 +82,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.borrow-rating', {
-    url: '/borrow/findLender/:owned_deviceID/:charger_id/:borrowTime/:lender_id/rating',
-    views: {
-      'tab-borrow': {
-        templateUrl: 'templates/borrow-rating.html',
-        controller: 'BorrowRating'
-      }
-    }
-  })
 
   .state('tab.lend', {
     url: '/lend',
@@ -133,6 +124,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })  
+
+  .state('tab.borrow-rating', {
+    url: '/transactions/rating',
+    views: {
+      'tab-transactions': {
+        templateUrl: 'templates/borrow-rating.html',
+        controller: 'BorrowRating'
+      }
+    }
+  })
 
 
   .state('tab.chat-detail', {

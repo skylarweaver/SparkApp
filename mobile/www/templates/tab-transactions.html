@@ -29,6 +29,12 @@
             {{userHasRequestedTransactions = true; ""}}
           </span> 
         </div>
+        <span ng-if="requested_transaction.borrower_id==userId">
+
+            <div class=" button-bar item item-divider">
+              <a ng-click="cancelRequest({{requested_transaction.id}})"class="button button-small button-block button-assertive">Cancel Request</a>
+            </div>
+        </span>
 
         <span ng-if="requested_transaction.lender_id==userId">
 
@@ -110,7 +116,7 @@
   <div ng-repeat="past_transaction in past_transactions">
     <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
-        <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{current_transaction.id}}">
+        <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{past_transaction.id}}">
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">

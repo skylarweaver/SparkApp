@@ -236,6 +236,8 @@ angular.module('starter.controllers', [])
     var mapOptions = {
         center: $scope.curUserLatLng,
         zoom: 15,
+        streetViewControl: false,
+        zoomControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     $scope.map = new google.maps.Map(document.getElementById("map2"), mapOptions);
@@ -427,6 +429,16 @@ angular.module('starter.controllers', [])
     $scope.owned_devices = response;
   });
 
+
+  $scope.cancelRequest = function(transactionId){
+      console.log("transaction deleting with id", transactionId)
+      Transactions.delete({id: transactionId,
+       accepted: true}).$promise.then(function(response){
+        $window.location.reload();  
+       });
+   }
+
+
    $scope.transactionAccepted = function(transactionId){
       console.log("accepted clicked with id", transactionId)
       UpdateTransactions.update({id: transactionId,
@@ -470,45 +482,51 @@ angular.module('starter.controllers', [])
    });
   }
 
+  $scope.openVenmo = function(){
+    window.open('https://venmo.com/', 'location=yes');
+  }
+
   Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {
     $scope.transaction = data;
     $scope.lender_id = $scope.transaction.lender_id
 
-    // Users.get({id: lender_id}).$promise.then(function(data) {
-    //   $scope.lender = data;
-    //   $scope.rounded_distance = Number(data.distance_from_current_user).toFixed(2);
-    //   $scope.lenderLatLng = new google.maps.LatLng($scope.lender.latitude, $scope.lender.longitude);
-    // });
+    Users.get({id: $scope.lender_id}).$promise.then(function(data) {
+      $scope.lender = data;
+      $scope.rounded_distance = Number(data.distance_from_current_user).toFixed(2);
+      $scope.lenderLatLng = new google.maps.LatLng($scope.lender.latitude, $scope.lender.longitude);
+    });
 
-    // Users.get({id: $window.localStorage['userId']}).$promise.then(function(data) {
-    //   $scope.current_user = data;
-    //   $scope.curUserLatLng = new google.maps.LatLng(data.latitude, data.longitude);
+    Users.get({id: $window.localStorage['userId']}).$promise.then(function(data) {
+      $scope.current_user = data;
+      $scope.curUserLatLng = new google.maps.LatLng(data.latitude, data.longitude);
 
-    //   //create map
-    //   var mapOptions = {
-    //       center: $scope.curUserLatLng,
-    //       zoom: 15,
-    //       mapTypeId: google.maps.MapTypeId.ROADMAP
-    //   };
-    //   $scope.map = new google.maps.Map(document.getElementById("map3"), mapOptions);
-    //   //Wait until the map is loaded
-    //   google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-    //     console.log('hi map is loaded')
-    //     //drop my marker
-    //     var myMarker = new google.maps.Marker({
-    //         map: $scope.map,
-    //         animation: google.maps.Animation.DROP,
-    //         position: $scope.curUserLatLng,
-    //         icon: "http://m.bostonusa.com/core/icons/map/blue-dot.png"
-    //     });      
-    //     //drop lender marker
-    //     var lenderMarker = new google.maps.Marker({
-    //         map: $scope.map,
-    //         animation: google.maps.Animation.DROP,
-    //         position: $scope.lenderLatLng
-    //     }); 
-    //   });
-    // });
+      //create map
+      var mapOptions = {
+          center: $scope.curUserLatLng,
+          zoom: 15,
+          streetViewControl: false,
+          zoomControl: false,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      $scope.map = new google.maps.Map(document.getElementById("map3"), mapOptions);
+      //Wait until the map is loaded
+      google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+        console.log('hi map is loaded')
+        //drop my marker
+        var myMarker = new google.maps.Marker({
+            map: $scope.map,
+            animation: google.maps.Animation.DROP,
+            position: $scope.curUserLatLng,
+            icon: "http://m.bostonusa.com/core/icons/map/blue-dot.png"
+        });      
+        //drop lender marker
+        var lenderMarker = new google.maps.Marker({
+            map: $scope.map,
+            animation: google.maps.Animation.DROP,
+            position: $scope.lenderLatLng
+        }); 
+      });
+    });
   });
 
   Current_Transactions.query().$promise.then(function(response){
