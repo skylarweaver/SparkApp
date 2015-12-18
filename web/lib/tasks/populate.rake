@@ -160,8 +160,8 @@ namespace :db do
     skylar.email = "skylar@cmu.edu"
     skylar.encrypted_password = User.new(:password => password).encrypted_password
     # baker hall...     40.441620, -79.946524
-    skylar.longitude =  -79.946524
-    skylar.latitude = 40.441620
+    skylar.longitude =  -79.946250
+    skylar.latitude = 40.441657
     skylar.rating = 4.95
     skylar.facebook_mutual_friend_count = 39
     skylar.save!(validate: false) #avoid password can't be blank validation
