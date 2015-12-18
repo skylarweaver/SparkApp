@@ -101,7 +101,7 @@ angular.module('starter.controllers', [])
 //   });
 // })
 
-.controller('BorrowLenderMatch', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
+.controller('BorrowLenderMatch', function($scope, $stateParams, Users, Owned_Devices, Users_By_Charger, $window) {
   $scope.owned_deviceID = $stateParams.owned_deviceID;
   $scope.num_min_borrow = $stateParams.borrowTime;
   $scope.charger_id = $stateParams.charger_id;
@@ -111,9 +111,8 @@ angular.module('starter.controllers', [])
   console.log($scope.charger_id);
   console.log("this is the # min it needs to be borrowed for");
   console.log($scope.num_min_borrow);
-
-  var lat  = 40.4433;//position.coords.latitude;
-  var lng = -79.9436;//position.coords.longitude;
+  var lat  = 40.441690;//position.coords.latitude;
+  var lng = -79.946270;//position.coords.longitude;
   var myLatlng = new google.maps.LatLng(lat, lng);
   var mapOptions = {
       center: myLatlng,
@@ -170,6 +169,20 @@ angular.module('starter.controllers', [])
           //addInfoWindow(marker, infoWindowContent, record);
  
         }
+
+        Users.get({id: $window.localStorage['userId']}).$promise.then(function(data) {
+            var markerPos = new google.maps.LatLng(data.latitude, data.longitude);
+            // Add the markerto the map
+            var marker = new google.maps.Marker({
+                map: map,
+                animation: google.maps.Animation.DROP,
+                position: markerPos,
+                icon: "http://m.bostonusa.com/core/icons/map/blue-dot.png"
+            });
+
+        });
+
+ 
  
       }); 
  
@@ -385,6 +398,8 @@ angular.module('starter.controllers', [])
 
 
 .controller('TransactionCtrl', function($scope, $stateParams, $window, UpdateTransactions, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {   
+
+
   $scope.userId = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
@@ -589,7 +604,7 @@ angular.module('starter.controllers', [])
       // console.log(email)
       if (email) {
           //user already logged in
-          $location.path('/tab/borrow');
+          $location.path('/tab/transactions');
       } else {
         //user not logged in
         $location.path('/login');
