@@ -484,6 +484,10 @@ angular.module('starter.controllers', [])
     window.open('https://venmo.com/', 'location=yes');
   }
 
+  $scope.openMessenger = function(){
+    window.open('https://messenger.com/', 'location=yes');
+  }
+
   Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {
     $scope.transaction = data;
     $scope.lender_id = $scope.transaction.lender_id
