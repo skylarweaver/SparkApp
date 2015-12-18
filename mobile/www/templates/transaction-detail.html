@@ -1,7 +1,7 @@
 <ion-view view-title="Transaction Details">
   <ion-content class="">
     
-
+  <div ng-if="transaction.end_time == nil">
     <!-- if user is borrower and transaction not started-->
     <!-- TODO: Add in a time once the charger is lent out -->
     <div ng-if="lender_id != userID && transaction.start_time == nil">
@@ -18,7 +18,7 @@
         <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
       </div>
 
-      <div class-"item" id="map2" data-tap-disabled="true">
+      <div class-"item" id="map3" data-tap-disabled="true">
       </div>
 
       <div class="item">
@@ -43,7 +43,7 @@
         <p>{{transaction.borrower_user.facebook_mutual_friend_count}} mutual friends</p>
       </div>
 
-      <div class-"item" id="map2" data-tap-disabled="true">
+      <div class-"item" id="map3" data-tap-disabled="true">
       </div>
 
       <div class="item">
@@ -78,7 +78,7 @@
       <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
     </div>
 
-    <div class-"item" id="map2" data-tap-disabled="true">
+    <div class-"item" id="map3" data-tap-disabled="true">
     </div>
 
     <div class="item">
@@ -106,7 +106,7 @@
         <p>{{transaction.borrower_user.facebook_mutual_friend_count}} mutual friends</p>
       </div>
 
-      <div class-"item" id="map2" data-tap-disabled="true">
+      <div class-"item" id="map3" data-tap-disabled="true">
       </div>
 
       <div class="item">
@@ -124,7 +124,34 @@
           </div>          
         </div>
       </div>
+    </div>
+    <div ng-if = "transaction.end_time != nil">
+      <div ng-if="lender_id == userID">
+        <div class="item item-avatar">
+          <img ng-src='{{transaction.charger_object.charger_photo}}'>
+          <h2> Lent {{transaction.charger_object.name}} </h2>
+          <p>Lent for {{transaction.length_time_requested}} minutes</p>
+        </div>
+        <div class="item item-avatar">
+          <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+          <h2>{{transaction.borrower_user.first_name}}</h2>
+          <p>Average Rating: {{transaction.borrower_user.rating}} stars</p>
+          <p>{{transaction.borrower_user.facebook_mutual_friend_count}} mutual friends</p>
+        </div>
 
+        <div class="item">
+            <p>Message {{transaction.borrower_user.first_name}} to request charger return</p>
+            <div class="row">
+              <div class="col">
+                <button class="button button-block button-stable" ng-click="">Message {{transaction.borrower_user.first_name}}</button>
+              </div>
+              <div class="col">
+                <button class="button button-block button-balanced" ng-click="chargerReturned(transaction)">Charger Returned</button>
+              </div>
+            </div>          
+          </div>
+        </div>
+      </div>
 
   </ion-content>
 </ion-view>
