@@ -123,7 +123,7 @@
   <div ng-repeat="past_transaction in past_transactions">
     <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
-        <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{current_transaction.id}}">
+        <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{past_transaction.id}}">
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">
