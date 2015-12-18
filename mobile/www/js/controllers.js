@@ -167,7 +167,7 @@ angular.module('starter.controllers', [])
           });
           var infoWindowContent = "<a href='#/tab/borrow/findLender/"+$scope.owned_deviceID+"/"+$scope.charger_id+"/"+$scope.num_min_borrow+"/"+ record.id +"'>" + record.first_name  + "</a>";          
  
-          addInfoWindow(marker, infoWindowContent, record);
+          //addInfoWindow(marker, infoWindowContent, record);
  
         }
  
@@ -481,6 +481,10 @@ angular.module('starter.controllers', [])
 
   $scope.openVenmo = function(){
     window.open('https://venmo.com/', 'location=yes');
+  }
+
+  $scope.openMessenger = function(){
+    window.open('https://messenger.com/', 'location=yes');
   }
 
   Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {

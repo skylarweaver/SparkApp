@@ -87,7 +87,7 @@
             {{userHasCurrentTransactions = 'true'; ""}}
 
             <span ng-if="current_transaction.start_time == nil">
-                <p>{current_transaction.lender_user.first_name}} is ready to lend </p>
+                <p>{{current_transaction.lender_user.first_name}} is ready to lend </p>
             </span>
             <span ng-if="current_transaction.start_time != nil">
                  <p>Borrowed at {{current_transaction.start_time | date: 'shortTime'}}</p>
@@ -120,7 +120,7 @@
           <img ng-src="{{charger.charger_photo}}">
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">
             <h3>Lent {{charger.name}} </h3>
-            <p>Lent to {{past_transaction.lender_user.first_name + " " + past_transaction.lender_user.last_name}}</p>
+            <p>Lent to {{past_transaction.borrower_user.first_name + " " + past_transaction.borrower_user.last_name}}</p>
             {{userHasPastTransactions = true; ""}}
             <p>Lent on {{past_transaction.start_time | date: "MM/dd 'at' h:mma" }}</p>
             <p>Returned on {{past_transaction.end_time | date: "MM/dd 'at' h:mma" }}</p>

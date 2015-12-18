@@ -13,7 +13,7 @@
         <p>Requested for {{transaction.length_time_requested}} minutes</p>
       </div>
       <div class="item item-avatar">
-        <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+        <img ng-src="{{transaction.lender_user.user_photo}}">
         <h2>{{transaction.lender_user.first_name}} has accepted!</h2>
         <!-- <p>{{rounded_distance}} miles away</p> -->
         <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
@@ -25,7 +25,7 @@
 
       <div class="item">
         <p>Send {{transaction.lender_user.first_name}} a message to retrieve the charger!</p>
-        <button class="button button-block button-balanced icon-right ion-chatbubble" ng-click="">Send {{transaction.lender_user.first_name}} a message</button>
+        <button class="button button-block button-balanced icon-right ion-chatbubble" ng-click="openMessenger()">Send {{transaction.lender_user.first_name}} a message</button>
       </div>
     </div>
 
@@ -38,7 +38,7 @@
         <p>Requested for {{transaction.length_time_requested}} minutes</p>
       </div>
       <div class="item item-avatar">
-        <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+        <img ng-src="{{transaction.borrower_user.user_photo}}">
         <h2>{{transaction.borrower_user.first_name}}</h2>
         <!-- <p>{{rounded_distance}} miles away</p> -->
         <p>Average Rating: {{transaction.borrower_user.rating}} stars</p>
@@ -73,7 +73,7 @@
       <p>Requested for {{transaction.length_time_requested}} minutes</p>
     </div>
     <div class="item item-avatar">
-      <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+      <img ng-src="{{transaction.lender_user.user_photo}}">
       <h2>{{transaction.lender_user.first_name}}</h2>
       <!-- <p>{{rounded_distance}} miles away</p> -->
       <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
@@ -88,7 +88,7 @@
         <i class="icon ion-chatbubble"></i> -->
         <!-- <span id="userPhone">717.544.6345</span> -->
         <p>Message {{transaction.lender_user.first_name}} to return the charger</p>
-        <button class="button button-block button-balanced icon-right ion-chatbubble" ng-click="">Send {{transaction.lender_user.first_name}} a message</button>
+        <button class="button button-block button-balanced icon-right ion-chatbubble" ng-click="openMessenger()">Send {{transaction.lender_user.first_name}} a message</button>
       </div>
     </div>
       
@@ -101,7 +101,7 @@
         <p>Requested for {{transaction.length_time_requested}} minutes</p>
       </div>
       <div class="item item-avatar">
-        <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+        <img ng-src="{{transaction.borrower_user.user_photo}}">
         <h2>{{transaction.borrower_user.first_name}}</h2>
         <!-- <p>{{rounded_distance}} miles away</p> -->
         <p>Average Rating: {{transaction.borrower_user.rating}} stars</p>
@@ -139,7 +139,7 @@
           <p>Borrowed for {{transaction.length_time_requested}} minutes</p>
         </div>
         <div class="item item-avatar">
-          <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+          <img src="{{transaction.lender_user.user_photo}}">
           <h2>{{transaction.lender_user.first_name}}</h2>
           <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
           <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
@@ -167,8 +167,8 @@
           <p>Borrowed for {{transaction.length_time_requested}} minutes</p>
         </div>
         <div class="item item-avatar">
-          <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
-          <h2>{{transaction.lender_user.first_name}}</h2>
+          <img ng-src="{{transaction.borrower_user.user_photo}}">
+          <h2>{{transaction.borrower_user.first_name}}</h2>
           <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
           <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
         </div>
