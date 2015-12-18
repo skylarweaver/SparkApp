@@ -102,7 +102,7 @@ angular.module('starter.controllers', [])
 //   });
 // })
 
-.controller('BorrowLenderMatch', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
+.controller('BorrowLenderMatch', function($scope, $stateParams, Users, Owned_Devices, Users_By_Charger, $window) {
   $scope.owned_deviceID = $stateParams.owned_deviceID;
   $scope.num_min_borrow = $stateParams.borrowTime;
   $scope.charger_id = $stateParams.charger_id;
@@ -171,6 +171,20 @@ angular.module('starter.controllers', [])
           //addInfoWindow(marker, infoWindowContent, record);
  
         }
+
+        Users.get({id: $window.localStorage['userId']}).$promise.then(function(data) {
+            var markerPos = new google.maps.LatLng(data.latitude, data.longitude);
+            // Add the markerto the map
+            var marker = new google.maps.Marker({
+                map: map,
+                animation: google.maps.Animation.DROP,
+                position: markerPos,
+                icon: "http://m.bostonusa.com/core/icons/map/blue-dot.png"
+            });
+
+        });
+
+ 
  
       }); 
  
