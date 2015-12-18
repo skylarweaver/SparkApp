@@ -480,6 +480,10 @@ angular.module('starter.controllers', [])
    });
   }
 
+  $scope.openVenmo = function(){
+    window.open('https://venmo.com/', 'location=yes');
+  }
+
   Transactions.get({id: $scope.transactionID}).$promise.then(function(data) {
     $scope.transaction = data;
     $scope.lender_id = $scope.transaction.lender_id
