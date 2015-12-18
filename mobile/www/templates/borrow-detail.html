@@ -4,7 +4,7 @@
      <h2><center> {{item_details.charger_name}}</center></h2>
      <br/><br/>
     <center>
-      Around how long would you like to use it for?
+      Estimate how long you would like to borrow the charger
     </center>
     <br/>
     <div class="item range">
@@ -12,8 +12,7 @@
     	<input type="range" name="volume" min="0" max="60" ng-model="rangeValue" ng-change="drag(rangeValue)">
     	<i>1 hour</i>
     </div>
-    </br>
-    <h4><center>{{hours}} Hours and {{minutes}} Minutes<center></h4>
+    <h4><center>{{minutes}} Minutes<center></h4>
     &nbsp;</br>
 
      <!--  <a href="#/tab/borrow/findLender/{{owned_deviceID}}/{{charger_id}}/{{rangeValue}}/{{nearest_lender_id}}" class="button button-block button-balanced" align="center">Match me with a lender!</a>

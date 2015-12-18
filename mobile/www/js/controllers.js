@@ -58,8 +58,7 @@ angular.module('starter.controllers', [])
   $scope.hours = 0;
   $scope.minutes = 30;
   $scope.drag = function(value) {
-    $scope.hours = Math.floor(value/60);
-    $scope.minutes = value % 60;
+    $scope.minutes = value % 61;
   };
   //set initial time to 1 hr
   $scope.rangeValue = 30;
@@ -586,7 +585,7 @@ angular.module('starter.controllers', [])
       // console.log(email)
       if (email) {
           //user already logged in
-          $location.path('/tab/transactions');
+          $location.path('/tab/borrow');
       } else {
         //user not logged in
         $location.path('/login');
