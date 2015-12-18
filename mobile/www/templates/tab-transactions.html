@@ -86,7 +86,14 @@
             <p>Borrowing from {{current_transaction.lender_user.first_name + " " + current_transaction.lender_user.last_name}}</p>
             {{userHasCurrentTransactions = true; ""}}
             {{userHasCurrentTransactions = 'true'; ""}}
-            <p>Borrowed at {{current_transaction.start_time | date: 'shortTime'}}</p>
+
+            <span ng-if="current_transaction.start_time == nil">
+                <p>{current_transaction.lender_user.first_name}} is ready to lend </p>
+            </span>
+            <span ng-if="current_transaction.start_time != nil">
+                 <p>Borrowed at {{current_transaction.start_time | date: 'shortTime'}}</p>
+            </span>
+            
           </span> 
           <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
         </a>
