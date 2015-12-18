@@ -55,14 +55,14 @@ angular.module('starter.controllers', [])
 
 .controller('BorrowDetailCtrl', function($scope, $stateParams, Owned_Devices, Users_By_Charger, $window) {
   //set inital text to read 1 hr 0 min
-  $scope.hours = 1;
-  $scope.minutes = 0;
+  $scope.hours = 0;
+  $scope.minutes = 30;
   $scope.drag = function(value) {
     $scope.hours = Math.floor(value/60);
     $scope.minutes = value % 60;
   };
   //set initial time to 1 hr
-  $scope.rangeValue = 60;
+  $scope.rangeValue = 30;
 
   //set owned_deviceID to scope var to pass along again
   $scope.owned_deviceID = $stateParams.owned_deviceID;
@@ -385,14 +385,12 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TransactionCtrl', function($scope, $stateParams, $window, UpdateTransactions, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
-
-
-   
+.controller('TransactionCtrl', function($scope, $stateParams, $window, UpdateTransactions, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {   
   $scope.userId = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
-  $scope.userHasPastTransactions = false;
+  // $scope.userHasPastTransactions = false;
+  
   Current_Transactions.query().$promise.then(function(response){
     if (response.length > 0) {
         $scope.userHasCurrentTransactions = true;
