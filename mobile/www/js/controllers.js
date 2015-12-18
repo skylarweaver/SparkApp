@@ -604,7 +604,7 @@ angular.module('starter.controllers', [])
       // console.log(email)
       if (email) {
           //user already logged in
-          $location.path('/tab/borrow');
+          $location.path('/tab/transactions');
       } else {
         //user not logged in
         $location.path('/login');
