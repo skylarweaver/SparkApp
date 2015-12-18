@@ -30,34 +30,33 @@
           </span> 
         </div>
         <span ng-if="requested_transaction.borrower_id==userId">
-
-            <div class=" button-bar item item-divider">
-              <a ng-click="cancelRequest({{requested_transaction.id}})"class="button button-small button-block button-assertive">Cancel Request</a>
-            </div>
+          <div class=" button-bar item item-divider">
+            <a ng-click="cancelRequest({{requested_transaction.id}})"class="button button-small button-block button-assertive">Cancel Request</a>
+          </div>
         </span>
-
         <span ng-if="requested_transaction.lender_id==userId">
-
-            <div class=" button-bar item item-divider">
-
-              <a ng-click="transactionAccepted({{requested_transaction.id}})" class="button button-small button-block button-balanced">Accept</a>
-              <a ng-click="transactionRejected({{requested_transaction.id}})"class="button button-small button-block button-assertive">Reject</a>
-            </div>
+          <div class=" button-bar item item-divider">
+            <a ng-click="transactionAccepted({{requested_transaction.id}})" class="button button-small button-block button-balanced">Accept</a>
+            <a ng-click="transactionRejected({{requested_transaction.id}})"class="button button-small button-block button-assertive">Reject</a>
+          </div>
         </span>
-
       </div>
-
-
     </div>
   </div>
-  <div ng-if="userHasRequestedTransactions===false"> 
-    <h5>None</h5>
+  <div ng-repeat="charger in requestedTransactionsFilteredByBorrower = (requested_transactions | filter:{borrower_id: userId})">
   </div>
+  <div ng-repeat="charger in requestedTransactionsFilteredByLender = (requested_transactions | filter:{lender_id: userId})">
+  </div>
+  <div ng-if="requestedTransactionsFilteredByLender.length == 0">
+    <div ng-if="requestedTransactionsFilteredByBorrower == 0"> 
+      <h5>None</h5>
+    </div>
+  </div>
+
 
   <h3>      
       Current Transactions
   </h3>
-
   <div ng-repeat="current_transaction in current_transactions">
     <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: current_transaction.charger_id }">
@@ -69,14 +68,14 @@
             <h3>Lending {{charger.name}} </h3>
             <!-- <div ng-repeat="user in users | filter:{id: current_transaction.borrower_id }"> -->
             <p>Lending to {{current_transaction.borrower_user.first_name + " " + current_transaction.borrower_user.last_name}}</p>
-                    <span ng-if="current_transaction.start_time == nil">
-                        <p>Waiting for {{current_transaction.borrower_user.first_name}} to get charger </p>
+            <span ng-if="current_transaction.start_time == nil">
+              <p>Waiting for {{current_transaction.borrower_user.first_name}} to get charger </p>
 
-                    </span>
-                    <span ng-if="current_transaction.start_time != nil">
-                        <p>Lent at {{current_transaction.start_time | date: 'shortTime'}}</p>
+            </span>
+            <span ng-if="current_transaction.start_time != nil">
+              <p>Lent at {{current_transaction.start_time | date: 'shortTime'}}</p>
 
-                    </span>
+            </span>
             {{userHasCurrentTransactions = true; ""}}
             <!-- <p> current_transaction.borrower_id</p> -->
             <!-- <p> Currently lending from Lender Name</p> -->
@@ -98,31 +97,18 @@
           <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
         </a>
       </div>
-<!--     <div class="item item-text-wrap">
-      </div> -->
     </div>
   </div>
-  <div ng-if="userHasCurrentTransactions===false"> 
-    <h5>None</h5>
+  <div ng-repeat="charger in currentTransactionsFilteredByLender = (current_transactions | filter:{lender_id: userId})">
+  </div>
+  <div ng-repeat="charger in currentTransactionsFilteredByBorrower = (current_transactions | filter:{borrower_id: userId})">
+  </div>
+  <div ng-if="currentTransactionsFilteredByLender.length == 0">
+    <div ng-if="currentTransactionsFilteredByBorrower == 0"> 
+      <h5>None</h5>
+    </div>
   </div>
 
-
-<!--   <div class="card">
-    <div class="item item-divider">
-      Current Transactions
-    </div>
-    <div class="item item-text-wrap">
-      <div class="list" ng-repeat="current_transaction in current_transactions">
-        <span ng-if="current_transaction.lender_id==userId">
-          all charger_id are null because not set in the populate file
-        <p>You are lending {{current_transaction.charger_id}} to {{current_transaction.borrower_id}}</p>
-        </span> 
-        <span ng-if="current_transaction.borrower_id==userId">
-        <p>You are borrowing {{current_transaction.charger_id}} from {{current_transaction.lender_id}}</p>
-        </span> 
-      </div>
-    </div>
-  </div> -->
 
   <h3>      
       Past Transactions
@@ -132,17 +118,12 @@
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
         <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{past_transaction.id}}">
           <img ng-src="{{charger.charger_photo}}">
-          <!-- <p>{{charger.name}}</p> -->
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">
-            <!-- all charger_id are null because not set in the populate file -->
             <h3>Lent {{charger.name}} </h3>
-            <!-- <div ng-repeat="user in users | filter:{id: past_transaction.borrower_id }"> -->
             <p>Lent to {{past_transaction.lender_user.first_name + " " + past_transaction.lender_user.last_name}}</p>
             {{userHasPastTransactions = true; ""}}
             <p>Lent on {{past_transaction.start_time | date: "MM/dd 'at' h:mma" }}</p>
             <p>Returned on {{past_transaction.end_time | date: "MM/dd 'at' h:mma" }}</p>
-            <!-- <p> past_transaction.borrower_id</p> -->
-            <!-- <p> Currently lending from Lender Name</p> -->
           </span> 
           <span ng-if="past_transaction.borrower_id==userId" ng-init="userHasPastTransactions=true">
             <h3>Borrowed {{charger.name}} </h3>
@@ -154,13 +135,17 @@
           <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
         </a>
       </div>
-<!--     <div class="item item-text-wrap">
-      </div> -->
     </div>
   </div>
-<!--   <div ng-if="userHasPastTransactions == false"> 
-    <h5>None</h5>
-  </div> -->
-
+  <div ng-repeat="charger in past_transactionsFilteredByLender = (past_transactions | filter:{lender_id: userId})">
+  </div>
+  <div ng-repeat="charger in past_transactionsFilteredByBorrower = (past_transactions | filter:{borrower_id: userId})">
+  </div>
+  <div ng-if="past_transactionsFilteredByLender.length == 0">
+    <div ng-if="past_transactionsFilteredByBorrower == 0"> 
+      <h5>None</h5>
+    </div>
+  </div>
+  </div>
 </ion-content>
 </ion-view>
