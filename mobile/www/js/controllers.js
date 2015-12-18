@@ -111,9 +111,8 @@ angular.module('starter.controllers', [])
   console.log($scope.charger_id);
   console.log("this is the # min it needs to be borrowed for");
   console.log($scope.num_min_borrow);
-
-  var lat  = 40.4433;//position.coords.latitude;
-  var lng = -79.9436;//position.coords.longitude;
+  var lat  = 40.441690;//position.coords.latitude;
+  var lng = -79.946270;//position.coords.longitude;
   var myLatlng = new google.maps.LatLng(lat, lng);
   var mapOptions = {
       center: myLatlng,
@@ -399,6 +398,8 @@ angular.module('starter.controllers', [])
 
 
 .controller('TransactionCtrl', function($scope, $stateParams, $window, UpdateTransactions, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {   
+
+
   $scope.userId = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
