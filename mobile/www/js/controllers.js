@@ -385,14 +385,12 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TransactionCtrl', function($scope, $stateParams, $window, UpdateTransactions, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {
-
-
-   
+.controller('TransactionCtrl', function($scope, $stateParams, $window, UpdateTransactions, Transactions, Current_Transactions, Past_Transactions, Requested_Transactions, Chargers, Users, Devices, Owned_Devices) {   
   $scope.userId = $window.localStorage['userId'];
   // $scope.userHasRequestedTransactions = false;
   // $scope.userHasCurrentTransactions = false;
-  $scope.userHasPastTransactions = false;
+  // $scope.userHasPastTransactions = false;
+  
   Current_Transactions.query().$promise.then(function(response){
     if (response.length > 0) {
         $scope.userHasCurrentTransactions = true;
