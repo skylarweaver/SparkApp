@@ -10,7 +10,7 @@
   <div ng-repeat="requested_transaction in requested_transactions">
     <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: requested_transaction.charger_id }">
-        <div class="item item-avatar item-icon-right">
+        <div class="item item-avatar">
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="requested_transaction.lender_id==userId">
@@ -28,7 +28,6 @@
             <p>Sent at {{requested_transaction.created_at | date: 'shortTime'}}</p>
             {{userHasRequestedTransactions = true; ""}}
           </span> 
-          <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
         </div>
 
         <span ng-if="requested_transaction.lender_id==userId">
@@ -111,7 +110,7 @@
   <div ng-repeat="past_transaction in past_transactions">
     <div class="card">
       <div ng-repeat="charger in chargers | filter:{id: past_transaction.charger_id }">
-        <div class="item item-avatar item-icon-right">
+        <a class="item item-avatar item-icon-right" href = "#/tab/transactions/{{current_transaction.id}}">
           <img ng-src="{{charger.charger_photo}}">
           <!-- <p>{{charger.name}}</p> -->
           <span ng-if="past_transaction.lender_id==userId" ng-init="userHasPastTransactions=true">
@@ -133,7 +132,7 @@
             {{userHasPastTransactions = true; ""}}    
           </span> 
           <i class="icon ion-chevron-right" style="color:#ccc; font-size:16px;"></i>
-        </div>
+        </a>
       </div>
 <!--     <div class="item item-text-wrap">
       </div> -->
