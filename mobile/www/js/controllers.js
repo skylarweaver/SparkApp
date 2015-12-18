@@ -647,6 +647,10 @@ angular.module('starter.controllers', [])
       }
     );
   }
+  $scope.openFacebook = function(){
+    window.open('https://www.facebook.com/settings?tab=applications', 'location=yes');
+  }
+
 })
 
 

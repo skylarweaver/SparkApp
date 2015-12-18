@@ -36,11 +36,12 @@
         <input type="password" placeholder="Required" ng-model="data.user.old_password">
       </label>
     </div>  
-    <a class="button icon-left ion-loop button-block button-calm" ng-click="update()">
+    <a class="button icon-left ion-loop button-block button-balanced" ng-click="update()">
       Update  
     </a>
-<!--     <div class="padding">
-      <button class="button button-block button-assertive" ng-click="close()">Close</button>
-    </div>  -->
+    <!-- <p>Facebook link not neccessary for demo purposes. In production, linking will be necessary.</p> -->
+    <a class="button icon-left ion-social-facebook button-block button-calm" ng-click="openFacebook()">
+      Link with Facebook  
+    </a>
   </ion-content>
 </ion-view>
