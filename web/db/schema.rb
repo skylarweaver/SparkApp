@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20151125201144) do
     t.string   "master_lend_status"
     t.float    "rating"
     t.integer  "facebook_mutual_friend_count"
+    t.string   "user_photo"
     t.float    "latitude"
     t.float    "longitude"
   end

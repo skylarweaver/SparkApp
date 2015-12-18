@@ -151,6 +151,7 @@ namespace :db do
     aditi.latitude = 40.441657
     aditi.rating = 4.95
     aditi.facebook_mutual_friend_count = 39
+    aditi.user_photo = "http://i.imgur.com/qcf8GoD.jpg"
     aditi.save!(validate: false) #avoid password can't be blank validation
 
 
@@ -164,6 +165,7 @@ namespace :db do
     skylar.latitude = 40.441657
     skylar.rating = 4.95
     skylar.facebook_mutual_friend_count = 39
+    skylar.user_photo = "http://i.imgur.com/wZyUo2m.jpg"
     skylar.save!(validate: false) #avoid password can't be blank validation
 
 
@@ -177,8 +179,8 @@ namespace :db do
     nathan.latitude = 40.441690
     nathan.rating = 4.95
     nathan.facebook_mutual_friend_count = 39
+    nathan.user_photo = "http://i.imgur.com/FPnpMal.jpg"
     nathan.save!(validate: false) #avoid password can't be blank validation
 
-  
   end
 end
