@@ -1,7 +1,9 @@
 <ion-view view-title="Transaction Details">
   <ion-content class="">
-    
-  <div ng-if="transaction.end_time == nil">
+
+    <!-- if current transaction -->
+<div ng-if="transaction.end_time == nil">
+
     <!-- if user is borrower and transaction not started-->
     <!-- TODO: Add in a time once the charger is lent out -->
     <div ng-if="lender_id != userID && transaction.start_time == nil">
@@ -89,7 +91,7 @@
         <button class="button button-block button-balanced icon-right ion-chatbubble" ng-click="">Send {{transaction.lender_user.first_name}} a message</button>
       </div>
     </div>
-
+      
 
     <!-- if user is Lender and transaction started-->
     <div ng-if="lender_id == userID && transaction.start_time != nil">
@@ -119,39 +121,61 @@
               <button class="button button-block button-stable" ng-click="">Message {{transaction.borrower_user.first_name}}</button>
             </div>
             <div class="col">
-              <button class="button button-block button-balanced" ng-click="chargerReturned(transaction)">Charger Returned</button>
+              <a href="#/tab/lend/rating" class="button button-block button-balanced" ng-click="chargerReturned(transaction)">Charger Returned</a>
             </div>
           </div>          
         </div>
       </div>
     </div>
+
+      <!-- if past transaction -->
     <div ng-if = "transaction.end_time != nil">
-      <div ng-if="lender_id == userID">
+
+      <!-- if user was the borrower -->
+      <div ng-if = "transaction.borrower_user.id == userID">
         <div class="item item-avatar">
           <img ng-src='{{transaction.charger_object.charger_photo}}'>
-          <h2> Lent {{transaction.charger_object.name}} </h2>
-          <p>Lent for {{transaction.length_time_requested}} minutes</p>
+          <h2> Borrowed {{transaction.charger_object.name}} </h2>
+          <p>Borrowed for {{transaction.length_time_requested}} minutes</p>
         </div>
         <div class="item item-avatar">
           <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
-          <h2>{{transaction.borrower_user.first_name}}</h2>
-          <p>Average Rating: {{transaction.borrower_user.rating}} stars</p>
-          <p>{{transaction.borrower_user.facebook_mutual_friend_count}} mutual friends</p>
+          <h2>{{transaction.lender_user.first_name}}</h2>
+          <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
+          <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
         </div>
 
         <div class="item">
-            <p>Message {{transaction.borrower_user.first_name}} to request charger return</p>
-            <div class="row">
-              <div class="col">
-                <button class="button button-block button-stable" ng-click="">Message {{transaction.borrower_user.first_name}}</button>
-              </div>
-              <div class="col">
-                <button class="button button-block button-balanced" ng-click="chargerReturned(transaction)">Charger Returned</button>
-              </div>
-            </div>          
+          <h4>Rate the Lender!</h4>
+          <div class= "rating">
+            <input class="radio-input" type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+            <input class="radio-input" type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+            <input class="radio-input" type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+            <input class="radio-input" type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+            <input class="radio-input" type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
           </div>
+          <div>
+            <a ng-click ="openVenmo()" class="button button-block button-calm">Tip {{transaction.lender_user.first_name}}</a>
+          </div>          
         </div>
       </div>
+
+      <div ng-if = "transaction.lender_user.id == userID">
+        <div class="item item-avatar">
+          <img ng-src='{{transaction.charger_object.charger_photo}}'>
+          <h2> Borrowed {{transaction.charger_object.name}} </h2>
+          <p>Borrowed for {{transaction.length_time_requested}} minutes</p>
+        </div>
+        <div class="item item-avatar">
+          <img src="http://www.sfdevs.com.au/citysafe/media/avatar.jpg">
+          <h2>{{transaction.lender_user.first_name}}</h2>
+          <p>Average Rating: {{transaction.lender_user.rating}} stars</p>
+          <p>{{transaction.lender_user.facebook_mutual_friend_count}} mutual friends</p>
+        </div>
+      </div>
+
+    </div>
+
 
   </ion-content>
 </ion-view>
